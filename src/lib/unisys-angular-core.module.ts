@@ -13,7 +13,7 @@ import {ToastrModule} from 'ngx-toastr';
 
 @NgModule({
   imports: [
-    CommonModule, ,
+    CommonModule,
     AppRoutingModule,
     NgxPermissionsModule.forRoot(),
     ModalModule.forRoot(),
