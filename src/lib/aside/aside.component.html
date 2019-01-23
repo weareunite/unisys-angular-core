@@ -1,0 +1,8 @@
+<aside class="main-sidebar">
+  <section class="sidebar">
+    <ul class="sidebar-menu">
+      <li class="header" translate>MAIN_MENU</li>
+      <li *ngFor="let mainMenu of mainMenuList" routerLinkActive="active"><a [routerLink]="mainMenu.routerLink" *ngxPermissionsOnly="mainMenu.permission"><i [ngClass]="mainMenu.icon"></i><span translate>{{ mainMenu.translation}}</span></a></li>
+    </ul>
+  </section>
+</aside>

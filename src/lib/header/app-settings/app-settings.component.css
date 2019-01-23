@@ -1,0 +1,35 @@
+:host{
+    margin-bottom: 15px;
+}
+
+h5{
+    font-weight: 600;
+    padding-left: 10px;
+}
+h5.company-name{
+    font-weight: 500;
+    margin-top: 30px;
+    line-height: 30px;
+    font-size: 20px;
+}
+ul{
+    padding-left: 0px;
+}
+ul li{
+    list-style: none;
+}
+.fa{
+    margin-right: 7px;
+}
+
+a{
+    color: #404040;
+    display: block;
+    padding: 4px 4px 4px 10px;
+    margin: 0px;
+}
+
+a:hover, a:active{
+    background-color: #f1f1f1;
+    color: #605ca8;
+}

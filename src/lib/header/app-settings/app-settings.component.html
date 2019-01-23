@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="col-xs-12">
+    <h5 class="company-name">{{ company?.company}}</h5>
+  </div>
+  <div class="col-xs-6">
+    <h5 translate>YOUR_COMPANY</h5>
+    <!--<small *ngFor="let role of user.getUser()?.roles">{{ role}}</small>-->
+    <ul>
+      <li *ngFor="let item of companyMenuList"><a [routerLink]="item.routerLink" *ngxPermissionsOnly="item.permission"><i [ngClass]="item.icon"></i><span translate>{{ item.translation}}</span></a></li>
+    </ul>
+  </div>
+  <div class="col-xs-6">
+    <h5 translate>APLICATION</h5>
+    <ul>
+      <li *ngFor="let item of appMenuList"><a [routerLink]="item.routerLink" *ngxPermissionsOnly="item.permission"><i [ngClass]="item.icon"></i><span translate>{{ item.translation}}</span></a></li>
+    </ul>
+  </div>
+  <!--<div class="col-xs-4">-->
+    <!--<h5 translate>TOOLS</h5>-->
+    <!--<ul>-->
+      <!--<li *ngFor="let item of toolsMenuList"><a [routerLink]="item.routerLink"><i [ngClass]="item.icon"></i><span translate>{{ item.translation}}</span></a></li>-->
+    <!--</ul>-->
+  <!--</div>-->
+</div>

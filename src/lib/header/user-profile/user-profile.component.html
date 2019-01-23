@@ -1,0 +1,10 @@
+<h5>{{ user?.name}} {{ user?.surname}} <small>(<span *ngFor="let role of user?.roles ; let isLast=last">{{ role.name}}{{isLast ? '' : ', '}}</span>)</small></h5>
+<ul>
+  <li>
+    <a (click)="onLogOut()">
+      <i class="fa fa-lock"></i>
+      <span translate>LOG_OUT</span>
+    </a>
+  </li>
+</ul>
+
