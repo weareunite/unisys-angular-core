@@ -3,5 +3,9 @@
   "dest": "../../dist/unisys-angular-core",
   "lib": {
     "entryFile": "src/public_api.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+    "@angular/common",
+    "@angular/core"
+  ]
 }
