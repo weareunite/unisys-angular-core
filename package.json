@@ -1,0 +1,22 @@
+{
+  "name": "@weareunite/unisys-angular-core",
+  "version": "0.0.1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weareunite/unisys-angular-core"
+  },
+  "keywords": [
+    "unite",
+    "unisys",
+    "angular",
+    "angularjs",
+    "framework",
+    "typescript",
+    "javascript"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^7.2.0",
+    "@angular/core": "^7.2.0"
+  }
+}
