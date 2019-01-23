@@ -10,7 +10,7 @@ import {environment} from '../enviroments/enviroment';
 import {Subject} from 'rxjs/index';
 import {BaseService} from './base.service';
 import {ToastrService} from 'ngx-toastr';
-import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
+import {AppStateService} from './app-state.service';
 import {FormControl} from '@angular/forms';
 
 @Injectable()
@@ -28,7 +28,7 @@ export class UserService extends BaseService {
     protected router: Router,
     protected notificationService: NotificationService,
     protected toastrService: ToastrService,
-    protected appStateService: UnisysAngularAppStateServiceService,
+    protected appStateService: AppStateService,
     private   permissionsService: NgxPermissionsService,
   ) {
     super(http, appStateService);
