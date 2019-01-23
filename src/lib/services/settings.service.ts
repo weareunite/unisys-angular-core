@@ -2,7 +2,7 @@ import {Injectable, OnInit} from '@angular/core';
 import {Subject} from 'rxjs';
 
 import {HttpService} from './http.service';
-import {Contact} from '../models/contact.model';
+import {Contact} from '../models';
 
 @Injectable()
 
