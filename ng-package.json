@@ -6,6 +6,9 @@
   },
   "whitelistedNonPeerDependencies": [
     "@angular/common",
-    "@angular/core"
+    "@angular/core",
+    "ngx-permissions",
+    "ngx-toastr",
+    "rxjs"
   ]
 }

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {UserService} from '../../../services/user.service';
-import {User} from '../../../models/user.model';
+import {Component, OnInit} from '@angular/core';
+import {UserService} from '../../services/user.service';
+import {User} from '../../models';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -10,23 +10,24 @@ import {Subscription} from 'rxjs';
 })
 export class UserProfileComponent implements OnInit {
   public user;
-  private userSubscription : Subscription
+  private userSubscription: Subscription
 
   constructor(
-      private userService: UserService
-  ) { }
+    private userService: UserService
+  ) {
+  }
 
   ngOnInit() {
-      this.userSubscription = this.userService.userChanged
-          .subscribe(
-              (item) => {
-                  this.user = item;
-              }
-          );
+    this.userSubscription = this.userService.userChanged
+      .subscribe(
+        (item) => {
+          this.user = item;
+        }
+      );
   }
 
   onLogOut() {
-      this.userService.logOut();
+    this.userService.logOut();
   }
 
 }

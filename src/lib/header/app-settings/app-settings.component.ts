@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {MenuItem} from '../../../models/menuItem.model';
-import {SettingsService} from '../../../services/settings.service';
-import {Contact} from '../../../models/contact.model';
+import {MenuItem, Contact} from '../../models';
+import {SettingsService} from '../../services/settings.service';
 import {Subscription} from 'rxjs';
 
 @Component({
