@@ -11,7 +11,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
 import {AsideComponent} from './aside/aside.component';
 import {SharedModule} from './shared/shared.module';
-import {DefaultModule} from './default/default.module';
 import {DefaultComponent} from './default/default.component';
 
 @NgModule({
@@ -26,8 +25,7 @@ import {DefaultComponent} from './default/default.component';
     TabsModule.forRoot(),
     TooltipModule.forRoot(),
     AppRoutingModule,
-    SharedModule,
-    DefaultModule
+    SharedModule
   ],
   declarations: [
     FooterComponent,
