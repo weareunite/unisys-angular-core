@@ -1,10 +1,8 @@
-import {Country} from '../../../../../src/app/models/country.model';
-
 export interface MenuItem {
   routerLink: object,
   translation: string,
   icon: string,
-  permission?: string,
+  permission?: string
 }
 
 export interface Contact {
@@ -26,7 +24,7 @@ export interface Contact {
   description: string,
   custom_properties: any,
   selected?: boolean | undefined,
-  country_id?: number,
+  country_id?: number
 }
 
 export interface User {
@@ -53,4 +51,25 @@ export interface Tag {
   },
   created_at: null,
   selected?: boolean | undefined,
+}
+
+export interface Country {
+  id: number,
+  capital: string,
+  citizenship: string,
+  country_code: string,
+  currency: string,
+  currency_code: string,
+  currency_sub_unit: string,
+  currency_symbol: string,
+  currency_decimals: string,
+  full_name: string,
+  iso_3166_2: string,
+  iso_3166_3: string,
+  name: string,
+  region_code: string,
+  sub_region_code: string,
+  eea: string,
+  calling_code: string,
+  flag: string
 }

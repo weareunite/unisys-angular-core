@@ -10,6 +10,7 @@
     "ngx-permissions",
     "ngx-toastr",
     "ngx-bootstrap",
-    "rxjs"
+    "rxjs",
+    "@ngx-translate/http-loader"
   ]
 }
