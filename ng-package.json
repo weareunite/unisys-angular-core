@@ -11,6 +11,7 @@
     "ngx-toastr",
     "ngx-bootstrap",
     "rxjs",
-    "@ngx-translate/http-loader"
+    "@ngx-translate/http-loader",
+    "@weareunite/unite-angular-tab-router"
   ]
 }

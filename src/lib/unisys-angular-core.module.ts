@@ -10,6 +10,7 @@ import {BsDatepickerModule, ModalModule, TabsModule, TooltipModule} from 'ngx-bo
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
 import {AsideComponent} from './aside/aside.component';
+import {SharedModule} from './shared/shared.module';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import {AsideComponent} from './aside/aside.component';
     ToastrModule.forRoot(),
     TabsModule.forRoot(),
     TooltipModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    SharedModule
   ],
   declarations: [
     FooterComponent,
