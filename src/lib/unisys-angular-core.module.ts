@@ -12,7 +12,6 @@ import {ToastrModule} from 'ngx-toastr';
 import {AsideComponent} from './aside/aside.component';
 import {SharedModule} from './shared/shared.module';
 import {DefaultModule} from './default/default.module';
-import {DefaultComponent} from './default/default.component';
 
 @NgModule({
   imports: [
@@ -35,7 +34,6 @@ import {DefaultComponent} from './default/default.component';
     UserProfileComponent,
     AppSettingsComponent,
     AsideComponent,
-    DefaultComponent
   ],
   exports: []
 })
