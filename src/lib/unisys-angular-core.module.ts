@@ -34,6 +34,7 @@ import {DefaultModule} from './default/default.module';
     UserProfileComponent,
     AppSettingsComponent,
     AsideComponent,
+    DefaultModule
   ],
   exports: []
 })

@@ -5,7 +5,6 @@ import {DefaultRoutingModule} from './default-routing.module';
 import {SharedModule} from '../shared/shared.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {NgxPermissionsModule} from 'ngx-permissions';
-import {UnisysAngularTabRouterModule} from '@weareunite/unisys-angular-tab-router';
 
 @NgModule({
   imports: [
@@ -13,12 +12,9 @@ import {UnisysAngularTabRouterModule} from '@weareunite/unisys-angular-tab-route
     DefaultRoutingModule,
     SharedModule,
     ReactiveFormsModule,
-    NgxPermissionsModule.forChild(),
-    UnisysAngularTabRouterModule
+    NgxPermissionsModule.forChild()
   ],
-  exports: [
-    UnisysAngularTabRouterModule
-  ],
+  exports: [],
   declarations: [
     DefaultComponent,
   ],
