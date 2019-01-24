@@ -12,6 +12,7 @@ import {ToastrModule} from 'ngx-toastr';
 import {AsideComponent} from './aside/aside.component';
 import {SharedModule} from './shared/shared.module';
 import {DefaultModule} from './default/default.module';
+import {UnisysAngularTabRouterModule} from '@weareunite/unisys-angular-tab-router';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import {DefaultModule} from './default/default.module';
     TooltipModule.forRoot(),
     AppRoutingModule,
     SharedModule,
-    DefaultModule
+    DefaultModule,
+    UnisysAngularTabRouterModule
   ],
   declarations: [
     FooterComponent,
