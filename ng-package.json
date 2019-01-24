@@ -12,6 +12,6 @@
     "ngx-bootstrap",
     "rxjs",
     "@ngx-translate/http-loader",
-    "@weareunite/unite-angular-tab-router"
+    "@weareunite/unisys-angular-tab-router"
   ]
 }
