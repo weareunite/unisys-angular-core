@@ -4,7 +4,7 @@ import {AuthGuard} from '../services/auth-guard.service';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: 'default', pathMatch: 'full'},
-  {path: 'default', loadChildren: './default/default.module#DefaultModule'},
+  // {path: 'default', loadChildren: './default/default.module#DefaultModule'},
   // {path: 'admin/bank-account', loadChildren: './admin/bank-account/bank-account.module#BankAccountModule'},
   // {path: 'admin/category', loadChildren: './admin/category/category.module#CategoryModule'},
   // {path: 'admin/roles', loadChildren: './admin/role/role.module#RoleModule'},
