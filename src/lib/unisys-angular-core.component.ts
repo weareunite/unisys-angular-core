@@ -24,7 +24,7 @@ import {SettingsService} from "./services/settings.service";
   ]
 })
 
-export class UniSysAngularCoreAppComponent {
+export class UnisysAngularCoreComponent {
   private stateSubscription: Subscription;
   public state;
 
