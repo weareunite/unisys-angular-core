@@ -11,7 +11,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
 import {AsideComponent} from './aside/aside.component';
 import {SharedModule} from './shared/shared.module';
-import {DefaultComponent} from './default/default.component';
+import {RouterModule} from '@angular/router';
+import {AuthModule} from './auth/auth.module';
+import {DefaultModule} from './default/default.module';
 
 @NgModule({
   imports: [
@@ -25,7 +27,10 @@ import {DefaultComponent} from './default/default.component';
     TabsModule.forRoot(),
     TooltipModule.forRoot(),
     AppRoutingModule,
-    SharedModule
+    SharedModule,
+    RouterModule,
+    AuthModule,
+    DefaultModule
   ],
   declarations: [
     FooterComponent,
@@ -33,9 +38,15 @@ import {DefaultComponent} from './default/default.component';
     UserProfileComponent,
     AppSettingsComponent,
     AsideComponent,
-    DefaultComponent
   ],
-  exports: []
+  exports: [
+    FooterComponent,
+    HeaderComponent,
+    AsideComponent,
+    UserProfileComponent,
+    AppSettingsComponent,
+    RouterModule
+  ]
 })
 export class UnisysAngularCoreModule {
 }

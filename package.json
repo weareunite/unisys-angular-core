@@ -1,6 +1,6 @@
 {
   "name": "@weareunite/unisys-angular-core",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -16,14 +16,15 @@
     "javascript"
   ],
   "dependencies": {
-    "@angular/common": "^7.2.0",
     "@angular/core": "^7.2.0",
     "ngx-bootstrap": "^3.1.4",
     "ngx-permissions": ">=5.0.0",
     "ngx-toastr": ">=8.0.0",
     "rxjs": "^6.3.3",
     "@ngx-translate/http-loader": ">=3.0.0",
-    "@weareunite/unisys-angular-tab-router": "^0.0.5"
+    "@ngx-translate/core": "^11.0.1",
+    "@weareunite/unisys-angular-tab-router": "^0.0.5",
+    "admin-lte": "^2.4.8"
   },
   "peerDependencies": {
     "@angular/common": "^7.2.0",

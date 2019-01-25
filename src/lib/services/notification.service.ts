@@ -3,7 +3,9 @@ import { HttpService } from './http.service';
 import { Subject } from 'rxjs/index';
 import {BaseService} from './base.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class NotificationService extends BaseService{
     listUnreadChanged = new Subject();
     adminListChanged = new Subject();

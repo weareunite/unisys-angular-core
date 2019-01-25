@@ -12,6 +12,8 @@
     "ngx-bootstrap",
     "rxjs",
     "@ngx-translate/http-loader",
-    "@weareunite/unisys-angular-tab-router"
+    "@weareunite/unisys-angular-tab-router",
+    "@ngx-translate/core",
+    "admin-lte"
   ]
 }

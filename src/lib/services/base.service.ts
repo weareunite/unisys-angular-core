@@ -5,7 +5,9 @@ import { HttpService } from './http.service';
 import {Tag} from '../models';
 import {AppStateService} from './app-state.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 
 export abstract class BaseService{
 

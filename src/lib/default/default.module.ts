@@ -14,11 +14,9 @@ import {NgxPermissionsModule} from 'ngx-permissions';
     ReactiveFormsModule,
     NgxPermissionsModule.forChild()
   ],
-  exports: [],
   declarations: [
-    DefaultComponent,
-  ],
-  entryComponents: [],
+    DefaultComponent
+  ]
 })
 export class DefaultModule {
 }

@@ -13,7 +13,9 @@ import {ToastrService} from 'ngx-toastr';
 import {AppStateService} from './app-state.service';
 import {FormControl} from '@angular/forms';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class UserService extends BaseService {
   public roleListChanged = new Subject();
   public userChanged = new Subject();

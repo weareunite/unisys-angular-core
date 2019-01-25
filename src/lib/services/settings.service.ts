@@ -4,7 +4,9 @@ import {Subject} from 'rxjs';
 import {HttpService} from './http.service';
 import {Contact} from '../models';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 
 export class SettingsService{
 

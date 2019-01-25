@@ -1,0 +1,26 @@
+<div class="login-box">
+  <div class="login-logo"><a href="/"><b>Uni</b>Sys</a></div>
+  <div class="login-box-body">
+    <form (ngSubmit)="onSignIn(f)" #f="ngForm">
+      <div class="form-group has-feedback">
+        <input class="form-control" type="text" name="username" placeholder="Uživateľské meno" ngModel><span class="glyphicon glyphicon-user form-control-feedback"></span></div>
+      <div class="form-group has-feedback">
+        <input class="form-control" type="password" name="password" placeholder="Heslo" ngModel><span class="glyphicon glyphicon-lock form-control-feedback"></span></div>
+      <div class="row">
+        <div class="col-xs-7">
+          <!--<a routerLink="/quick-login">Rýchle prihlásenie</a>-->
+          <!--<br><a href="#">Zabudol som heslo</a>-->
+        </div>
+        <div class="col-xs-5">
+          <button class="btn btn-primary btn-block btn-flat" type="submit">Prihlásiť sa</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="lockscreen-footer text-center"><b><a class="text-black" href="http://www.unite.sk">Unite s.r.o</a></b> © 2018</div>
+  <div class="lockscreen-footer text-center">
+    <img style="max-height: 140px" src="/assets/images/cl.png">
+    <br>
+    <img style="max-height: 70px" src="/assets/images/eu.jpg">
+  </div>
+</div>

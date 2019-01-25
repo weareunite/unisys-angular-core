@@ -1,0 +1,15 @@
+<div class="wrapper">
+  <app-header *ngIf="auth.isAuthenticated()"></app-header>
+  <app-aside  *ngIf="auth.isAuthenticated()"></app-aside>
+  <div class="loader" [ngClass]="{'active' : state != '' }">
+    <span class="label label-danger" *ngIf="state == 'GET'" translate>LOADING</span>
+    <span class="label label-danger" *ngIf="state == 'POST'" translate>SAVING</span>
+    <span class="label label-danger" *ngIf="state == 'PUT'" translate>SAVING</span>
+    <span class="label label-danger" *ngIf="state == 'DELETE'" translate>DELETING</span>
+    <span class="label label-danger" *ngIf="state == ''">. . .</span>
+  </div>
+  <div class="content-wrapper">
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
+  </div>
+</div>

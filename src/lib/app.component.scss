@@ -1,0 +1,13 @@
+.loader {
+  position: fixed;
+  left: 0;
+  top: -25px;
+  width: 100%;
+  z-index: 10000;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.loader.active {
+  top: 2px;
+}

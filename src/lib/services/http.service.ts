@@ -3,7 +3,9 @@ import {Injectable} from '@angular/core';
 import {AuthService} from './auth.service';
 import {environment} from '../enviroments/enviroment';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class HttpService {
     private  url = environment.BASE_API_URL;
 

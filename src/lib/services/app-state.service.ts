@@ -4,7 +4,9 @@ import {HttpRequest} from '@angular/common/http';
 import {Router} from '@angular/router';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AppStateService {
     public state = '';
     public viewState = {};
