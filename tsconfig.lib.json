@@ -15,7 +15,12 @@
     "lib": [
       "dom",
       "es2018"
-    ]
+    ],
+    "paths": {
+      "assets": [
+        "src/lib/assets/images/cl.png"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,

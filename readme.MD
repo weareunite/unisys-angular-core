@@ -13,3 +13,28 @@
 Install library by running command
 > npm i @weareunite/unisys-angular-core
 
+#### Integration
+* Before installing this Core Module, install Angular project first (command **ng new**)
+* Point to file **app.module.ts** in src/app folder
+* Replace **AppModule** to **UnisysAngularCoreModule** in imports
+* Replace **AppComponent** to **UnisysAngularCoreComponent** in bootstrap
+
+Your app.module.ts file should looks like this
+
+```typescript
+import {NgModule} from '@angular/core';
+import {UnisysAngularCoreModule} from '../../projects/unisys-angular-core/src/lib/unisys-angular-core.module';
+import {UnisysAngularCoreComponent} from '../../projects/unisys-angular-core/src/lib/unisys-angular-core.component';
+
+
+@NgModule({
+  declarations: [],
+  imports: [UnisysAngularCoreModule],
+  providers: [],
+  bootstrap: [UnisysAngularCoreComponent]
+})
+export class AppModule {
+}
+```
+
+Now you can run your application by command **ng serve**
