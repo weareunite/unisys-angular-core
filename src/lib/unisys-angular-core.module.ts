@@ -47,8 +47,7 @@ import {UnisysAngularCoreComponent} from './unisys-angular-core.component';
     AsideComponent,
     UserProfileComponent,
     AppSettingsComponent,
-    RouterModule,
-    UnisysAngularCoreComponent
+    RouterModule
   ]
 })
 export class UnisysAngularCoreModule {
