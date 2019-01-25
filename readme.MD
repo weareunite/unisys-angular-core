@@ -11,5 +11,5 @@
 ![](https://img.shields.io/github/languages/count/weareunite/unisys-angular-core.svg?style=flat-square&colorB=blue)
 # UniSys Angular Core
 Install library by running command
-> npm i @weareunite/unisys-angular-view-button
+> npm i @weareunite/unisys-angular-core
 
