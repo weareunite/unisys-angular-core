@@ -1,4 +1,4 @@
-![](https://img.shields.io/badge/platform-unisys-orange.svg?style=for-the-badge&link=https://unite.sk/&link=https://unite.sk/)
+[![](https://img.shields.io/badge/platform-unisys-orange.svg?style=for-the-badge)](https://unite.sk)
 
 ![](https://img.shields.io/npm/v/@weareunite/unisys-angular-core.svg?style=flat-square&colorB=red)
 ![](https://img.shields.io/npm/l/@weareunite/unisys-angular-core.svg?style=flat-square&colorB=red)
