@@ -23,8 +23,8 @@ Your app.module.ts file should looks like this
 
 ```typescript
 import {NgModule} from '@angular/core';
-import {UnisysAngularCoreModule} from '../../projects/unisys-angular-core/src/lib/unisys-angular-core.module';
-import {UnisysAngularCoreComponent} from '../../projects/unisys-angular-core/src/lib/unisys-angular-core.component';
+import {UnisysAngularCoreModule} from '@weareunite/unisys-angular-core';
+import {UnisysAngularCoreComponent} from '@weareunite/unisys-angular-core';
 
 
 @NgModule({
