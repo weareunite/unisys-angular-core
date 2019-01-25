@@ -19,7 +19,8 @@ import {SettingsService} from "./services/settings.service";
     '../../../../node_modules/font-awesome/css/font-awesome.css',
     '../../../../node_modules/ionicons/dist/css/ionicons.min.css',
     '../../../../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css',
-    '../../../../node_modules/ngx-toastr/toastr.css'
+    '../../../../node_modules/ngx-toastr/toastr.css',
+    './../styles.css'
   ]
 })
 
