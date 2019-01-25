@@ -62,4 +62,6 @@ fabric.properties
 .idea/httpRequests
 
 dist/
-
+dist/*
+dist
+dist/*.*
