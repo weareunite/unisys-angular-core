@@ -10,12 +10,12 @@ import {FilterVisibilityPipe} from './filter-visibility.pipe';
 import {SlideAssetDirective} from './slide-asset.directive';
 import {SortByPipe} from './sort-by.pipe';
 import {NgSelectModule} from '@ng-select/ng-select';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 // UniSys Modules
 import {UnisysAngularTabRouterModule} from '@weareunite/unisys-angular-tab-router';
 import {UnisysAngularFormGroupModule} from '@weareunite/unisys-angular-form-group';
 import {UnisysAngularInputWrapperModule} from '@weareunite/unisys-angular-input-wrapper';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
 // AoT requires an exported function for factories

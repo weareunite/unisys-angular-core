@@ -2,7 +2,9 @@ import {Injectable} from '@angular/core';
 
 import {BaseService} from './base.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class CountryService extends BaseService{
     protected url = 'country';
 

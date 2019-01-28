@@ -32,8 +32,7 @@ import {SettingsModule} from './admin/settings/settings.module';
     SharedModule,
     RouterModule,
     AuthModule,
-    DefaultModule,
-    SettingsModule
+    DefaultModule
   ],
   declarations: [
     FooterComponent,
