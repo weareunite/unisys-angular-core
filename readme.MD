@@ -47,4 +47,14 @@ export class AppModule {
 }
 ```              
 
+* In your **enviroment** file, set this variables
+
+Variable | Description
+--- | --- 
+`BASE_API_URL` | URL to base API
+`OAUTH_TOKEN_URL` | URL to obtain auth token
+`OAUTH_FAST_TOKEN_URL` | URL to obtain fast auth token
+`OAUTH_CLIENT_SECRET` | Client secret
+`OAUTH_CLIENT_ID` | Client ID
+
 Now you can run your application by command **ng serve**
