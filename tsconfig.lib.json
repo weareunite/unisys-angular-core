@@ -15,12 +15,15 @@
     "lib": [
       "dom",
       "es2018"
+    ]
+  },
+  "paths": {
+    "assets": [
+      "lib/assets"
     ],
-    "paths": {
-      "assets": [
-        "src/lib/assets/images/cl.png"
-      ]
-    }
+    "assets/*": [
+      "lib/assets/*"
+    ]
   },
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
