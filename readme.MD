@@ -22,19 +22,27 @@ Install library by running command
 Your app.module.ts file should looks like this
 
 ```typescript
-import {NgModule} from '@angular/core';
-import {UnisysAngularCoreModule} from '@weareunite/unisys-angular-core';
-import {UnisysAngularCoreComponent} from '@weareunite/unisys-angular-core';
-
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { AppComponent } from './app.component';
+import { UnisysAngularCoreModule } from '@weareunite/unisys-angular-core';
+import { UnisysAngularCoreComponent } from '@weareunite/unisys-angular-core';
 
 @NgModule({
-  declarations: [],
-  imports: [UnisysAngularCoreModule],
+  declarations: [
+    AppComponent,
+  ],
+  imports: [
+    UnisysAngularCoreModule,
+    BrowserModule
+  ],
   providers: [],
-  bootstrap: [UnisysAngularCoreComponent]
+  bootstrap: [
+    UnisysAngularCoreComponent
+  ]
 })
-export class AppModule {
-}
+
+export class AppModule { }
 ```
 
 * Add snippet below as scripts into your **angular.json** file
