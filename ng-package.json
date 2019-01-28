@@ -17,7 +17,10 @@
     "@weareunite/unisys-angular-tab-router",
     "@weareunite/unisys-angular-form-group",
     "@weareunite/unisys-angular-input-wrapper",
+    "@weareunite/unisys-angular-view-button",
+    "@weareunite/unisys-angular-progress-bar",
     "@ngx-translate/core",
-    "admin-lte"
+    "admin-lte",
+    "ng2-truncate"
   ]
 }

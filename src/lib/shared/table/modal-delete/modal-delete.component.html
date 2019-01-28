@@ -1,0 +1,13 @@
+<div class="modal-body">
+  <h4 *ngIf="item" class="text-center" translate [translateParams]="{id: item.id}">DO_YOU_REALY_DELETE_ITEM_WITH_ID</h4>
+  <h4 *ngIf="!item" class="text-center" translate>DO_YOU_REALY_DELETE_ITEMS</h4>
+  <div class="form-footer">
+    <button type="button" class="btn btn-sm btn-default" (click)="bsModalRef.hide()" translate>CLOSE</button>
+    <div class="pull-right">
+      <div class="btn-group">
+        <button *ngIf="item" type="button" class="btn btn-danger" (click)="deleteItem()" translate>DELETE</button>
+        <button *ngIf="!item" type="button" class="btn btn-danger" (click)="deleteSelected()" translate>DELETE_SELECTED</button>
+      </div>
+    </div>
+  </div>
+</div>

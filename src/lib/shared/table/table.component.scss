@@ -1,0 +1,107 @@
+.hand{
+    cursor: pointer;
+}
+
+.selected{
+    position: relative;
+    padding: 5px 20px 5px 5px !important;
+    &:before{
+        position: absolute;
+        content: "";
+        right: 5px;
+        bottom: 10px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 5px 5px 0 5px;
+        border-color: #000000 transparent transparent transparent;
+    }
+    &.desc:before{
+        border-width: 0 5px 5px 5px;
+        border-color: transparent transparent #000000 transparent;
+    }
+}
+
+table.table thead  > tr > th:last-of-type, table.table tbody > tr  > td:last-of-type{
+    text-align: right;
+}
+
+.table>thead>tr>th {
+    font-size: 13px;
+    padding: 5px 5px;
+}
+
+.table-hover>tbody>tr{
+    &.hightligt{
+        background-color: #ffcc0038;
+    }
+    &.new{
+        background-color: rgba(0, 154, 60, 0.18);
+    }
+    &.clicked{
+        background-color: rgba(31, 124, 154,0.3);
+    }
+}
+
+tbody>tr>td{
+    font-size: 12px;
+    padding: 3px 5px;
+    border-left: 1px solid #eaeaea;
+    &.detail{
+        position: relative;
+        &:after{
+            position: absolute;
+            content: '';
+            right: 0px;
+            top: 0px;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 7px 7px 0;
+            border-color: transparent rgba(250, 22, 29, 0.18) transparent transparent;
+            display: block;
+        }
+        &:hover:after{
+            border-color: transparent rgba(250, 22, 29, 0.65) transparent transparent;
+        }
+    }
+    &.text{
+        white-space: nowrap;
+        min-width: 100px;
+        max-width: 150px;
+        text-overflow: ellipsis;
+        > span > span{
+            display: block;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+    }
+    &.text-right{
+        white-space: nowrap;
+    }
+}
+
+.box-header>.box-tools{
+    padding: 4px 7px 3px 2px;
+    width: 100%;
+    right: 0px;
+    top: 2px;
+}
+
+.dropdown-menu.row-select{
+    padding: 10px;
+    min-width: 200px;
+}
+
+
+.dropdown-menu.dropdown-filter{
+    padding: 10px;
+}
+
+.label{
+    margin-right: 2px;
+}
+
+.disalowed > a{
+    display: none;
+}

@@ -11,12 +11,20 @@ import {SlideAssetDirective} from './slide-asset.directive';
 import {SortByPipe} from './sort-by.pipe';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {TableComponent} from './table/table.component';
+import {ModalDeleteComponent} from './table/modal-delete/modal-delete.component';
+import {ModalTagComponent} from './table/modal-tag/modal-tag.component';
+import {ModalTagDeleteComponent} from './table/modal-tag-delete/modal-tag-delete.component';
+import {NgxPermissionsModule} from 'ngx-permissions';
+import {BsDatepickerModule, BsLocaleService, TooltipModule} from 'ngx-bootstrap';
+import {TruncateModule} from 'ng2-truncate';
 
 // UniSys Modules
 import {UnisysAngularTabRouterModule} from '@weareunite/unisys-angular-tab-router';
 import {UnisysAngularFormGroupModule} from '@weareunite/unisys-angular-form-group';
 import {UnisysAngularInputWrapperModule} from '@weareunite/unisys-angular-input-wrapper';
-
+import {UnisysAngularViewButtonModule} from '@weareunite/unisys-angular-view-button';
+import {UnisysAngularProgressBarModule} from '@weareunite/unisys-angular-progress-bar';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -30,10 +38,15 @@ export function HttpLoaderFactory(http: HttpClient) {
     UnisysAngularTabRouterModule,
     UnisysAngularFormGroupModule,
     UnisysAngularInputWrapperModule,
+    UnisysAngularViewButtonModule,
+    UnisysAngularProgressBarModule,
     HttpClientModule,
     NgSelectModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxPermissionsModule,
+    TooltipModule,
+    TruncateModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -47,13 +60,19 @@ export function HttpLoaderFactory(http: HttpClient) {
     FilterColumnsPipe,
     FilterVisibilityPipe,
     SlideAssetDirective,
-    SortByPipe
+    SortByPipe,
+    TableComponent,
+    ModalDeleteComponent,
+    ModalTagComponent,
+    ModalTagDeleteComponent
   ],
   exports: [
     CommonModule,
     UnisysAngularTabRouterModule,
     UnisysAngularFormGroupModule,
     UnisysAngularInputWrapperModule,
+    UnisysAngularViewButtonModule,
+    UnisysAngularProgressBarModule,
     TranslateModule,
     DropdownDirective,
     FilterColumnsPipe,
@@ -62,9 +81,15 @@ export function HttpLoaderFactory(http: HttpClient) {
     SortByPipe,
     NgSelectModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TableComponent,
+    TruncateModule
   ],
-  entryComponents: [],
+  entryComponents: [
+    ModalDeleteComponent,
+    ModalTagComponent,
+    ModalTagDeleteComponent
+  ],
 })
 export class SharedModule {
   constructor(

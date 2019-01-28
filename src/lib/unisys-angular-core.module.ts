@@ -13,9 +13,8 @@ import {AsideComponent} from './aside/aside.component';
 import {SharedModule} from './shared/shared.module';
 import {RouterModule} from '@angular/router';
 import {AuthModule} from './auth/auth.module';
-import {DefaultModule} from './default/default.module';
 import {UnisysAngularCoreComponent} from './unisys-angular-core.component';
-import {SettingsModule} from './admin/settings/settings.module';
+import {BankAccountModule} from './admin/bank-account/bank-account.module';
 
 @NgModule({
   imports: [
@@ -32,7 +31,7 @@ import {SettingsModule} from './admin/settings/settings.module';
     SharedModule,
     RouterModule,
     AuthModule,
-    DefaultModule
+    BankAccountModule
   ],
   declarations: [
     FooterComponent,

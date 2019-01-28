@@ -1,0 +1,15 @@
+<div class="modal-body">
+  <form [formGroup]="defaultForm" (ngSubmit)="onSubmit()">
+    <lib-unisys-angular-input-wrapper translation="TAGS" [group]="defaultForm">
+      <ng-select [items]="tagList" [multiple]="true" [hideSelected]="true" bindLabel="name" [typeahead]="tagTypehead" formControlName="tag" [addTag]="true"></ng-select>
+    </lib-unisys-angular-input-wrapper>
+    <div class="form-footer">
+      <button type="button" class="btn btn-sm btn-default" (click)="bsModalRef.hide()" translate>CLOSE</button>
+      <div class="pull-right">
+        <div class="btn-group">
+          <button type="submit" class="btn btn-primary" translate>ADD_TAG</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

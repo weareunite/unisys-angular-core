@@ -73,3 +73,14 @@ export interface Country {
   calling_code: string,
   flag: string
 }
+
+export interface BankAccount {
+  id: number,
+  type: string,
+  name: string,
+  short_name: string,
+  iban: string,
+  swift: string,
+  bank: string,
+  selected?: boolean | undefined,
+}

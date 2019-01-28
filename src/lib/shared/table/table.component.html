@@ -1,0 +1,159 @@
+<div class="row">
+  <div class="col-xs-12">
+  <div class="box">
+    <div class="box-header" style="height: 35px;">
+      <div class="box-tools">
+        <!--<div class="input-group input-group-sm" style="width: 150px;">-->
+          <!--<input type="text" name="table_search" class="form-control pull-right" placeholder="Search">-->
+          <!--<div class="input-group-btn">-->
+            <!--<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>-->
+          <!--</div>-->
+        <!--</div>-->
+        <div class="btn-group btn-group-sm pull-right">
+          <!--<button type="submit" class="btn btn-sm btn-default"><i class="fa fa-print"></i></button>-->
+          <button *ngIf="settings.allowExport" type="submit" class="btn btn-sm btn-default" (click)="onExport()"><i class="fa fa-share-square-o"></i></button>
+          <div appDropdown [autoclose]=false style="position: relative;float: left; margin-left: 3px;">
+            <a class="btn btn-sm btn-default" data-toggle="dropdown">
+              <i class="fa fa-cog"></i>
+            </a>
+            <ul class="dropdown-menu row-select" style="left: inherit; right: 0px">
+                <h5 translate>COLUMNS</h5>
+                <li *ngFor="let item of columns" style="list-style: none; margin: 5px;">
+                  <span *ngIf="item.type != 'action'">
+                    <input type="checkbox" [checked]="isColumnVisible(item.key)" (change)="toggleVisibleColumn(item.key)" style="margin-right: 3px;"/> <span translate>{{ item.translation}}</span>
+                  </span>
+                </li>
+                <div>
+                  <h5 translate>ROWS</h5>
+                  <select (change)="setPageSize(settings.rowsOnPage)" [(ngModel)]="settings.rowsOnPage">
+                    <option *ngFor="let item of settings.rowsOnPageOptions" [ngValue]="item">{{item}}</option>
+                  </select>
+                </div>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body no-padding table-responsive">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th width="40px">
+              <div *ngIf="checkSelectedCount(); else notSelected">
+                <div class="btn-group" appDropdown>
+                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="true" style="padding: 4px 7px;font-size: 12px;line-height: 1;">
+                    <i class="fa fa-bars"></i>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a (click)="onUnselectAll()"><i class="fa fa-minus"></i><span translate>CANCEL_SELECTION</span> ({{ checkSelectedCount()}})</a></li>
+                    <li *ngIf="tags" role="presentation" class="divider"></li>
+                    <li *ngIf="tags"><a *ngxPermissionsOnly="settings.permission+'.update'" (click)="onOpenTagModal()"><i class="fa fa-tags"></i><span translate>ADD_TAGS</span></a></li>
+                    <li role="presentation" class="divider"></li>
+                    <li><a *ngxPermissionsOnly="settings.permission+'.delete'" (click)="onOpenDeleteSelectedModal()"><i class="fa fa-trash-o"></i><span translate>DELETE</span></a></li>
+                  </ul>
+                </div>
+              </div>
+              <ng-template #notSelected>
+                <div class="btn-group" appDropdown>
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true" style="padding: 4px 7px;font-size: 12px;line-height: 1;">
+                    <i class="fa fa-bars"></i>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a (click)="onSelectAll()"><i class="fa fa-plus"></i><span translate>SELECT_ALL</span></a></li>
+                  </ul>
+                </div>
+              </ng-template>
+            </th>
+            <th *ngFor="let item of columns | filterColumns: settings.visibleColumns" translate (click)="setSorting(item)" [ngClass]="setClass(item)" style="min-width: 30px;" class="text-center">
+              <span *ngIf="item.type != 'attachment' ; else paperClip" translate>{{item.translation}}</span>
+              <ng-template #paperClip><i class="fa fa-paperclip"></i></ng-template>
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngIf="data?.length > 0 ; else noRows">
+        <tr *ngFor="let item of data ; let even = even; let odd = odd" [ngClass]="{ odd: odd, even: even, hightligt: item.selected, new: item.new, clicked: item.clicked}">
+        <!--<tr *ngFor="let item of data | orderBy : 'id'">-->
+          <td style="text-align: center;"><input type="checkbox" [checked]="item.selected" (click)="onCheckboxSelect(item)"/></td>
+          <td *ngFor="let column of columns | filterColumns: settings.visibleColumns" (click)="clickEvent(item,column)" (mouseover)="overEvent(item,column)" [ngClass]="{'hand detail': column.click || column.mouseover, 'text-right': column.type == 'number', 'text-center': column.type == 'attachment', 'text' : column.type == 'string' || column.type == 'list_prop'}">
+            <span *ngIf="column.type != 'action'; else actionType">
+              <span *ngIf="column.type == 'number' || column.type == 'date'">{{ getValue(item,column)}}</span>
+              <span *ngIf="column.type == 'string' || column.type == 'list_prop'" [tooltip]="getValue(item,column)" placement="top">{{ getValue(item,column)  | truncate : stringLimit : "…"}}</span>
+              <span *ngIf="column.type == 'boolean'">
+                <i class="fa" [ngClass]="getValue(item,column) ? 'fa-check-square-o' : 'fa-square-o'"></i>
+              </span>
+              <span *ngIf="column.type == 'attachment'">
+                <i class="fa fa-check" *ngIf="getValue(item,column)"></i>
+              </span>
+              <span *ngIf="column.type == 'progress'">
+                <lib-unisys-angular-progress-bar [percentage]="getValue(item,column)*100"></lib-unisys-angular-progress-bar>
+              </span>
+              <span *ngIf="column.type == 'tag'">
+                <small *ngFor="let tag of getValue(item,column)" class="label label-default" [ngStyle]="{'background-color': tag.custom_properties ? tag.custom_properties.color : 'gray'}"> {{ tag.name}} <i class="fa fa-times hand" *ngxPermissionsOnly="settings.permission+'.update'" (click)="onOpenDeleteTagModal(item,tag)"></i></small>
+              </span>
+              <span *ngIf="column.type == 'tag_view'">
+                <small *ngFor="let tag of getValue(item,column)" class="label label-default" [ngStyle]="{'background-color': tag.custom_properties ? tag.custom_properties.color : 'gray'}"> {{ tag.name}}</small>
+              </span>
+              <span *ngIf="column.type == 'color'">
+                <small class="label label-default" [ngStyle]="{'background-color': getValue(item,column)}"> {{ getValue(item,column)}}</small>
+              </span>
+              <span *ngIf="column.type == 'translation'">
+                <span translate>{{ getValue(item,column).toUpperCase()}}</span>
+              </span>
+            </span>
+            <ng-template #actionType>
+              <div style="display: flex; float: right;">
+                <div *ngFor="let option of column.options | filterVisibility: true">
+                  <a *ngxPermissionsOnly="option.permission" translate (click)="clickAction(item,option.action)" class="action">{{ option.translation}}</a>
+                </div>
+                <div appDropdown [autoclose]="true" style="position: relative; display: inline;width: 25px;">
+                  <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" style="padding: 4px 7px;font-size: 16px;line-height: 1;">
+                    <i class="fa fa-angle-down"></i>
+                  </a>
+                  <ul class="dropdown-menu" style="left: inherit; right: 0px">
+                    <li *ngFor="let option of column.options | filterVisibility: false">
+                      <a *ngxPermissionsOnly="option.permission" translate (click)="clickAction(item,option.action)" class="subaction">{{ option.translation}}</a>
+                    </li>
+                    <li><a *ngxPermissionsOnly="settings.permission+'.delete'" translate (click)="onOpenDeleteItemModal(item)" class="subaction">DELETE</a></li>
+                  </ul>
+                </div>
+              </div>
+            </ng-template>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer clearfix" *ngIf="service.pageList.length">
+      <div class="col-sm-5">
+        <div class="dataTables_info" translate [translateParams]="{from: service.meta?.from, to: service.meta?.to, total: service.meta?.total}">SHOWING_FROM_TO_OF</div>
+      </div>
+      <div class="col-sm-7">
+        <ul class="pagination pagination-sm no-margin pull-right" *ngIf="service.pageList.length > 1">
+          <li><a (click)="setPrevPage()">«</a></li>
+          <li *ngIf="showDotsAtBegin()"><a (click)="setPage(1)">1</a></li>
+          <li *ngIf="showDotsAtBegin()"><a>...</a></li>
+          <li *ngFor="let page of service.pageList" [ngClass]="{'active': page == service.page , 'disalowed': !showPageAsOption(page)}"><a (click)="setPage(page)">{{ page}}</a></li>
+          <li *ngIf="showDotsAtEnd()"><a>...</a></li>
+          <li *ngIf="showDotsAtEnd()"><a (click)="setPage(service.pageList[service.pageList.length-1])">{{ service.pageList[service.pageList.length-1]}}</a></li>
+          <li><a (click)="setNextPage()">»</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- /.box -->
+</div>
+</div>
+
+<ng-template #noRows>
+  <tbody>
+  <tr>
+    <td colspan="100" style="text-align: center" *ngIf="appStateService.state == ''; else loading" translate>NO_RECORDS</td>
+  </tr>
+  </tbody>
+</ng-template>
+
+<ng-template #loading>
+  <td colspan="100" style="text-align: center" translate>LOADING</td>
+</ng-template>
