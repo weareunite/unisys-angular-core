@@ -12,15 +12,6 @@ import {SettingsService} from "./services/settings.service";
   templateUrl: './app.component.html',
   styleUrls: [
     './app.component.scss',
-    '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css',
-    '../../../../node_modules/admin-lte/dist/css/AdminLTE.min.css',
-    '../../../../node_modules/admin-lte/dist/css/skins/_all-skins.css',
-    '../../../../node_modules/admin-lte/dist/css/skins/skin-purple-light.min.css',
-    '../../../../node_modules/font-awesome/css/font-awesome.css',
-    '../../../../node_modules/ionicons/dist/css/ionicons.min.css',
-    '../../../../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css',
-    '../../../../node_modules/ngx-toastr/toastr.css',
-    '../../../../node_modules/@ng-select/ng-select/themes/default.theme.css',
     './../styles.css'
   ]
 })

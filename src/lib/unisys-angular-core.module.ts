@@ -1,57 +1,44 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FooterComponent} from './footer/footer.component';
-import {HeaderComponent} from './header/header.component';
-import {AppRoutingModule} from './app-routing.module';
-import {NgxPermissionsModule} from 'ngx-permissions';
-import {UserProfileComponent} from './header/user-profile/user-profile.component';
-import {AppSettingsComponent} from './header/app-settings/app-settings.component';
-import {BsDatepickerModule, ModalModule, TabsModule, TooltipModule} from 'ngx-bootstrap';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ToastrModule} from 'ngx-toastr';
-import {AsideComponent} from './aside/aside.component';
+import {LOCALE_ID, NgModule} from '@angular/core';
+
+import {CoreModule} from './core.module';
 import {SharedModule} from './shared/shared.module';
-import {RouterModule} from '@angular/router';
-import {AuthModule} from './auth/auth.module';
-import {UnisysAngularCoreComponent} from './unisys-angular-core.component';
-import {BankAccountModule} from './admin/bank-account/bank-account.module';
-import {SettingsModule} from './admin/settings/settings.module';
 import {DefaultModule} from './default/default.module';
+import {AuthModule} from './auth/auth.module';
+import {AuthService} from './auth/auth.service';
+import {HttpService} from './services/http.service';
+import {UserService} from './services/user.service';
+import {NotificationService} from './services/notification.service';
+import {BankAccountModule} from './admin/bank-account/bank-account.module';
+import {BankAccountService} from './services/bank-account.service';
+import {TagService} from './services/tag.service'
+import {CountryService} from './services/country.service';
+import {SettingsModule} from './admin/settings/settings.module';
+import {SettingsService} from './services/settings.service';
+import {AppStateService} from './services/app-state.service';
+import {UnisysAngularCoreComponent} from './unisys-angular-core.component';
 
 @NgModule({
   imports: [
-    CommonModule,
-    AppRoutingModule,
-    NgxPermissionsModule.forRoot(),
-    ModalModule.forRoot(),
-    BsDatepickerModule.forRoot(),
-    BrowserAnimationsModule,
-    ToastrModule.forRoot(),
-    TabsModule.forRoot(),
-    TooltipModule.forRoot(),
-    AppRoutingModule,
+    CoreModule,
     SharedModule,
-    RouterModule,
     AuthModule,
-    BankAccountModule,
-    SettingsModule,
-    DefaultModule
+    // DefaultModule,
+    // BankAccountModule,
+    // SettingsModule
   ],
   declarations: [
-    FooterComponent,
-    HeaderComponent,
-    UserProfileComponent,
-    AppSettingsComponent,
-    AsideComponent,
     UnisysAngularCoreComponent
   ],
-  exports: [
-    // FooterComponent,
-    // HeaderComponent,
-    // AsideComponent,
-    // UserProfileComponent,
-    // AppSettingsComponent,
-    // RouterModule
+  providers: [
+    AuthService,
+    HttpService,
+    UserService,
+    AppStateService,
+    NotificationService,
+    BankAccountService,
+    TagService,
+    CountryService,
+    SettingsService
   ]
 })
 export class UnisysAngularCoreModule {
