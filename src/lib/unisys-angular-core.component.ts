@@ -20,6 +20,7 @@ import {SettingsService} from "./services/settings.service";
     '../../../../node_modules/ionicons/dist/css/ionicons.min.css',
     '../../../../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css',
     '../../../../node_modules/ngx-toastr/toastr.css',
+    '../../../../node_modules/@ng-select/ng-select/themes/default.theme.css',
     './../styles.css'
   ]
 })

@@ -17,14 +17,6 @@
       "es2018"
     ]
   },
-  "paths": {
-    "assets": [
-      "lib/assets"
-    ],
-    "assets/*": [
-      "lib/assets/*"
-    ]
-  },
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
     "skipTemplateCodegen": true,

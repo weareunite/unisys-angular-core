@@ -27,7 +27,7 @@ export class AppSettingsComponent implements OnInit {
     }
 
     public companyMenuList : MenuItem[] = [
-        // {routerLink:['admin','bank-account'], permission:'admin.bank-account',translation:'BANK_ACCOUNTS',icon:'fa fa-bank'},
+        {routerLink:['admin','bank-account'], permission:'admin.bank-account',translation:'BANK_ACCOUNTS',icon:'fa fa-bank'},
     ];
 
     public toolsMenuList : MenuItem[] = [];

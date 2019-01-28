@@ -28,9 +28,9 @@ export class BankAccountComponent implements OnInit {
         this.context = this;
         this.mainMenu = [
             {routerLink:['/admin','bank-account'], permission:'admin.bank-account',translation:'BANK_ACCOUNTS',icon:''},
-            {routerLink:['/admin','tags'], permission:'admin.tags',translation:'TAGS',icon:''},
-            {routerLink:['/admin','category'], permission:'admin.category',translation:'CATEGORIES',icon:''},
-            {routerLink:['/admin','user'], permission:'admin.users',translation:'USERS',icon:''},
+            // {routerLink:['/admin','tags'], permission:'admin.tags',translation:'TAGS',icon:''},
+            // {routerLink:['/admin','category'], permission:'admin.category',translation:'CATEGORIES',icon:''},
+            // {routerLink:['/admin','user'], permission:'admin.users',translation:'USERS',icon:''},
             {routerLink:['/admin','settings'], permission:'admin.settings',translation:'APP_SETTINGS',icon:''},
         ];
 

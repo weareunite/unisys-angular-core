@@ -15,6 +15,7 @@ import {RouterModule} from '@angular/router';
 import {AuthModule} from './auth/auth.module';
 import {UnisysAngularCoreComponent} from './unisys-angular-core.component';
 import {BankAccountModule} from './admin/bank-account/bank-account.module';
+import {SettingsModule} from './admin/settings/settings.module';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import {BankAccountModule} from './admin/bank-account/bank-account.module';
     SharedModule,
     RouterModule,
     AuthModule,
-    BankAccountModule
+    BankAccountModule,
+    SettingsModule
   ],
   declarations: [
     FooterComponent,
@@ -42,12 +44,12 @@ import {BankAccountModule} from './admin/bank-account/bank-account.module';
     UnisysAngularCoreComponent
   ],
   exports: [
-    FooterComponent,
-    HeaderComponent,
-    AsideComponent,
-    UserProfileComponent,
-    AppSettingsComponent,
-    RouterModule
+    // FooterComponent,
+    // HeaderComponent,
+    // AsideComponent,
+    // UserProfileComponent,
+    // AppSettingsComponent,
+    // RouterModule
   ]
 })
 export class UnisysAngularCoreModule {

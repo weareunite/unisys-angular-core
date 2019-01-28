@@ -22,4 +22,6 @@ import {NgxPermissionsModule} from 'ngx-permissions';
       AppComponent
   ]
 })
-export class SettingsModule { }
+export class SettingsModule {
+
+}
