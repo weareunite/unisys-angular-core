@@ -1,6 +1,6 @@
 {
   "name": "@weareunite/unisys-angular-core",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -17,14 +17,18 @@
   ],
   "dependencies": {
     "@angular/core": "^7.2.0",
+    "@angular/forms": "^7.2.2",
+    "@ng-select/ng-select": "^2.15.1",
+    "@ngx-translate/core": "^11.0.1",
+    "@ngx-translate/http-loader": ">=3.0.0",
+    "@weareunite/unisys-angular-form-group": "^0.2.12",
+    "@weareunite/unisys-angular-input-wrapper": "0.0.8",
+    "@weareunite/unisys-angular-tab-router": "^0.0.5",
+    "admin-lte": "^2.4.8",
     "ngx-bootstrap": "^3.1.4",
     "ngx-permissions": ">=5.0.0",
     "ngx-toastr": ">=8.0.0",
-    "rxjs": "^6.3.3",
-    "@ngx-translate/http-loader": ">=3.0.0",
-    "@ngx-translate/core": "^11.0.1",
-    "@weareunite/unisys-angular-tab-router": "^0.0.5",
-    "admin-lte": "^2.4.8"
+    "rxjs": "^6.3.3"
   },
   "peerDependencies": {
     "@angular/common": "^7.2.0",

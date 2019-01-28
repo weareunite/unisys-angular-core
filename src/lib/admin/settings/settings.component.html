@@ -1,0 +1,19 @@
+<section class="content" style="position: relative">
+  <lib-unisys-angular-tab-router [menuList]="mainMenu"></lib-unisys-angular-tab-router>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <div class="box-body" style="background-color: white">
+          <div class="row" style="display: flex">
+            <div class="col-sm-2" style="border-right: 1px solid #eceaea">
+              <lib-unisys-angular-tab-router [menuList]="subMenu" [vertical]="true"></lib-unisys-angular-tab-router>
+            </div>
+            <div class="col-sm-10">
+              <router-outlet></router-outlet>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -15,6 +15,7 @@ import {RouterModule} from '@angular/router';
 import {AuthModule} from './auth/auth.module';
 import {DefaultModule} from './default/default.module';
 import {UnisysAngularCoreComponent} from './unisys-angular-core.component';
+import {SettingsModule} from './admin/settings/settings.module';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import {UnisysAngularCoreComponent} from './unisys-angular-core.component';
     SharedModule,
     RouterModule,
     AuthModule,
-    DefaultModule
+    DefaultModule,
+    SettingsModule
   ],
   declarations: [
     FooterComponent,

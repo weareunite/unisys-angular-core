@@ -7,12 +7,16 @@
   "whitelistedNonPeerDependencies": [
     "@angular/common",
     "@angular/core",
+    "@angular/forms",
     "ngx-permissions",
     "ngx-toastr",
     "ngx-bootstrap",
     "rxjs",
     "@ngx-translate/http-loader",
+    "@ng-select/ng-select",
     "@weareunite/unisys-angular-tab-router",
+    "@weareunite/unisys-angular-form-group",
+    "@weareunite/unisys-angular-input-wrapper",
     "@ngx-translate/core",
     "admin-lte"
   ]

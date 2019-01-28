@@ -2,14 +2,15 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {AuthGuard} from './services/auth-guard.service';
 import {DefaultComponent} from './default/default.component';
+import {SettingsModule} from './admin/settings/settings.module';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: 'default', pathMatch: 'full'},
-  {path: 'default', component: DefaultComponent}
+  {path: 'default', component: DefaultComponent},
   // {path: 'admin/bank-account', loadChildren: './admin/bank-account/bank-account.module#BankAccountModule'},
   // {path: 'admin/category', loadChildren: './admin/category/category.module#CategoryModule'},
   // {path: 'admin/roles', loadChildren: './admin/role/role.module#RoleModule'},
-  // {path: 'admin/settings', loadChildren: './admin/settings/settings.module#SettingsModule'},
+  {path: 'admin/settings', component: SettingsModule},
   // {path: 'admin/tags', loadChildren: './admin/tags/tags.module#TagsModule'},
   // {path: 'admin/user', loadChildren: './admin/users/users.module#UsersModule'},
   // {path: 'contact', loadChildren: './contact/contact.module#ContactModule'},

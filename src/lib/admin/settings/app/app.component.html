@@ -1,0 +1,20 @@
+<form [formGroup]="defaultForm" (ngSubmit)="onSubmit()">
+  <div class="pull-right">
+    <div class="btn-group">
+      <button type="submit" class="btn btn-primary" [disabled]="!defaultForm.valid" translate>SUBMIT</button>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="row">
+    <div class="col-sm-6">
+      <lib-unisys-angular-form-group translation="SMTP_USERNAME" fieldName="smtp_username" [group]="defaultForm"></lib-unisys-angular-form-group>
+      <lib-unisys-angular-form-group translation="SMTP_PASSWORD" fieldName="smtp_password" [group]="defaultForm"></lib-unisys-angular-form-group>
+    </div>
+    <div class="col-sm-6">
+      <blockquote>
+        <p translate>SYSTEM_EMAIL</p>
+        <small translate>THIS_IS_USED_TO_SEND_ALL_SYSTEM_EMAILS</small>
+      </blockquote>
+    </div>
+  </div>
+</form>

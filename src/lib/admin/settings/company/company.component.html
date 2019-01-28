@@ -1,0 +1,28 @@
+<form [formGroup]="defaultForm" (ngSubmit)="onSubmit()">
+  <div class="pull-right">
+    <div class="btn-group">
+      <button type="submit" class="btn btn-primary" [disabled]="!defaultForm.valid && !defaultForm.touched" translate>SUBMIT</button>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <lib-unisys-angular-form-group translation="COMPANY" fieldName="company" [group]="defaultForm"></lib-unisys-angular-form-group>
+  <lib-unisys-angular-input-wrapper translation="COUNTRY" [group]="defaultForm">
+    <ng-select [items]="countryList" bindLabel="name" formControlName="country"></ng-select>
+  </lib-unisys-angular-input-wrapper>
+  <lib-unisys-angular-form-group translation="STREET" fieldName="street" [group]="defaultForm"></lib-unisys-angular-form-group>
+  <lib-unisys-angular-form-group translation="CITY" fieldName="city" [group]="defaultForm"></lib-unisys-angular-form-group>
+  <lib-unisys-angular-form-group translation="ZIP" fieldName="zip" [group]="defaultForm"></lib-unisys-angular-form-group>
+  <lib-unisys-angular-form-group translation="REG_NO" fieldName="reg_no" [group]="defaultForm"></lib-unisys-angular-form-group>
+  <lib-unisys-angular-form-group translation="TAX_NO" fieldName="tax_no" [group]="defaultForm"></lib-unisys-angular-form-group>
+  <lib-unisys-angular-form-group translation="VAT_NO" fieldName="vat_no" [group]="defaultForm"></lib-unisys-angular-form-group>
+  <lib-unisys-angular-form-group translation="WEB" fieldName="web" [group]="defaultForm"></lib-unisys-angular-form-group>
+  <lib-unisys-angular-form-group translation="EMAIL" fieldName="email" [group]="defaultForm"></lib-unisys-angular-form-group>
+  <lib-unisys-angular-form-group translation="TELEPHONE" fieldName="telephone" [group]="defaultForm"></lib-unisys-angular-form-group>
+  <lib-unisys-angular-form-group translation="DESCRIPTION" fieldName="description" [group]="defaultForm" type="textarea"></lib-unisys-angular-form-group>
+  <div class="clearfix" style="margin-top: 20px"></div>
+  <div class="pull-right">
+    <div class="btn-group">
+      <button type="submit" class="btn btn-primary" [disabled]="!defaultForm.valid && !defaultForm.touched" translate>SUBMIT</button>
+    </div>
+  </div>
+</form>
