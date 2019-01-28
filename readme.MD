@@ -37,4 +37,14 @@ export class AppModule {
 }
 ```
 
+* Add snippet below as scripts into your **angular.json** file
+
+```json
+{
+  "glob": "**/*",
+  "input": "./node_modules/@weareunite/unisys-angular-core/assets",
+  "output": "./assets/"
+}
+```              
+
 Now you can run your application by command **ng serve**
