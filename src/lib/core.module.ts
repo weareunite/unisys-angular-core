@@ -11,9 +11,6 @@ import {AppSettingsComponent} from './header/app-settings/app-settings.component
 import {BsDatepickerModule, ModalModule, TabsModule, TooltipModule} from 'ngx-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
-import {DefaultModule} from './default/default.module';
-import {BankAccountModule} from './admin/bank-account/bank-account.module';
-import {SettingsModule} from './admin/settings/settings.module';
 
 @NgModule({
   imports: [
@@ -26,23 +23,20 @@ import {SettingsModule} from './admin/settings/settings.module';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     TabsModule.forRoot(),
-    TooltipModule.forRoot(),
-    DefaultModule,
-    BankAccountModule,
-    SettingsModule
+    TooltipModule.forRoot()
   ],
   declarations: [
     AsideComponent,
     FooterComponent,
     HeaderComponent,
     UserProfileComponent,
-    AppSettingsComponent,
+    AppSettingsComponent
   ],
   exports: [
     AsideComponent,
     FooterComponent,
     HeaderComponent,
-    AppRoutingModule,
+    AppRoutingModule
   ]
 })
 export class CoreModule {

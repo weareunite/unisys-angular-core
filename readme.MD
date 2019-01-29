@@ -15,34 +15,25 @@ Install library by running command
 
 #### Integration
 * Before installing this Core Module, install Angular project first (command **ng new**)
-* Point to file **app.module.ts** in src/app folder
+* Point to file **main.ts** in src folder
 * Replace **AppModule** to **UnisysAngularCoreModule** in imports
-* Replace **AppComponent** to **UnisysAngularCoreComponent** in bootstrap
 
 Your app.module.ts file should looks like this
 
 ```typescript
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { AppComponent } from './app.component';
+import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+// import { AppModule } from './app/app.module';
 import { UnisysAngularCoreModule } from '@weareunite/unisys-angular-core';
-import { UnisysAngularCoreComponent } from '@weareunite/unisys-angular-core';
+import { environment } from './environments/environment';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-  ],
-  imports: [
-    UnisysAngularCoreModule,
-    BrowserModule
-  ],
-  providers: [],
-  bootstrap: [
-    UnisysAngularCoreComponent
-  ]
-})
+if (environment.production) {
+  enableProdMode();
+}
 
-export class AppModule { }
+platformBrowserDynamic().bootstrapModule(UnisysAngularCoreModule)
+  .catch(err => console.error(err));
 ```
 
 * Add snippet below as scripts into your **angular.json** file
