@@ -20,15 +20,16 @@ import {DefaultModule} from './default/default.module';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {InterceptorService} from './services/interceptor.service';
 
+
 @NgModule({
   imports: [
-    CoreModule,
-    SharedModule,
-    AuthModule,
     BankAccountModule,
     SettingsModule,
     UsersModule,
-    DefaultModule
+    DefaultModule,
+    CoreModule,
+    SharedModule,
+    AuthModule
   ],
   declarations: [
     UnisysAngularCoreComponent
@@ -43,10 +44,10 @@ import {InterceptorService} from './services/interceptor.service';
     TagService,
     CountryService,
     SettingsService,
-    {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}
   ],
   bootstrap: [
-    UnisysAngularCoreComponent,
+    UnisysAngularCoreComponent
   ]
 })
 export class UnisysAngularCoreModule {
