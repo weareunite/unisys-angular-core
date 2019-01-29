@@ -17,6 +17,8 @@ import {BankAccountModule} from './admin/bank-account/bank-account.module';
 import {SettingsModule} from './admin/settings/settings.module';
 import {UsersModule} from './admin/users/users.module';
 import {DefaultModule} from './default/default.module';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {InterceptorService} from './services/interceptor.service';
 
 @NgModule({
   imports: [
@@ -40,7 +42,8 @@ import {DefaultModule} from './default/default.module';
     BankAccountService,
     TagService,
     CountryService,
-    SettingsService
+    SettingsService,
+    {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true},
   ],
   bootstrap: [
     UnisysAngularCoreComponent,

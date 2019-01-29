@@ -18,6 +18,8 @@ import {ModalTagDeleteComponent} from './table/modal-tag-delete/modal-tag-delete
 import {NgxPermissionsModule} from 'ngx-permissions';
 import {BsDatepickerModule, BsLocaleService, TooltipModule} from 'ngx-bootstrap';
 import {TruncateModule} from 'ng2-truncate';
+import {defineLocale} from 'ngx-bootstrap/chronos';
+import {skLocale} from 'ngx-bootstrap/locale';
 
 // UniSys Modules
 import {UnisysAngularTabRouterModule} from '@weareunite/unisys-angular-tab-router';
@@ -88,13 +90,16 @@ export function HttpLoaderFactory(http: HttpClient) {
   entryComponents: [
     ModalDeleteComponent,
     ModalTagComponent,
-    ModalTagDeleteComponent
+    ModalTagDeleteComponent,
   ],
 })
 export class SharedModule {
   constructor(
     translate: TranslateService,
+    private localeService: BsLocaleService
   ) {
+    defineLocale('sk', skLocale)
+    this.localeService.use('sk');
 // userLang = translate.getBrowserLang(); for future translations
     translate.setDefaultLang('sk');
     translate.use('sk');
