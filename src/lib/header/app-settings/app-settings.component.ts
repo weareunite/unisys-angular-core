@@ -35,7 +35,7 @@ export class AppSettingsComponent implements OnInit {
     public appMenuList : MenuItem[] = [
         // {routerLink:['admin','tags'], permission:'admin.tags', translation:'TAGS',icon:'fa fa-tags'},
         // {routerLink:['admin','category'], permission:'admin.category', translation:'CATEGORIES',icon:'fa fa-folder-open'},
-        // {routerLink:['admin','user'], permission:'admin.users', translation:'USERS',icon:'fa fa-users'},
+        {routerLink:['admin','user'], permission:'admin.users', translation:'USERS',icon:'fa fa-users'},
         // {routerLink:['admin','roles'], permission:'admin.role', translation:'ROLES', icon: 'fa fa-lock'},
         {routerLink:['admin','settings','app'], permission:'admin.settings' ,translation:'APP_SETTINGS',icon:'fa fa-cog'},
     ];

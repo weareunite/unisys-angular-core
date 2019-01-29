@@ -10,7 +10,7 @@ const appRoutes: Routes = [
   // {path: 'admin/roles', loadChildren: './admin/role/role.module#RoleModule'},
   {path: 'admin/settings', loadChildren: './admin/settings/settings.module#SettingsModule'},
   // {path: 'admin/tags', loadChildren: './admin/tags/tags.module#TagsModule'},
-  // {path: 'admin/user', loadChildren: './admin/users/users.module#UsersModule'},
+  {path: 'admin/user', loadChildren: './admin/users/users.module#UsersModule'},
   // {path: 'contact', loadChildren: './contact/contact.module#ContactModule'},
   // {path: 'draw', loadChildren: './draw/draw.module#DrawModule'},
   // {path: 'expense', loadChildren: './expense/expense.module#ExpenseModule'},

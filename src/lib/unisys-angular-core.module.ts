@@ -13,12 +13,20 @@ import {CountryService} from './services/country.service';
 import {SettingsService} from './services/settings.service';
 import {AppStateService} from './services/app-state.service';
 import {UnisysAngularCoreComponent} from './unisys-angular-core.component';
+import {BankAccountModule} from './admin/bank-account/bank-account.module';
+import {SettingsModule} from './admin/settings/settings.module';
+import {UsersModule} from './admin/users/users.module';
+import {DefaultModule} from './default/default.module';
 
 @NgModule({
   imports: [
     CoreModule,
     SharedModule,
-    AuthModule
+    AuthModule,
+    BankAccountModule,
+    SettingsModule,
+    UsersModule,
+    DefaultModule
   ],
   declarations: [
     UnisysAngularCoreComponent

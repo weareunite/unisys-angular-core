@@ -1,29 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import {BsModalRef, BsModalService} from 'ngx-bootstrap';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import {MenuItem} from '../../models';
-import {BankAccountService} from '../../services/bank-account.service';
-import {ModalEditComponent} from './modal-edit/modal-edit.component';
+import { ModalUpdateComponent } from './modal-update/modal-update.component';
+import { UserService } from '../../services/user.service';
 import {AppStateService} from '../../services/app-state.service';
 
 @Component({
-  selector: 'app-bank-account',
-  templateUrl: './bank-account.component.html',
-  styleUrls: ['./bank-account.component.css']
+  selector: 'app-users',
+  templateUrl: './users.component.html',
+  styleUrls: ['./users.component.css']
 })
-export class BankAccountComponent implements OnInit {
-    public  context;
-    public  item;
+export class UsersComponent implements OnInit {
+
+    public data;
+    public context;
+    public item;
     private bsModalRef: BsModalRef;
     public  mainMenu:MenuItem[];
     public  settings;
     public  actionList;
     public  selectedColumns;
 
-
     constructor(
-        private modalService: BsModalService,
-        public  bankAccountService : BankAccountService,
-        public  appStateService : AppStateService,
+        public modalService: BsModalService,
+        public userService : UserService,
+        public appStateService : AppStateService,
     ) {
         this.context = this;
         this.mainMenu = [
@@ -35,25 +36,24 @@ export class BankAccountComponent implements OnInit {
         ];
 
         this.actionList = [
-            {translation:'ADD_NEW_BANK_ACCOUNT', permission:'admin.bank-account.create',visibility:true,  action: function (){this.openModalCreate()}},
+            {translation:'ADD_NEW_USER', permission:'admin.users.create', visibility:true,  action: function (){this.openModalCreate()}},
         ];
 
         this. selectedColumns = [
             {translation:'ID',          key:'id',           sortable:true,  type:'number'},
-            {translation:'NAME',        key:'name',         sortable:true,  type:'string'},
-            {translation:'SHORT_NAME',  key:'short_name',   sortable:true,  type:'number'},
-            {translation:'BALANCE',     key:'balance',      sortable:true,  type:'number'},
-            {translation:'IBAN',        key:'iban',         sortable:true,  type:'string'},
+            {translation:'NANE',        key:'name',         sortable:true,  type:'string'},
+            {translation:'SURNAME',     key:'surname',      sortable:true,  type:'string'},
+            {translation:'USERNAME',    key:'username',     sortable:true,  type:'string'},
             {translation:'ACTION',      key:'action',       sortable:false, type:'action', options:[
-                {translation:'UPDATE_ITEM', permission:'admin.bank-account.update' , visibility:true, action: function (item){this.openModalEdit(item)}},
+                {translation:'UPDATE_ITEM', permission:'admin.users.update', visibility:true, action: function (item){this.openModalEdit(item)}},
             ]
             },
         ];
 
         this.settings = {
-            permission:'bank-account',
+            permission:'users',
             sortBy:'name',
-            visibleColumns: ['id','name','short_name','balance','action'],
+            visibleColumns: ['id','name','surname','username','action'],
             rowsOnPageOptions: [50,100,200],
             rowsOnPage: 50,
             activePage:1,
@@ -66,17 +66,17 @@ export class BankAccountComponent implements OnInit {
     public openModalCreate(){
         let initialState = {
             context : this.context,
-            service: this.bankAccountService,
+            service: this.userService,
         };
-        this.bsModalRef = this.modalService.show(ModalEditComponent,{initialState});
+        this.bsModalRef = this.modalService.show(ModalUpdateComponent,{initialState});
     }
 
     public openModalEdit(item){
         let initialState = {
             context : this.context,
             item: item,
-            service: this.bankAccountService,
+            service: this.userService,
         };
-        this.bsModalRef = this.modalService.show(ModalEditComponent,{initialState});
+        this.bsModalRef = this.modalService.show(ModalUpdateComponent,{initialState});
     }
 }
