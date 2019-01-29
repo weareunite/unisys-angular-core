@@ -55,7 +55,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    }),
+    })
   ],
   declarations: [
     DropdownDirective,
@@ -90,8 +90,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   entryComponents: [
     ModalDeleteComponent,
     ModalTagComponent,
-    ModalTagDeleteComponent,
-  ],
+    ModalTagDeleteComponent
+  ]
 })
 export class SharedModule {
   constructor(
