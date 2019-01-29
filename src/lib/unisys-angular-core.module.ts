@@ -35,7 +35,7 @@ import {UnisysAngularCoreComponent} from './unisys-angular-core.component';
     SettingsService
   ],
   bootstrap: [
-    UnisysAngularCoreComponent
+    UnisysAngularCoreComponent,
   ]
 })
 export class UnisysAngularCoreModule {

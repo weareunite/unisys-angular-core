@@ -45,6 +45,11 @@ platformBrowserDynamic().bootstrapModule(UnisysAngularCoreModule)
   "output": "./assets/"
 }
 ```              
+* In **angular.json** file change variable "index" under architect.options.index
+
+```json
+"index": "./node_modules/@weareunite/unisys-angular-core/index.html",
+```
 
 * In your **enviroment** file, set this variables
 
