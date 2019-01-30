@@ -1,7 +1,7 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import {AuthService} from './services/auth.service';
 import {Router} from '@angular/router';
-import {AppStateService} from './services/app-state.service';
+import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
 import {UserService} from './services/user.service';
 import {Subscription} from 'rxjs';
 import {SettingsService} from "./services/settings.service";
@@ -23,7 +23,7 @@ export class UnisysAngularCoreComponent {
   constructor(
     private user: UserService,
     private settingsService: SettingsService,
-    private appState: AppStateService,
+    private appState: UnisysAngularAppStateServiceService,
     private router: Router,
     public  auth: AuthService,
   ) {

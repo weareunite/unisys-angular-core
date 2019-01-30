@@ -19,6 +19,7 @@
     "@weareunite/unisys-angular-input-wrapper",
     "@weareunite/unisys-angular-view-button",
     "@weareunite/unisys-angular-progress-bar",
+    "@weareunite/unisys-angular-app-state-service",
     "@ngx-translate/core",
     "admin-lte",
     "ng2-truncate"

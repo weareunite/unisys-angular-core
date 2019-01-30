@@ -1,6 +1,6 @@
 {
   "name": "@weareunite/unisys-angular-core",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
     "@weareunite/unisys-angular-form-group": "^0.3.0",
     "@weareunite/unisys-angular-tab-router": "^0.1.0",
     "@weareunite/unisys-angular-view-button": "^0.2.0",
+    "@weareunite/unisys-angular-app-state-service": "^0.2.0",
     "admin-lte": "^2.4.8",
     "ngx-bootstrap": "^3.1.4",
     "ngx-permissions": ">=5.0.0",

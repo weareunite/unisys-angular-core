@@ -7,11 +7,10 @@ import {AuthService} from './auth/auth.service';
 import {HttpService} from './services/http.service';
 import {UserService} from './services/user.service';
 import {NotificationService} from './services/notification.service';
-import {BankAccountService} from './services/bank-account.service';
 import {TagService} from './services/tag.service'
 import {CountryService} from './services/country.service';
 import {SettingsService} from './services/settings.service';
-import {AppStateService} from './services/app-state.service';
+import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
 import {UnisysAngularCoreComponent} from './unisys-angular-core.component';
 import {SettingsModule} from './admin/settings/settings.module';
 import {UsersModule} from './admin/users/users.module';
@@ -39,9 +38,8 @@ import {RoleService} from './services/role.service';
     AuthService,
     HttpService,
     UserService,
-    AppStateService,
+    UnisysAngularAppStateServiceService,
     NotificationService,
-    BankAccountService,
     TagService,
     CountryService,
     SettingsService,

@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 
 import { HttpService } from './http.service';
 import {Tag} from '../models';
-import {AppStateService} from './app-state.service';
+import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +31,7 @@ export abstract class BaseService{
 
     constructor(
         protected http: HttpService,
-        protected appStateService: AppStateService,
+        protected appStateService: UnisysAngularAppStateServiceService,
     ){
     }
 

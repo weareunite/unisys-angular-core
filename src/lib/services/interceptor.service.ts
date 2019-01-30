@@ -3,7 +3,7 @@ import { Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
-import {AppStateService} from './app-state.service';
+import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
 import {ToastrService} from 'ngx-toastr';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -12,7 +12,7 @@ export class InterceptorService implements HttpInterceptor {
 
     constructor(
         protected toastrService: ToastrService,
-        protected appState : AppStateService,
+        protected appState : UnisysAngularAppStateServiceService,
         protected translate: TranslateService,
     ){}
 

@@ -5,7 +5,7 @@ import {ModalDeleteComponent} from './modal-delete/modal-delete.component';
 import {ModalTagComponent} from './modal-tag/modal-tag.component';
 import {Tag} from '../../models';
 import {ModalTagDeleteComponent} from './modal-tag-delete/modal-tag-delete.component';
-import {AppStateService} from '../../services/app-state.service';
+import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
 import {Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -30,7 +30,7 @@ export class TableComponent implements OnInit {
 
   constructor(
     private modalService: BsModalService,
-    public appStateService: AppStateService,
+    public appStateService: UnisysAngularAppStateServiceService,
     public translate: TranslateService,
     protected elem: ElementRef,
   ) {

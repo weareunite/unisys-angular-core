@@ -3,7 +3,7 @@ import {BsModalRef, BsModalService} from 'ngx-bootstrap';
 import {MenuItem} from '../../models';
 import {ModalUpdateComponent} from './modal-update/modal-update.component';
 import {RoleService} from '../../services/role.service';
-import {AppStateService} from '../../services/app-state.service';
+import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
 
 @Component({
   selector: 'app-role',
@@ -24,7 +24,7 @@ export class RoleComponent implements OnInit {
   constructor(
     private     modalService: BsModalService,
     public      roleService: RoleService,
-    protected   appStateService: AppStateService,
+    protected   appStateService: UnisysAngularAppStateServiceService,
   ) {
     this.context = this;
     this.mainMenu = [

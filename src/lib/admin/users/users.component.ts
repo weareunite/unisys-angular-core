@@ -3,7 +3,7 @@ import {BsModalRef, BsModalService} from 'ngx-bootstrap';
 import {MenuItem} from '../../models';
 import {ModalUpdateComponent} from './modal-update/modal-update.component';
 import {UserService} from '../../services/user.service';
-import {AppStateService} from '../../services/app-state.service';
+import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
 
 @Component({
   selector: 'app-users',
@@ -24,7 +24,7 @@ export class UsersComponent implements OnInit {
   constructor(
     public modalService: BsModalService,
     public userService: UserService,
-    public appStateService: AppStateService,
+    public appStateService: UnisysAngularAppStateServiceService,
   ) {
     this.context = this;
     this.mainMenu = [
