@@ -17,7 +17,5 @@ export class DefaultComponent implements OnInit {
   ngOnInit() {
   }
 
-  public mainMenu: MenuItem[] = [
-    {routerLink: ['/default'], translation: 'STATS', icon: ''},
-  ];
+  public mainMenu: MenuItem[] = [];
 }
