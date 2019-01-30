@@ -13,20 +13,21 @@ import {CountryService} from './services/country.service';
 import {SettingsService} from './services/settings.service';
 import {AppStateService} from './services/app-state.service';
 import {UnisysAngularCoreComponent} from './unisys-angular-core.component';
-import {BankAccountModule} from './admin/bank-account/bank-account.module';
 import {SettingsModule} from './admin/settings/settings.module';
 import {UsersModule} from './admin/users/users.module';
 import {DefaultModule} from './default/default.module';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {InterceptorService} from './services/interceptor.service';
+import {RoleModule} from './admin/role/role.module';
+import {RoleService} from './services/role.service';
 
 
 @NgModule({
   imports: [
-    BankAccountModule,
     SettingsModule,
     UsersModule,
     DefaultModule,
+    RoleModule,
     CoreModule,
     SharedModule,
     AuthModule
@@ -44,6 +45,7 @@ import {InterceptorService} from './services/interceptor.service';
     TagService,
     CountryService,
     SettingsService,
+    RoleService,
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}
   ],
   bootstrap: [

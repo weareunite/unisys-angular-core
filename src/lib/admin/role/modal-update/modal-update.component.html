@@ -1,0 +1,61 @@
+<div class="modal-header">
+  <h4 *ngIf="!item" class="modal-title pull-left" translate>CREATE_NEW</h4>
+  <h4 *ngIf="item" class="modal-title pull-left" translate [translateParams]="{id: item.id}">UPDATE_ITEM_WITH_ID</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="defaultForm" (ngSubmit)="onSubmit()">
+    <lib-unisys-angular-form-group translation="NAME" fieldName="name" [group]="defaultForm"></lib-unisys-angular-form-group>
+    <div class="row" *ngIf="item">
+      <div class="col-xs-12 col">
+        <tabset [justified]="true">
+          <tab [heading]="'FRONTEND_RIGHTS' | translate">
+            <hr>
+            <div class="btn-group">
+              <a class="btn btn-default btn-xs" (click)="selectUnselectAll('frontendPermissions', true)" translate>SELECT_ALL</a>
+              <a class="btn btn-default btn-xs" (click)="selectUnselectAll('frontendPermissions', false)" translate>UNSELECT_ALL</a>
+            </div>
+            <hr>
+            <div formGroupName="frontendPermissions">
+              <div *ngFor="let fRights of getControls('frontendPermissions')">
+                <input type="checkbox" [formControlName]="fRights" id="{{fRights}}" ng-checked="1"><label for="{{fRights}}">{{defaultForm.get('frontendPermissions.' + fRights)['name']}}</label>
+              </div>
+            </div>
+          </tab>
+          <tab [heading]="'BACKEND_RIGHTS' | translate">
+            <hr>
+            <div class="btn-group">
+              <a class="btn btn-default btn-xs" (click)="selectUnselectAll('apiPermissions', true)" translate>SELECT_ALL</a>
+              <a class="btn btn-default btn-xs" (click)="selectUnselectAll('apiPermissions', false)" translate>UNSELECT_ALL</a>
+            </div>
+            <hr>
+            <div formGroupName="apiPermissions">
+              <div *ngFor="let bRights of getControls('apiPermissions')">
+                <input type="checkbox" [formControlName]="bRights" id="{{bRights}}" ng-checked="1"><label for="{{bRights}}">{{defaultForm.get('apiPermissions.' + bRights)['name']}}</label>
+              </div>
+            </div>
+          </tab>
+        </tabset>
+      </div>
+    </div>
+    <div class="form-footer">
+      <button type="button" class="btn btn-sm btn-default" (click)="bsModalRef.hide()" translate>CLOSE</button>
+      <div class="pull-right">
+        <div class="btn-group">
+          <button type="submit" class="btn btn-sm btn-primary" [disabled]="!defaultForm.valid" translate>
+            SUBMIT_AND_CLOSE
+          </button>
+          <div class="btn btn-sm btn-primary" appDropdown>
+            <span class="caret"></span>
+            <ul class="dropdown-menu" role="menu" style="right: 0px;left: inherit">
+              <li><a *ngIf="item" (click)="update()" translate>SUBMIT_AND_STAY</a></li>
+              <li><a *ngIf="!item" (click)="create()" translate>SUBMIT_AND_STAY</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

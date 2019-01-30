@@ -84,3 +84,14 @@ export interface BankAccount {
   bank: string,
   selected?: boolean | undefined,
 }
+
+export interface Role {
+  id: number,
+  name: string,
+  guard_name: string,
+  created_at: null,
+  updated_at: null,
+  frontendPermissions: null,
+  apiPermissions: null,
+  selected?: boolean | undefined,
+}

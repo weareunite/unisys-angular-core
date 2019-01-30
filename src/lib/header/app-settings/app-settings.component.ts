@@ -27,7 +27,7 @@ export class AppSettingsComponent implements OnInit {
     }
 
     public companyMenuList : MenuItem[] = [
-        {routerLink:['admin','bank-account'], permission:'admin.bank-account',translation:'BANK_ACCOUNTS',icon:'fa fa-bank'},
+        // {routerLink:['admin','bank-account'], permission:'admin.bank-account',translation:'BANK_ACCOUNTS',icon:'fa fa-bank'},
     ];
 
     public toolsMenuList : MenuItem[] = [];
@@ -36,7 +36,7 @@ export class AppSettingsComponent implements OnInit {
         // {routerLink:['admin','tags'], permission:'admin.tags', translation:'TAGS',icon:'fa fa-tags'},
         // {routerLink:['admin','category'], permission:'admin.category', translation:'CATEGORIES',icon:'fa fa-folder-open'},
         {routerLink:['admin','user'], permission:'admin.users', translation:'USERS',icon:'fa fa-users'},
-        // {routerLink:['admin','roles'], permission:'admin.role', translation:'ROLES', icon: 'fa fa-lock'},
+        {routerLink:['admin','roles'], permission:'admin.role', translation:'ROLES', icon: 'fa fa-lock'},
         {routerLink:['admin','settings','app'], permission:'admin.settings' ,translation:'APP_SETTINGS',icon:'fa fa-cog'},
     ];
 }

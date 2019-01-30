@@ -2,29 +2,29 @@ import {Component, OnInit} from '@angular/core';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap';
 import {MenuItem} from '../../models';
 import {ModalUpdateComponent} from './modal-update/modal-update.component';
-import {UserService} from '../../services/user.service';
+import {RoleService} from '../../services/role.service';
 import {AppStateService} from '../../services/app-state.service';
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  selector: 'app-role',
+  templateUrl: './role.component.html',
+  styleUrls: ['./role.component.css']
 })
-export class UsersComponent implements OnInit {
+export class RoleComponent implements OnInit {
 
-  public data;
-  public context;
-  public item;
-  private bsModalRef: BsModalRef;
-  public mainMenu: MenuItem[];
-  public settings;
-  public actionList;
   public selectedColumns;
+  public item;
+  public context;
+  public settings;
+  public mainMenu: MenuItem[];
+  private bsModalRef: BsModalRef;
+  public actionList;
+  public service;
 
   constructor(
-    public modalService: BsModalService,
-    public userService: UserService,
-    public appStateService: AppStateService,
+    private     modalService: BsModalService,
+    public      roleService: RoleService,
+    protected   appStateService: AppStateService,
   ) {
     this.context = this;
     this.mainMenu = [
@@ -35,7 +35,7 @@ export class UsersComponent implements OnInit {
 
     this.actionList = [
       {
-        translation: 'ADD_NEW_USER', permission: 'admin.users.create', visibility: true, action: function () {
+        translation: 'ADD_NEW_ROLE', permission: 'admin.role.create', visibility: true, action: function () {
           this.openModalCreate()
         }
       },
@@ -43,24 +43,23 @@ export class UsersComponent implements OnInit {
 
     this.selectedColumns = [
       {translation: 'ID', key: 'id', sortable: true, type: 'number'},
-      {translation: 'NANE', key: 'name', sortable: true, type: 'string'},
-      {translation: 'SURNAME', key: 'surname', sortable: true, type: 'string'},
-      {translation: 'USERNAME', key: 'username', sortable: true, type: 'string'},
+      {translation: 'NAME', key: 'name', sortable: true, type: 'string'},
+      // {translation: 'GUARD_NAME', key: 'guard_name', sortable: false, type: 'string'},
       {
         translation: 'ACTION', key: 'action', sortable: false, type: 'action', options: [
           {
-            translation: 'UPDATE_ITEM', permission: 'admin.users.update', visibility: true, action: function (item) {
+            translation: 'UPDATE_ITEM', permission: 'admin.role.update', visibility: true, action: function (item) {
               this.openModalEdit(item)
             }
-          },
+          }
         ]
       },
     ];
 
     this.settings = {
-      permission: 'users',
-      sortBy: 'name',
-      visibleColumns: ['id', 'name', 'surname', 'username', 'action'],
+      permission: 'admin.role',
+      sortBy: 'id',
+      visibleColumns: ['id', 'name', 'guard_name', 'action'],
       rowsOnPageOptions: [50, 100, 200],
       rowsOnPage: 50,
       activePage: 1,
@@ -73,7 +72,7 @@ export class UsersComponent implements OnInit {
   public openModalCreate() {
     let initialState = {
       context: this.context,
-      service: this.userService,
+      service: this.roleService,
     };
     this.bsModalRef = this.modalService.show(ModalUpdateComponent, {initialState});
   }
@@ -82,8 +81,9 @@ export class UsersComponent implements OnInit {
     let initialState = {
       context: this.context,
       item: item,
-      service: this.userService,
+      service: this.roleService,
     };
     this.bsModalRef = this.modalService.show(ModalUpdateComponent, {initialState});
   }
+
 }
