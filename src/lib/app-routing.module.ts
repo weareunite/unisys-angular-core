@@ -7,7 +7,7 @@ const appRoutes: Routes = [
   {path: 'default', loadChildren: './default/default.module#DefaultModule'},
   {path: 'admin/roles', loadChildren: './admin/role/role.module#RoleModule'},
   {path: 'admin/settings', loadChildren: './admin/settings/settings.module#SettingsModule'},
-  {path: 'admin/user', loadChildren: './admin/users/users.module#UsersModule'},
+  {path: 'admin/user', loadChildren: './admin/users/users.module#UsersModule'}
 ];
 
 @NgModule({

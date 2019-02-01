@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {NgxPermissionsGuard} from 'ngx-permissions';
 
-import {AuthGuard} from '../../auth/auth-guard.service';
+import {AuthGuard} from '../../services/auth-guard.service';
 import {SettingsComponent} from './settings.component';
 import {CompanyComponent} from './company/company.component';
 import {SubscriptionComponent} from './subscription/subscription.component';

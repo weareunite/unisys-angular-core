@@ -1,201 +1,210 @@
-a{
-    cursor: pointer;
+a {
+  cursor: pointer;
 }
 
 .content {
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 }
 
-.clearfix{
-    clear: both;
+.clearfix {
+  clear: both;
 }
 
-.content-header>.breadcrumb{
-    position: relative !important;
-    top: 0 !important;
-    float: left !important;
-    left: 0;
+.content-header > .breadcrumb {
+  position: relative !important;
+  top: 0 !important;
+  float: left !important;
+  left: 0;
 }
 
-.content-header>.btn-group{
-    margin-top: -22px;
+.content-header > .btn-group {
+  margin-top: -22px;
 }
 
-.dropdown-menu{
-    box-shadow: 0 5px 10px 0 rgba(0,0,0,0.4) !important;
+.dropdown-menu {
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.4) !important;
 }
 
-input.ng-touched.ng-invalid, select.ng-touched.ng-invalid{
-    border: 1px solid crimson;
+input.ng-touched.ng-invalid, select.ng-touched.ng-invalid {
+  border: 1px solid crimson;
 }
 
-input.ng-dirty, select.ng-dirty{
-    border: 1px solid black;
+input.ng-dirty, select.ng-dirty {
+  border: 1px solid black;
 }
 
-input.form-control, select.form-control{
-    height: 28px;
-    font-size: 12px;
+input.form-control, select.form-control {
+  height: 28px;
+  font-size: 12px;
 }
 
-textarea.form-control{
-    min-height: 28px;
-    font-size: 12px;
+textarea.form-control {
+  min-height: 28px;
+  font-size: 12px;
 }
 
 [hidden] {
-    display: none !important;
+  display: none !important;
 }
 
-.ediTable.table>tbody>tr>td{
-    vertical-align: middle
+.ediTable.table > tbody > tr > td {
+  vertical-align: middle
 }
 
-.ediTable.table>tbody>tr>td>my-date-picker>.mydp{
-    margin-top: 6px;
+.ediTable.table > tbody > tr > td > my-date-picker > .mydp {
+  margin-top: 6px;
 }
 
-.mydp, .mydp .headertodaybtn, .mydp .selection, .mydp .selectiongroup, .mydp .selector{
-    border-radius: 0 !important;
+.mydp, .mydp .headertodaybtn, .mydp .selection, .mydp .selectiongroup, .mydp .selector {
+  border-radius: 0 !important;
 }
 
-.my-drop-zone { border: dotted 3px lightgray; }
-.nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
-.another-file-over-class { border: dotted 3px green; }
-
-.box-body.new{
-    border-top: 1px solid lightgray;
-    border-bottom: 1px solid lightgray;
-    background-color: whitesmoke;
-    -webkit-box-shadow: inset 0 0 7px 0 rgba(0,0,0,0.3);
-    -moz-box-shadow: inset 0 0 7px 0 rgba(0,0,0,0.3);
-    box-shadow: inset 0 0 7px 0 rgba(0,0,0,0.3);
+.my-drop-zone {
+  border: dotted 3px lightgray;
 }
 
-.box-body{
-    border-bottom: 1px solid lightgray;
+.nv-file-over {
+  border: dotted 3px red;
 }
 
-.box-body:not(:last-child){
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
+/* Default class applied to drop zones on over */
+.another-file-over-class {
+  border: dotted 3px green;
 }
 
-.box-body:nth-child(odd){
-    background-color: whitesmoke;
+.box-body.new {
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  background-color: whitesmoke;
+  -webkit-box-shadow: inset 0 0 7px 0 rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: inset 0 0 7px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 7px 0 rgba(0, 0, 0, 0.3);
 }
 
-.box-body:last-child{
-    border-bottom: none;
+.box-body {
+  border-bottom: 1px solid lightgray;
 }
 
-body.fullscreen app-header, body.fullscreen .main-sidebar{
-    display: none;
+.box-body:not(:last-child) {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
-body.fullscreen .content-wrapper, body.fullscreen .main-footer{
-    margin-left: 0;
+.box-body:nth-child(odd) {
+  background-color: whitesmoke;
+}
+
+.box-body:last-child {
+  border-bottom: none;
+}
+
+body.fullscreen app-header, body.fullscreen .main-sidebar {
+  display: none;
+}
+
+body.fullscreen .content-wrapper, body.fullscreen .main-footer {
+  margin-left: 0;
 }
 
 .main-footer {
-    margin-left: 0 !important;
+  margin-left: 0 !important;
 }
 
 @media (min-width: 768px) {
-    .sidebar-mini.sidebar-collapse .main-footer {
-        margin-left: 0 !important;
-    }
+  .sidebar-mini.sidebar-collapse .main-footer {
+    margin-left: 0 !important;
+  }
 }
 
-body.fixed .content-wrapper{
-    height: 100vh;
-    overflow-y: scroll;
+body.fixed .content-wrapper {
+  height: 100vh;
+  overflow-y: scroll;
 }
 
 body.fixed .content-wrapper2 {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 100%;
 }
 
 body.fixed .content-wrapper2 > router-outlet {
-    display: none;
+  display: none;
 }
 
-.main-header .logo{
-    height: 54px !important;
+.main-header .logo {
+  height: 54px !important;
 }
 
-body.fullscreen.skin-purple .wrapper{
-    background-color: #ecf0f5;;
+body.fullscreen.skin-purple .wrapper {
+  background-color: #ecf0f5;;
 }
 
-.table-hover>tbody>tr>td{
-    vertical-align: middle !important;
+.table-hover > tbody > tr > td {
+  vertical-align: middle !important;
 }
 
-.table-hover>tbody>tr.selected{
-    transition: background-color 0.3s ease;
-    background-color: #C1CFDE;
+.table-hover > tbody > tr.selected {
+  transition: background-color 0.3s ease;
+  background-color: #C1CFDE;
 }
 
-.table-hover>tbody>tr:hover{
-    transition: background-color 0.1s ease;
-    background-color: #DEE5E5;
+.table-hover > tbody > tr:hover {
+  transition: background-color 0.1s ease;
+  background-color: #DEE5E5;
 }
 
-.form-footer{
-    margin-top: 10px;
-    margin-left: -15px;
-    margin-right: -15px;
-    padding: 10px 15px 0px 15px;
-    border-top: 1px solid #f4f4f4;
+.form-footer {
+  margin-top: 10px;
+  margin-left: -15px;
+  margin-right: -15px;
+  padding: 10px 15px 0px 15px;
+  border-top: 1px solid #f4f4f4;
 }
 
-.ng-select > .ng-select-container,.ng-dropdown-panel.ng-select-bottom, .ng-dropdown-panel.ng-select-bottom .ng-dropdown-panel-items .ng-option:last-child,.ng-dropdown-panel.ng-select-top .ng-dropdown-panel-items .ng-option:first-child{
-    border-radius: 0px;
-    font-size: 12px;
+.ng-select > .ng-select-container, .ng-dropdown-panel.ng-select-bottom, .ng-dropdown-panel.ng-select-bottom .ng-dropdown-panel-items .ng-option:last-child, .ng-dropdown-panel.ng-select-top .ng-dropdown-panel-items .ng-option:first-child {
+  border-radius: 0px;
+  font-size: 12px;
 }
 
-.ng-select, .ng-select .ng-select-container, .ng-select.ng-select-opened.ng-select-bottom>.ng-select-container, .ng-select.ng-select-single .ng-select-container{
-    height: 28px;
-    min-height: 28px;
+.ng-select, .ng-select .ng-select-container, .ng-select.ng-select-opened.ng-select-bottom > .ng-select-container, .ng-select.ng-select-single .ng-select-container {
+  height: 28px;
+  min-height: 28px;
 }
 
-.form-group{
-    margin-bottom: 5px;
+.form-group {
+  margin-bottom: 5px;
 }
 
-.modal-header{
-    padding: 3px 15px;
+.modal-header {
+  padding: 3px 15px;
 }
 
-.modal-header > h4.modal-title{
-    font-size: 15px;
+.modal-header > h4.modal-title {
+  font-size: 15px;
 }
 
-.modal-body{
-    padding: 10px 15px;
+.modal-body {
+  padding: 10px 15px;
 }
 
-.modal-body > tabset > .nav>li>a{
-    padding: 5px 10px;
+.modal-body > tabset > .nav > li > a {
+  padding: 5px 10px;
 }
 
-.content{
-    margin-bottom: 0px;
-    padding-bottom: 0px;
+.content {
+  margin-bottom: 0px;
+  padding-bottom: 0px;
 }
 
-.fullscreen.sidebar-mini.sidebar-collapse .content-wrapper{
-    margin-left: 0 !important;
+.fullscreen.sidebar-mini.sidebar-collapse .content-wrapper {
+  margin-left: 0 !important;
 }
 
-.fullscreen footer.main-footer{
-    position: absolute;
-    left: 0px;
-    bottom: 0px;
-    width: 100%;
+.fullscreen footer.main-footer {
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
 }

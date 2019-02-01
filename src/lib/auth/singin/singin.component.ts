@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, Renderer2} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {UserService} from '../../services/user.service';
-import {AuthService} from '../auth.service';
+import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
 
 @Component({

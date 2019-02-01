@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit, Renderer2} from '@angular/core';
 import {UserService} from '../../services/user.service';
 import {NgForm} from '@angular/forms';
 import {Router} from '@angular/router';
-import {AuthService} from '../auth.service';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-quick-login',

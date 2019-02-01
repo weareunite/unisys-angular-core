@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {AsideComponent} from './aside/aside.component';
 import {FooterComponent} from './footer/footer.component';
 import {HeaderComponent} from './header/header.component';
-import {SharedModule} from './shared/shared.module';
+import {UnisysAngularSharedModule} from './shared/unisys-angular-shared.module';
 import {AppRoutingModule} from './app-routing.module';
 import {NgxPermissionsModule} from 'ngx-permissions';
 import {UserProfileComponent} from './header/user-profile/user-profile.component';
@@ -15,7 +15,7 @@ import {ToastrModule} from 'ngx-toastr';
 @NgModule({
   imports: [
     CommonModule,
-    SharedModule,
+    UnisysAngularSharedModule,
     AppRoutingModule,
     NgxPermissionsModule.forRoot(),
     ModalModule.forRoot(),

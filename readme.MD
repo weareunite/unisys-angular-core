@@ -25,14 +25,19 @@ Your app.module.ts file should looks like this
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+
+// Imported UniSys Core Module and Component
 import { UnisysAngularCoreModule } from '@weareunite/unisys-angular-core';
 import { UnisysAngularCoreComponent } from '@weareunite/unisys-angular-core';
+
+// Import default environment from app and provided it for root
+import {environment} from '../environments/environment';
 
 @NgModule({
   declarations: [],
   imports: [
     BrowserModule,
-    UnisysAngularCoreModule
+    UnisysAngularCoreModule.forRoot(environment)
   ],
   providers: [],
   bootstrap: [UnisysAngularCoreComponent]
@@ -41,6 +46,7 @@ export class AppModule { }
 
 ```
 
+* It's necessary to import module **UnisysAngularSharedModule** into your Core or Shared module to make shared components from UniSys Angular Core working
 * Add snippet below as scripts into your **angular.json** file
 
 ```json

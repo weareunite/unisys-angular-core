@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {MenuItem} from '../models';
+import { Component, OnInit } from '@angular/core';
+import { MenuItem } from '../models';
 
 @Component({
   selector: 'app-aside',

@@ -93,7 +93,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ModalTagDeleteComponent
   ]
 })
-export class SharedModule {
+export class UnisysAngularSharedModule {
   constructor(
     translate: TranslateService,
     private localeService: BsLocaleService

@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {SharedModule} from '../../shared/shared.module';
+import {UnisysAngularSharedModule} from '../../shared/unisys-angular-shared.module';
 import {ModalUpdateComponent} from './modal-update/modal-update.component';
 import {RoleComponent} from './role.component';
 import {NgxPermissionsModule} from 'ngx-permissions';
@@ -10,7 +10,7 @@ import {TabsModule} from 'ngx-bootstrap';
 @NgModule({
   imports: [
     CommonModule,
-    SharedModule,
+    UnisysAngularSharedModule,
     AdminRoleRoutingModule,
     TabsModule,
     NgxPermissionsModule.forChild(),

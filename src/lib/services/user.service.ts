@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import {HttpService} from './http.service';
 import {NgxPermissionsService, NgxRolesService} from 'ngx-permissions';
 import {AuthService} from './auth.service';
@@ -6,7 +6,6 @@ import {User} from '../models';
 import {Router} from '@angular/router';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {NotificationService} from './notification.service';
-import {environment} from '../enviroments/enviroment';
 import {Subject} from 'rxjs/index';
 import {BaseService} from './base.service';
 import {ToastrService} from 'ngx-toastr';
@@ -32,6 +31,7 @@ export class UserService extends BaseService {
     protected toastrService: ToastrService,
     protected appStateService: UnisysAngularAppStateServiceService,
     private   permissionsService: NgxPermissionsService,
+    @Inject('env') private environment,
   ) {
     super(http, appStateService);
   }
@@ -57,7 +57,7 @@ export class UserService extends BaseService {
   }
 
   destroyProfile() {
-    this.setPermisonsByRole(null);
+    // this.setPermisonsByRole(null);
     this.setUser(null);
   }
 
@@ -97,7 +97,7 @@ export class UserService extends BaseService {
   filterPermissionsByRole(selected: any) {
     let permissions = [];
     selected.forEach(function (entry) {
-      permissions = permissions.concat(environment.roles[entry.name]);
+      // permissions = permissions.concat(this.environment.roles[entry.name]);
     });
     return permissions = Array.from(new Set(permissions));
   }
@@ -106,14 +106,14 @@ export class UserService extends BaseService {
 
     const postData = {
       grant_type: 'password',
-      client_id: environment.OAUTH_CLIENT_ID,
-      client_secret: environment.OAUTH_CLIENT_SECRET,
+      client_id: this.environment.OAUTH_CLIENT_ID,
+      client_secret: this.environment.OAUTH_CLIENT_SECRET,
       username: email,
       password: password,
       scope: ''
     };
 
-    return this.httpAngular.post(environment.OAUTH_TOKEN_URL, postData, {
+    return this.httpAngular.post(this.environment.OAUTH_TOKEN_URL, postData, {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
     })
       .subscribe(data => {
@@ -131,7 +131,7 @@ export class UserService extends BaseService {
       short_code: code,
     };
 
-    return this.httpAngular.post(environment.OAUTH_FAST_TOKEN_URL, postData, {
+    return this.httpAngular.post(this.environment.OAUTH_FAST_TOKEN_URL, postData, {
       headers: new HttpHeaders()
         .set('Content-Type', 'application/json')
         .append('Accept', 'application/json')
@@ -151,12 +151,12 @@ export class UserService extends BaseService {
   getOneTimeToken() {
     const postData = {
       grant_type: 'client_credentials',
-      client_id: environment.OAUTH_CLIENT_ID,
-      client_secret: environment.OAUTH_CLIENT_SECRET,
+      client_id: this.environment.OAUTH_CLIENT_ID,
+      client_secret: this.environment.OAUTH_CLIENT_SECRET,
       scope: ''
     };
 
-    return this.httpAngular.post(environment.OAUTH_TOKEN_URL, postData, {
+    return this.httpAngular.post(this.environment.OAUTH_TOKEN_URL, postData, {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
     })
       .subscribe(data => {
