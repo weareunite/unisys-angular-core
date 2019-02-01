@@ -99,7 +99,7 @@ export class SettingsService{
 
     setSettings(settings) {
         this.settings = settings;
-        this.settingsChanged.next(this.company);
+        this.settingsChanged.next(this.settings);
     }
 
     setCompany(item:Contact) {

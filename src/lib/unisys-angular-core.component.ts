@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import {AuthService} from './services/auth.service';
 import {Router} from '@angular/router';
 import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
@@ -16,7 +16,7 @@ import {SettingsService} from "./services/settings.service";
   ]
 })
 
-export class UnisysAngularCoreComponent {
+export class UnisysAngularCoreComponent implements OnInit{
   private stateSubscription: Subscription;
   public state;
 
@@ -26,6 +26,7 @@ export class UnisysAngularCoreComponent {
     private appState: UnisysAngularAppStateServiceService,
     private router: Router,
     public  auth: AuthService,
+    @Inject('menu') private asideMenu,
   ) {
     if (this.auth.isAuthenticated()) {
       this.user.loadProfile();

@@ -1,5 +1,4 @@
 import { LOCALE_ID, ModuleWithProviders, NgModule } from '@angular/core';
-
 import { CoreModule } from './core.module';
 import { UnisysAngularSharedModule } from './shared/unisys-angular-shared.module';
 import { AuthModule } from './auth/auth.module';
@@ -19,6 +18,8 @@ import { RoleModule } from './admin/role/role.module';
 import { RoleService } from './services/role.service';
 import { UnisysAngularCoreComponent } from './unisys-angular-core.component';
 import { DefaultModule } from './default/default.module';
+import { CoreService } from "./services/core.service";
+import { MenuItem } from "./models";
 
 
 @NgModule({
@@ -32,7 +33,7 @@ import { DefaultModule } from './default/default.module';
     DefaultModule
   ],
   declarations: [
-    UnisysAngularCoreComponent
+    UnisysAngularCoreComponent,
   ],
   providers: [
     AuthService,
@@ -44,20 +45,20 @@ import { DefaultModule } from './default/default.module';
     CountryService,
     SettingsService,
     RoleService,
+    CoreService,
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}
   ]
 })
 export class UnisysAngularCoreModule {
-  public static forRoot(environment: any): ModuleWithProviders {
+  public static forRoot(menu: MenuItem[],environment: any): ModuleWithProviders {
     return {
       ngModule: UnisysAngularCoreModule,
       providers: [
+        CoreService,
         HttpService,
         UserService,
-        {
-          provide: 'env',
-          useValue: environment
-        }
+        {provide: 'menu', useValue: menu },
+        {provide: 'env', useValue: environment }
       ]
     };
   }
