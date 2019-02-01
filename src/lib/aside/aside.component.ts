@@ -5,6 +5,7 @@ import { CoreService } from "../services/core.service";
 @Injectable({
   providedIn: 'root'
 })
+
 @Component({
   selector: 'app-aside',
   templateUrl: './aside.component.html',

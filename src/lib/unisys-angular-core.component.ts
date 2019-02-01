@@ -5,6 +5,7 @@ import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-ap
 import {UserService} from './services/user.service';
 import {Subscription} from 'rxjs';
 import {SettingsService} from "./services/settings.service";
+import { CoreService } from "./services/core.service";
 
 @Component({
   selector: 'app-root',
@@ -44,5 +45,4 @@ export class UnisysAngularCoreComponent implements OnInit{
         }
       );
   }
-
 }
