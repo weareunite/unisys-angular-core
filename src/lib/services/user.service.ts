@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import {HttpService} from './http.service';
-import {NgxPermissionsService, NgxRolesService} from 'ngx-permissions';
+import {NgxPermissionsService} from 'ngx-permissions';
 import {AuthService} from './auth.service';
 import {User} from '../models';
 import {Router} from '@angular/router';
@@ -10,7 +10,6 @@ import {Subject} from 'rxjs/index';
 import {BaseService} from './base.service';
 import {ToastrService} from 'ngx-toastr';
 import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
-import {FormControl} from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -50,14 +49,12 @@ export class UserService extends BaseService {
     this.http.get('user/profile')
       .subscribe(data => {
         this.setUser(data['data']);
-        // this.setPermisonsByRole(data['data']['roles']);
         this.setPermissionsByProfile(data['data']['frontendPermissions']);
-        // this.notificationService.getUserUnreadList();
       });
   }
 
   destroyProfile() {
-    // this.setPermisonsByRole(null);
+    this.destroyPermisions();
     this.setUser(null);
   }
 
@@ -83,24 +80,11 @@ export class UserService extends BaseService {
 
   }
 
-  setPermisonsByRole(roles?: any[]) {
-    if (!roles) {
-      localStorage.removeItem('permissions');
-      this.permissionsService.flushPermissions();
-    } else {
-      const filterPermissions = this.filterPermissionsByRole(roles);
-      localStorage.setItem('permissions', JSON.stringify(filterPermissions));
-      this.permissionsService.loadPermissions(filterPermissions);
-    }
+  destroyPermisions() {
+    localStorage.removeItem('permissions');
+    this.permissionsService.flushPermissions();
   }
 
-  filterPermissionsByRole(selected: any) {
-    let permissions = [];
-    selected.forEach(function (entry) {
-      // permissions = permissions.concat(this.environment.roles[entry.name]);
-    });
-    return permissions = Array.from(new Set(permissions));
-  }
 
   singinUser(email: string, password: string) {
 
