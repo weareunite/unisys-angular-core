@@ -19,6 +19,8 @@ import { RoleModule } from './admin/role/role.module';
 import { RoleService } from './services/role.service';
 import { UnisysAngularCoreComponent } from './unisys-angular-core.component';
 import { DefaultModule } from './default/default.module';
+import { CoreService } from './services/core.service';
+import { MenuItem } from './models';
 
 
 @NgModule({
@@ -44,20 +46,27 @@ import { DefaultModule } from './default/default.module';
     CountryService,
     SettingsService,
     RoleService,
+    CoreService,
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}
   ]
 })
+
 export class UnisysAngularCoreModule {
-  public static forRoot(environment: any): ModuleWithProviders {
+  public static forRoot(environment: any,menu: MenuItem[]): ModuleWithProviders {
     return {
       ngModule: UnisysAngularCoreModule,
       providers: [
         HttpService,
         UserService,
+        CoreService,
         {
           provide: 'env',
           useValue: environment
-        }
+        },
+        {
+          provide: 'menu',
+          useValue: menu
+        },
       ]
     };
   }

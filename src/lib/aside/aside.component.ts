@@ -1,18 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, Injectable, OnInit } from '@angular/core';
 import { MenuItem } from '../models';
+import { CoreService } from '../services/core.service';
+
+@Injectable({
+  providedIn: 'root'
+})
 
 @Component({
   selector: 'app-aside',
   templateUrl: './aside.component.html',
   styleUrls: ['./aside.component.css']
 })
-export class AsideComponent implements OnInit {
-  public mainMenuList: MenuItem[] = [];
 
-  constructor() {
-  }
+export class AsideComponent{
+  public itemList: MenuItem[] = this.coreService.itemList;
 
-  ngOnInit() {
-  }
-
+  constructor(
+    public coreService: CoreService,
+    @Inject('menu') private asideMenu,
+  ){}
 }
+
