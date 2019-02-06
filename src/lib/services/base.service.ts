@@ -135,9 +135,8 @@ export abstract class BaseService {
       };
     });
 
-    console.log(newItem);
-
     this.itemList.unshift(newItem);
+    this.setItemList(this.itemList);
 
   }
 

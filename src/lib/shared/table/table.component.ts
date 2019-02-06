@@ -160,8 +160,10 @@ export class TableComponent implements OnInit {
     let valueToReturn: any = '';
     let valueClass = item[column.key];
 
-    if (valueClass.hasOwnProperty('class')) {
-      valueToReturn = valueClass['class'];
+    if (typeof valueClass !== 'undefined') {
+      if (valueClass.hasOwnProperty('class')) {
+        valueToReturn = valueClass['class'];
+      }
     }
 
     return valueToReturn;
