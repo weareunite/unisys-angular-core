@@ -1,13 +1,13 @@
-import {Component, ElementRef, Input, OnInit} from '@angular/core';
-import {formatDate} from '@angular/common';
-import {BsModalRef, BsModalService} from 'ngx-bootstrap';
-import {ModalDeleteComponent} from './modal-delete/modal-delete.component';
-import {ModalTagComponent} from './modal-tag/modal-tag.component';
-import {Tag} from '../../models';
-import {ModalTagDeleteComponent} from './modal-tag-delete/modal-tag-delete.component';
-import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
-import {Subscription} from 'rxjs';
-import {TranslateService} from '@ngx-translate/core';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { formatDate } from '@angular/common';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { ModalDeleteComponent } from './modal-delete/modal-delete.component';
+import { ModalTagComponent } from './modal-tag/modal-tag.component';
+import { Tag } from '../../models';
+import { ModalTagDeleteComponent } from './modal-tag-delete/modal-tag-delete.component';
+import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
+import { Subscription } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-table',
@@ -83,10 +83,10 @@ export class TableComponent implements OnInit {
   public setClass(item) {
     let desc: boolean = false;
     let classString = '';
-    if (item.key == this.settings.sortBy.replace("-", "") || item.key == this.settings.sortBy) {
+    if (item.key == this.settings.sortBy.replace('-', '') || item.key == this.settings.sortBy) {
       classString = 'selected';
     }
-    if (!this.settings.sortBy.includes("-")) {
+    if (!this.settings.sortBy.includes('-')) {
       classString = classString + ' desc';
     }
     if (item.sortable) {
@@ -125,16 +125,16 @@ export class TableComponent implements OnInit {
 
   public isColumnVisible(key: string) {
     if (this.settings.visibleColumns.indexOf(key) > -1) {
-      return true
+      return true;
     }
-    return false
+    return false;
   }
 
   public drillColumnFromItem(item, key) {
     let valueToReturn;
 
     if (key.indexOf('.') > -1) {
-      let array = key.split(".");
+      let array = key.split('.');
       if (item[array[0]] && array[1] && array[2] && array[3]) {
         valueToReturn = item[array[0]][array[1]][array[2]][array[3]];
       } else if (item[array[0]] && array[1] && array[2]) {
@@ -146,6 +146,22 @@ export class TableComponent implements OnInit {
       }
     } else {
       valueToReturn = item[key];
+
+      if (valueToReturn.hasOwnProperty('value')) {
+        valueToReturn = valueToReturn.value;
+      }
+    }
+
+    return valueToReturn;
+  }
+
+  public getClass(item, column) {
+
+    let valueToReturn: any = '';
+    let valueClass = item[column.key];
+
+    if (valueClass.hasOwnProperty('class')) {
+      valueToReturn = valueClass['class'];
     }
 
     return valueToReturn;
@@ -155,16 +171,16 @@ export class TableComponent implements OnInit {
     let valueToReturn: any = '';
 
     switch (column.type) {
-      case "date": {
+      case 'date': {
         valueToReturn = this.transformDate(this.drillColumnFromItem(item, column.key), 'dd.MM.yyyy');
         break;
       }
-      case "progress": {
+      case 'progress': {
         valueToReturn = this.returnRatio(item, column.key);
         break;
       }
-      case "list_prop": {
-        let splitedPath = column.key.split("/");
+      case 'list_prop': {
+        let splitedPath = column.key.split('/');
         let valueList = [];
         this.drillColumnFromItem(item, splitedPath[0]).forEach(function (entry, index) {
           valueList.push(this.drillColumnFromItem(entry, splitedPath[1]));
@@ -176,6 +192,7 @@ export class TableComponent implements OnInit {
         valueToReturn = this.drillColumnFromItem(item, column.key);
       }
     }
+
     return valueToReturn;
   }
 
@@ -192,29 +209,29 @@ export class TableComponent implements OnInit {
   }
 
   returnRatio(item, column: string) {
-    let splitedPath = column.split("/");
+    let splitedPath = column.split('/');
     let leftPart = 0;
     let rightPart = 0;
 
     if (splitedPath[0].includes('-')) {
-      let leftPartString = splitedPath[0].split("-");
+      let leftPartString = splitedPath[0].split('-');
       leftPart = this.drillColumnFromItem(item, leftPartString[0]) - this.drillColumnFromItem(item, leftPartString[1]);
     }
     if (splitedPath[0].includes('+')) {
-      let leftPartString = splitedPath[0].split("+");
+      let leftPartString = splitedPath[0].split('+');
       leftPart = this.drillColumnFromItem(item, leftPartString[0]) + this.drillColumnFromItem(item, leftPartString[1]);
     } else {
-      leftPart = this.drillColumnFromItem(item, splitedPath[0])
+      leftPart = this.drillColumnFromItem(item, splitedPath[0]);
     }
 
     if (splitedPath[1].includes('-')) {
-      let rightPartString = splitedPath[1].split("-");
+      let rightPartString = splitedPath[1].split('-');
       rightPart = this.drillColumnFromItem(item, rightPartString[0]) - this.drillColumnFromItem(item, rightPartString[1]);
     } else if (splitedPath[1].includes('+')) {
-      let rightPartString = splitedPath[1].split("+");
+      let rightPartString = splitedPath[1].split('+');
       rightPart = this.drillColumnFromItem(item, rightPartString[0]) + this.drillColumnFromItem(item, rightPartString[1]);
     } else {
-      rightPart = this.drillColumnFromItem(item, splitedPath[1])
+      rightPart = this.drillColumnFromItem(item, splitedPath[1]);
     }
     return leftPart / rightPart;
   }
@@ -282,7 +299,7 @@ export class TableComponent implements OnInit {
     let initialState = {
       service: this.service,
     };
-    this.bsModalRef = this.modalService.show(ModalDeleteComponent, {initialState, class: "modal-sm"});
+    this.bsModalRef = this.modalService.show(ModalDeleteComponent, {initialState, class: 'modal-sm'});
   }
 
   onOpenDeleteItemModal(item) {
@@ -290,7 +307,7 @@ export class TableComponent implements OnInit {
       service: this.service,
       item: item,
     };
-    this.bsModalRef = this.modalService.show(ModalDeleteComponent, {initialState, class: "modal-sm"});
+    this.bsModalRef = this.modalService.show(ModalDeleteComponent, {initialState, class: 'modal-sm'});
   }
 
 //TAGS
@@ -299,7 +316,7 @@ export class TableComponent implements OnInit {
     let initialState = {
       service: this.service,
     };
-    this.bsModalRef = this.modalService.show(ModalTagComponent, {initialState, class: "modal-sm"});
+    this.bsModalRef = this.modalService.show(ModalTagComponent, {initialState, class: 'modal-sm'});
   }
 
   onOpenDeleteTagModal(item, tag: Tag) {
@@ -308,7 +325,7 @@ export class TableComponent implements OnInit {
       item: item,
       tag: tag,
     };
-    this.bsModalRef = this.modalService.show(ModalTagDeleteComponent, {initialState, class: "modal-sm"});
+    this.bsModalRef = this.modalService.show(ModalTagDeleteComponent, {initialState, class: 'modal-sm'});
   }
 
 //EXPORT
