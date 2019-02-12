@@ -13,7 +13,7 @@ import { SettingsService } from './services/settings.service';
 import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
 import { SettingsModule } from './admin/settings/settings.module';
 import { UsersModule } from './admin/users/users.module';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { InterceptorService } from './services/interceptor.service';
 import { RoleModule } from './admin/role/role.module';
 import { RoleService } from './services/role.service';
@@ -21,20 +21,12 @@ import { UnisysAngularCoreComponent } from './unisys-angular-core.component';
 import { DefaultModule } from './default/default.module';
 import { CoreService } from './services/core.service';
 import { MenuItem } from './models';
-import { APOLLO_OPTIONS, ApolloModule } from 'apollo-angular';
+import { Apollo, ApolloModule } from 'apollo-angular';
 import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
 import { environment } from '../../../../src/environments/environment';
 import { ApolloService } from './services/apollo.service';
-
-const uri = environment.GRAPHQL_API_URL;
-export function createApollo(httpLink: HttpLink) {
-  return {
-    link: httpLink.create({uri}),
-    cache: new InMemoryCache(),
-  };
-}
-
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloLink, concat } from 'apollo-link';
 
 @NgModule({
   imports: [
@@ -44,7 +36,10 @@ export function createApollo(httpLink: HttpLink) {
     CoreModule,
     UnisysAngularSharedModule,
     AuthModule,
-    DefaultModule
+    DefaultModule,
+    HttpClientModule,
+    ApolloModule,
+    HttpLinkModule
   ],
   declarations: [
     UnisysAngularCoreComponent
@@ -62,11 +57,6 @@ export function createApollo(httpLink: HttpLink) {
     CoreService,
     ApolloService,
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true},
-    {provide: APOLLO_OPTIONS, useFactory: createApollo, deps: [HttpLink]}
-  ],
-  exports: [
-      ApolloModule,
-      HttpLinkModule
   ],
 })
 
@@ -89,4 +79,33 @@ export class UnisysAngularCoreModule {
       ]
     };
   }
+
+  constructor(
+      protected apollo: Apollo,
+      protected httpLink: HttpLink,
+      protected auth: AuthService,
+  ) {
+
+    const link = httpLink.create({
+      uri: environment.GRAPHQL_API_URL
+    });
+
+    const authMiddleware = new ApolloLink((operation, forward) => {
+      operation.setContext({
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + this.auth.getAccessToken(),
+        })
+      });
+
+      return forward(operation);
+    });
+
+    apollo.create({
+      link: concat(authMiddleware, link),
+      cache: new InMemoryCache(),
+    });
+  }
+
 }
