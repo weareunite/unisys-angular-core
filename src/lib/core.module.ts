@@ -11,6 +11,8 @@ import {AppSettingsComponent} from './header/app-settings/app-settings.component
 import {BsDatepickerModule, ModalModule, TabsModule, TooltipModule} from 'ngx-bootstrap';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
+import { HttpLinkModule } from 'apollo-angular-link-http';
+import { ApolloModule } from 'apollo-angular';
 
 @NgModule({
   imports: [
@@ -23,7 +25,9 @@ import {ToastrModule} from 'ngx-toastr';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     TabsModule.forRoot(),
-    TooltipModule.forRoot()
+    TooltipModule.forRoot(),
+    ApolloModule,
+    HttpLinkModule
   ],
   declarations: [
     AsideComponent,
@@ -36,7 +40,9 @@ import {ToastrModule} from 'ngx-toastr';
     AsideComponent,
     FooterComponent,
     HeaderComponent,
-    AppRoutingModule
+    AppRoutingModule,
+    ApolloModule,
+    HttpLinkModule,
   ]
 })
 export class CoreModule {

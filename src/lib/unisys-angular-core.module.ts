@@ -21,12 +21,7 @@ import { UnisysAngularCoreComponent } from './unisys-angular-core.component';
 import { DefaultModule } from './default/default.module';
 import { CoreService } from './services/core.service';
 import { MenuItem } from './models';
-import { Apollo, ApolloModule } from 'apollo-angular';
-import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
-import { environment } from '../../../../src/environments/environment';
 import { ApolloService } from './services/apollo.service';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloLink, concat } from 'apollo-link';
 
 @NgModule({
   imports: [
@@ -37,9 +32,7 @@ import { ApolloLink, concat } from 'apollo-link';
     UnisysAngularSharedModule,
     AuthModule,
     DefaultModule,
-    HttpClientModule,
-    ApolloModule,
-    HttpLinkModule
+    HttpClientModule
   ],
   declarations: [
     UnisysAngularCoreComponent
@@ -79,33 +72,4 @@ export class UnisysAngularCoreModule {
       ]
     };
   }
-
-  constructor(
-      protected apollo: Apollo,
-      protected httpLink: HttpLink,
-      protected auth: AuthService,
-  ) {
-
-    const link = httpLink.create({
-      uri: environment.GRAPHQL_API_URL
-    });
-
-    const authMiddleware = new ApolloLink((operation, forward) => {
-      operation.setContext({
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer ' + this.auth.getAccessToken(),
-        })
-      });
-
-      return forward(operation);
-    });
-
-    apollo.create({
-      link: concat(authMiddleware, link),
-      cache: new InMemoryCache(),
-    });
-  }
-
 }
