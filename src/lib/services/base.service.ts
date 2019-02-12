@@ -1,10 +1,9 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { HttpService } from './http.service';
 import { Tag } from '../models';
 import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
-import { forEach } from '@angular/router/src/utils/collection';
 
 @Injectable({
   providedIn: 'root'
