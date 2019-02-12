@@ -21,6 +21,19 @@ import { UnisysAngularCoreComponent } from './unisys-angular-core.component';
 import { DefaultModule } from './default/default.module';
 import { CoreService } from './services/core.service';
 import { MenuItem } from './models';
+import { APOLLO_OPTIONS, ApolloModule } from 'apollo-angular';
+import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { environment } from '../../../../src/environments/environment';
+import { ApolloService } from './services/apollo.service';
+
+const uri = environment.GRAPHQL_API_URL;
+export function createApollo(httpLink: HttpLink) {
+  return {
+    link: httpLink.create({uri}),
+    cache: new InMemoryCache(),
+  };
+}
 
 
 @NgModule({
@@ -47,12 +60,18 @@ import { MenuItem } from './models';
     SettingsService,
     RoleService,
     CoreService,
-    {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}
-  ]
+    ApolloService,
+    {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true},
+    {provide: APOLLO_OPTIONS, useFactory: createApollo, deps: [HttpLink]}
+  ],
+  exports: [
+      ApolloModule,
+      HttpLinkModule
+  ],
 })
 
 export class UnisysAngularCoreModule {
-  public static forRoot(environment: any,menu: MenuItem[]): ModuleWithProviders {
+  public static forRoot( environment: any, menu: MenuItem[]): ModuleWithProviders {
     return {
       ngModule: UnisysAngularCoreModule,
       providers: [
