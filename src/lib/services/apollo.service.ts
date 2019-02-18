@@ -82,11 +82,12 @@ export class ApolloService {
     } else {
       params = JSON.stringify(this.postData);
     }
-    params = params.replace(/"/g, '');
+
+    params = params.replace(/\"([^(\")"]+)\":/g, '$1:');
 
     const testString = operationName + '{' + this.operationType + '(' + params + '){' + this.selection + '}}';
     console.log(testString);
-    const query = gql`${testString}`;;
+    const query = gql`${testString}`;
     return this.apollo.watchQuery({query: query});
   }
 

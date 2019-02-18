@@ -13,25 +13,45 @@ export abstract class BaseApolloService extends BaseService{
     protected operationTypePlural: string;
     protected operationName: string;
 
-    protected default
-
 // (C)RUD
+
+    createItem(item: any) {
+        this.http.post(this.url, item).subscribe(data => {
+            this.setItem(data['data']);
+        });
+        this.apollo .setOperationName('mutation')
+                    .setOperationType('update'+this.capitalizeFirstLetter(this.operationType))
+                    .setPostData(item)
+                    .watchQuery().valueChanges.subscribe(result => {
+                        this.setItem(result.data);
+                        // this.setPaging();
+                    });
+    }
 
 
 // C(R)UD
 
-    getItemList() {
-        this.apollo.setOperationName(this.operationName)
-            .setOperationType(this.operationType)
-            .setParams(this.generateGraphQlParams())
-            .setSelection(this.selection)
-            .watchQuery();
-            // .valueChanges.subscribe(result => {
-            //     console.log(result);
-            //     // this.setItemList();
-            //     // this.setPaging();
-            // });
+    getItem(id: number) {
+        this.apollo .setOperationName(this.operationName)
+                    .setOperationType(this.operationType)
+                    .setParams({id: id})
+                    .setSelection(this.selection)
+                    .watchQuery().valueChanges.subscribe(result => {
+                        this.setItem(result.data);
+                        // this.setPaging();
+                    });
     }
+
+    getItemList() {
+        this.apollo .setOperationName(this.operationName)
+                    .setOperationType(this.operationTypePlural)
+                    .setParams(this.generateGraphQlParams())
+                    .setSelection(this.selection)
+                    .watchQuery().valueChanges.subscribe(result => {
+                        this.setItemList(result.data);
+                        // this.setPaging();
+                    });
+        }
 
 // CR(U)D
 
@@ -55,6 +75,10 @@ export abstract class BaseApolloService extends BaseService{
     }
 
 // HELPERS
+
+    protected capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
 
     protected generateGraphQlParams() {
         this.paramsObj = {};
