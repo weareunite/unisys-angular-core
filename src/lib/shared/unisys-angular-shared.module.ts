@@ -42,6 +42,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     UnisysAngularInputWrapperModule,
     UnisysAngularViewButtonModule,
     UnisysAngularProgressBarModule,
+    BsDatepickerModule,
     HttpClientModule,
     NgSelectModule,
     FormsModule,
@@ -85,6 +86,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FormsModule,
     ReactiveFormsModule,
     TableComponent,
+    BsDatepickerModule,
     TruncateModule
   ],
   entryComponents: [

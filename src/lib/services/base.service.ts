@@ -129,15 +129,26 @@ export abstract class BaseService {
 
     var newItem = [];
 
-    Object.keys(columns).forEach(function (columnKey) {
-      newItem[columns[columnKey]['key']] = {
-        value: 'xxx',
-        new: true
-      };
+    let alreadyExists = false;
+
+    Object.keys(this.itemList).forEach(function (itemKey) {
+      if (this.itemList[itemKey].hasOwnProperty('new')) {
+        alreadyExists = true;
+      }
     });
 
-    this.itemList.unshift(newItem);
-    this.setItemList(this.itemList);
+    if (!alreadyExists) {
+      Object.keys(columns).forEach(function (columnKey) {
+        newItem[columns[columnKey]['key']] = {
+          value: ''
+        };
+      });
+
+      newItem['new'] = 'yes';
+
+      this.itemList.unshift(newItem);
+      this.setItemList(this.itemList);
+    }
 
   }
 

@@ -22,6 +22,17 @@
     "@weareunite/unisys-angular-app-state-service",
     "@ngx-translate/core",
     "admin-lte",
-    "ng2-truncate"
+    "ng2-truncate",
+    "apollo-angular",
+    "apollo-angular-link-http",
+    "apollo-cache-inmemory",
+    "apollo-client",
+    "apollo-link",
+    "chart.js",
+    "core-js",
+    "express",
+    "express-graphql",
+    "graphql",
+    "graphql-tag"
   ]
 }

@@ -8,6 +8,7 @@ import { ModalTagDeleteComponent } from './modal-tag-delete/modal-tag-delete.com
 import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-table',
@@ -20,13 +21,17 @@ export class TableComponent implements OnInit {
   @Input('context') context;
   @Input('service') service;
   @Input('tags') tags: boolean = false;
+  @Input('formGroup') formGroup;
 
+  public bsConfig;
   private bsModalRef: BsModalRef;
   private subscription: Subscription;
   public data: any[];
   private selector: string;
   public stringLimit: number = 60;
   public plausiblePageRange: number = 3;
+
+  objectKeys = Object.keys;
 
   constructor(
     private modalService: BsModalService,
@@ -35,6 +40,11 @@ export class TableComponent implements OnInit {
     protected elem: ElementRef,
   ) {
     this.selector = elem.nativeElement.tagName.toLowerCase();
+    this.bsConfig = {
+      containerClass: 'theme-dark-blue',
+      rangeInputFormat: 'DD.MM.YYYY',
+      placement: 'top',
+    };
   }
 
   ngOnInit() {
@@ -160,7 +170,7 @@ export class TableComponent implements OnInit {
     let valueToReturn: any = '';
     let valueClass = item[column.key];
 
-    if (typeof valueClass !== 'undefined') {
+    if (typeof valueClass !== 'undefined' && valueClass !== null) {
       if (valueClass.hasOwnProperty('class')) {
         valueToReturn = valueClass['class'];
       }
@@ -413,6 +423,36 @@ export class TableComponent implements OnInit {
 
   setTableState(option, value) {
     this.appStateService.setViewStateValue(value, this.selector + '.' + option);
+  }
+
+  // Validate workaround
+
+  isValid(form, key) {
+
+    let valid = false;
+
+    if (form.controls[key]['errors'] === null) {
+      valid = true;
+    }
+
+    return valid;
+  }
+
+  isTouched(form, key) {
+
+    return form.controls[key]['touched'];
+  }
+
+  isValidError(form, key, errorKey) {
+
+    let valid = true;
+
+    if (form.controls[key]['errors'].hasOwnProperty(errorKey)) {
+      valid = false;
+    }
+
+    return valid;
+
   }
 
 }
