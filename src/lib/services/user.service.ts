@@ -10,6 +10,7 @@ import {Subject} from 'rxjs/index';
 import {BaseService} from './base.service';
 import {ToastrService} from 'ngx-toastr';
 import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
+import { ApolloService } from './apollo.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class UserService extends BaseService {
   constructor(
     protected auth: AuthService,
     protected http: HttpService,
+    protected apollo: ApolloService,
     protected httpAngular: HttpClient,
     protected router: Router,
     protected notificationService: NotificationService,
@@ -32,7 +34,7 @@ export class UserService extends BaseService {
     private   permissionsService: NgxPermissionsService,
     @Inject('env') private environment,
   ) {
-    super(http, appStateService);
+    super(http, appStateService, apollo);
   }
 
 

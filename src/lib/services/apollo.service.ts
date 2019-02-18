@@ -15,7 +15,9 @@ export class ApolloService {
   protected operationName: string;
   protected operationType: string;
   protected params: object;
+  protected postData: object;
   protected selection: string;
+
   constructor(
       public apollo: Apollo,
       public httpLink: HttpLink,
@@ -43,10 +45,6 @@ export class ApolloService {
     });
   }
 
-  get(test) {
-    console.log('apollo ide' + test);
-  }
-
   setOperationName(operationName?: string) {
     this.operationName = operationName;
     return this;
@@ -62,31 +60,33 @@ export class ApolloService {
     return this;
   }
 
+  setPostData(postData: object) {
+    this.postData = postData;
+    return this;
+  }
+
   setSelection(selection: string) {
     this.selection = selection;
     return this;
   }
 
-  fakeCall() {
-    // const testString = 'query{allActors2(orderBy: id_ASC){id,name,movies}}';
-    const originalString = 'query' + '{' + 'allActors2' + '(' + 'orderBy: id_ASC' + ')' + '{id,name,movies}' + '}';
+  watchQuery() {
+    let operationName = '';
+    if (!this.operationName) {
+      operationName = 'query';
+    }
 
-    // TODO TO REMOVE
-
-    var params = JSON.stringify(this.params);
-    params = params.substring(1, params.length - 1);
+    let params = '';
+    if (operationName.includes('query')) {
+      params = 'filter:' + JSON.stringify(this.params);
+    } else {
+      params = JSON.stringify(this.postData);
+    }
     params = params.replace(/"/g, '');
 
-    const testString = this.operationName + '{' + this.operationType + '(' + params + '){' + this.selection + '}}';
+    const testString = operationName + '{' + this.operationType + '(' + params + '){' + this.selection + '}}';
     console.log(testString);
-    console.log(originalString);
-    const FeedQuery = gql`${testString}`;
-    console.log(FeedQuery);
-    return this.apollo.watchQuery({query: FeedQuery});
-  }
-
-  call(query) {
-    console.log(query);
+    const query = gql`${testString}`;;
     return this.apollo.watchQuery({query: query});
   }
 
