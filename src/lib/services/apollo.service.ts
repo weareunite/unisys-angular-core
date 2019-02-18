@@ -19,9 +19,9 @@ export class ApolloService {
   protected selection: string;
 
   constructor(
-      public apollo: Apollo,
-      public httpLink: HttpLink,
-      public auth: AuthService,
+    public apollo: Apollo,
+    public httpLink: HttpLink,
+    public auth: AuthService,
   ) {
 
     const link = httpLink.create({
@@ -74,6 +74,8 @@ export class ApolloService {
     let operationName = '';
     if (!this.operationName) {
       operationName = 'query';
+    } else {
+      operationName = this.operationName;
     }
 
     let params = '';
@@ -82,13 +84,26 @@ export class ApolloService {
     } else {
       params = JSON.stringify(this.postData);
     }
-
     params = params.replace(/\"([^(\")"]+)\":/g, '$1:');
 
-    const testString = operationName + '{' + this.operationType + '(' + params + '){' + this.selection + '}}';
+    if (operationName !== 'query') {
+      params = params.replace('{', '');
+      params = params.replace('}', '');
+    }
+
+    var testString = operationName + '{' + this.operationType + '(' + params + ')';
+    if (this.selection) {
+      testString = testString + '{' + this.selection + '}';
+    }
+    testString = testString + '}';
     console.log(testString);
     const query = gql`${testString}`;
-    return this.apollo.watchQuery({query: query});
+
+    if (operationName === 'query') {
+      return this.apollo.watchQuery({query: query});
+    } else {
+      return this.apollo.mutate({mutation: query});
+    }
   }
 
 }

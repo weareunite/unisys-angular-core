@@ -1,26 +1,33 @@
 import { Inject, Injectable } from '@angular/core';
-import {HttpService} from './http.service';
-import {NgxPermissionsService} from 'ngx-permissions';
-import {AuthService} from './auth.service';
-import {User} from '../models';
-import {Router} from '@angular/router';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {NotificationService} from './notification.service';
-import {Subject} from 'rxjs/index';
-import {BaseService} from './base.service';
-import {ToastrService} from 'ngx-toastr';
-import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
+import { HttpService } from './http.service';
+import { NgxPermissionsService } from 'ngx-permissions';
+import { AuthService } from './auth.service';
+import { User } from '../models';
+import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { NotificationService } from './notification.service';
+import { Subject } from 'rxjs/index';
+import { BaseService } from './base.service';
+import { ToastrService } from 'ngx-toastr';
+import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
 import { ApolloService } from './apollo.service';
+import { BaseApolloService } from './baseApollo.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService extends BaseService {
+export class UserService extends BaseApolloService {
   public roleListChanged = new Subject();
   public userChanged = new Subject();
   private roleList;
   private User: User;
   protected url = 'user';
+
+  // Apollo
+  protected selection = 'data{id,name,surname,username, email}';
+  protected paramsObj = ['id', 'name', 'surname', 'username', 'email'];
+  protected operationType = 'user';
+  protected operationTypePlural = 'users';
 
   constructor(
     protected auth: AuthService,
@@ -174,7 +181,7 @@ export class UserService extends BaseService {
   updateUserFromList(item: User) {
     item.password == '' && delete item.password;
     item.password_confirmation == '' && delete item.password_confirmation;
-    item.roles_id = this.returnIdArray(item.roles);
+    // item.roles_id = this.returnIdArray(item.roles);
     this.updateItemFromList(item);
   }
 
