@@ -15,7 +15,7 @@ export abstract class BaseApolloService extends BaseService{
 
 // (C)RUD
 
-    createItem(item: any){
+    createItem(item: any) {
         this.apollo.setOperationName('mutation')
             .setOperationType('create' + this.capitalizeFirstLetter(this.operationType))
             .setPostData(item)
@@ -25,12 +25,12 @@ export abstract class BaseApolloService extends BaseService{
         });
     }
 
-    pushItemToList(item: any){
+    pushItemToList(item: any) {
         this.apollo.setOperationName('mutation')
             .setOperationType('create' + this.capitalizeFirstLetter(this.operationType))
             .setPostData(item)
             .watchQuery().subscribe(result => {
-            let newItem = result['data'];
+            const newItem = result['data'];
             newItem['new'] = true;
             this.setItem(newItem);
 
@@ -42,7 +42,7 @@ export abstract class BaseApolloService extends BaseService{
 
 // C(R)UD
 
-    getItem(id: number){
+    getItem(id: number) {
         this.apollo.setOperationName('query')
             .setOperationType(this.operationType)
             .setParams({id: id})
@@ -53,7 +53,7 @@ export abstract class BaseApolloService extends BaseService{
         });
     }
 
-    getItemFromServerToList(item: any){
+    getItemFromServerToList(item: any) {
         this.apollo.setOperationName('query')
             .setOperationType(this.operationType)
             .setParams({id: item.id})
@@ -61,9 +61,9 @@ export abstract class BaseApolloService extends BaseService{
             .watchQuery().valueChanges.subscribe(result => {
             this.setItem(result.data);
             let updatedItem = result['data'];
-            this.itemList.forEach(function(entry, index, object){
-                if (entry.id === updatedItem.id){
-                    Object.keys(updatedItem).forEach(function(key){
+            this.itemList.forEach(function(entry, index, object) {
+                if (entry.id === updatedItem.id) {
+                    Object.keys(updatedItem).forEach(function(key) {
                         object[index][key] = updatedItem[key];
                     });
                 }
@@ -72,7 +72,7 @@ export abstract class BaseApolloService extends BaseService{
         });
     }
 
-    getItemList(){
+    getItemList() {
         this.apollo.setOperationName('query')
             .setOperationType(this.operationTypePlural)
             .setParams(this.generateGraphQlParams())
@@ -92,9 +92,9 @@ export abstract class BaseApolloService extends BaseService{
 
         // mutation {updateUser(id:8,name:"Gay",surname:"Zilka",username:"vlado.zilka@gmail.com",email:"vlado.zilka@gmail.com")}
         let mutationName = '';
-        if (action){
+        if (action) {
             mutationName = action + this.firstLetterUp(this.operationType);
-        }else{
+        } else {
             mutationName = 'update' + this.firstLetterUp(this.operationType);
         }
 
@@ -105,7 +105,7 @@ export abstract class BaseApolloService extends BaseService{
             .watchQuery()
             .subscribe(data => {
                 this.itemList.forEach(function(entry, index, object){
-                    if (entry.id === item.id){
+                    if (entry.id === item.id) {
                         Object.keys(item).forEach(function(key){
                             object[index][key] = item[key];
                         });
@@ -124,11 +124,9 @@ export abstract class BaseApolloService extends BaseService{
             .setSelection('')
             .watchQuery()
             .subscribe(data => {
-                this.itemList.forEach(function(entry, index, object){
-                    if (entry.id === item.id){
-                        Object.keys(item).forEach(function(key){
-                            object[index][key] = item[key];
-                        });
+                this.itemList.forEach(function (entry, index, object) {
+                    if (entry.id === item.id) {
+                        object.splice(index, 1);
                     }
                 });
                 this.setItemList(this.itemList);
