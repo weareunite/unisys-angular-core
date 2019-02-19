@@ -8,7 +8,7 @@ import { ModalTagDeleteComponent } from './modal-tag-delete/modal-tag-delete.com
 import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-table',
@@ -45,6 +45,7 @@ export class TableComponent implements OnInit {
       rangeInputFormat: 'DD.MM.YYYY',
       placement: 'top',
     };
+    this.formGroup = new FormGroup({});
   }
 
   ngOnInit() {

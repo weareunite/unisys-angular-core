@@ -67,6 +67,7 @@ export class AppModule { }
 Variable | Description
 --- | --- 
 `BASE_API_URL` | URL to base API
+`GRAPHQL_API_URL` | URL to base GraphQL API
 `OAUTH_TOKEN_URL` | URL to obtain auth token
 `OAUTH_FAST_TOKEN_URL` | URL to obtain fast auth token
 `OAUTH_CLIENT_SECRET` | Client secret
