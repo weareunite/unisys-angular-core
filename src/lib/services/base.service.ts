@@ -135,7 +135,7 @@ export abstract class BaseService {
       if (this.itemList[itemKey].hasOwnProperty('new')) {
         alreadyExists = true;
       }
-    });
+    }, this);
 
     if (!alreadyExists) {
       Object.keys(columns).forEach(function (columnKey) {

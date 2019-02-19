@@ -23,7 +23,7 @@ export abstract class BaseApolloService extends BaseService {
     this.apolloInstnc = this.apollo.setOperationName('mutation')
       .setOperationType('create' + this.capitalizeFirstLetter(this.operationType))
       .setPostData(item)
-      .setSelection('id')
+      .setSelection(this.selection)
       .clearMetaData()
       .watchQuery();
 
@@ -33,20 +33,26 @@ export abstract class BaseApolloService extends BaseService {
     });
   }
 
-  pushItemToList(item: any) {
+  pushItemToList(item: any, isNewItem?: boolean) {
 
     item = this.removeIdFromItem(item);
 
+    let itemAction = 'create' + this.capitalizeFirstLetter(this.operationType);
+
     this.apolloInstnc = this.apollo.setOperationName('mutation')
-      .setOperationType('create' + this.capitalizeFirstLetter(this.operationType))
+      .setOperationType(itemAction)
       .setPostData(item)
-      .setSelection('id')
+      .setSelection(this.selection)
       .clearMetaData()
       .watchQuery();
 
     this.apolloInstnc.subscribe(result => {
-      const newItem = result['data'];
-      newItem['new'] = true;
+      const newItem = result['data'][itemAction];
+
+      if (isNewItem) {
+        newItem['new'] = true;
+      }
+
       this.setItem(newItem);
 
       this.itemList.unshift(newItem);
@@ -96,7 +102,7 @@ export abstract class BaseApolloService extends BaseService {
     this.apolloInstnc = this.apollo.setOperationName('query')
       .setOperationType(this.operationTypePlural)
       .setParams(this.generateGraphQlParams())
-      .setSelection(this.selection)
+      .setSelection(this.selection, 'data')
       .setMetaData()
       .watchQuery();
 

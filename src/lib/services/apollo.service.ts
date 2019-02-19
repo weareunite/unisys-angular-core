@@ -79,7 +79,10 @@ export class ApolloService {
     return this;
   }
 
-  setSelection(selection: string) {
+  setSelection(selection: string, wrapper?: string) {
+    if (wrapper) {
+      selection = wrapper + '{' + selection + '}';
+    }
     this.selection = selection;
     return this;
   }

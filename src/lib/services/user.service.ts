@@ -24,7 +24,7 @@ export class UserService extends BaseApolloService {
   protected url = 'user';
 
   // Apollo
-  protected selection = 'data{id,name,surname,username, email}';
+  protected selection = 'id,name,surname,username, email';
   protected paramsObj = ['id', 'name', 'surname', 'username', 'email'];
   protected operationType = 'user';
   protected operationTypePlural = 'users';
