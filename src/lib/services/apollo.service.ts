@@ -26,7 +26,7 @@ export class ApolloService {
   ) {
 
     const link = httpLink.create({
-      uri: environment.GRAPHQL_API_URL
+      uri: this.environment.GRAPHQL_API_URL
     });
 
     const authMiddleware = new ApolloLink((operation, forward) => {
