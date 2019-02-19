@@ -188,7 +188,7 @@ export class UserService extends BaseApolloService {
   pushUserToList(item: User) {
     item.password == '' && delete item.password;
     item.password_confirmation == '' && delete item.password_confirmation;
-    item.roles_id = this.returnIdArray(item.roles);
+    // item.roles_id = this.returnIdArray(item.roles);
     this.pushItemToList(item);
   }
 }

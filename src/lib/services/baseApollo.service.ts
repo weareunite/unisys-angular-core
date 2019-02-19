@@ -18,9 +18,13 @@ export abstract class BaseApolloService extends BaseService {
 
   createItem(item: any) {
 
+    item = this.removeIdFromItem(item);
+
     this.apolloInstnc = this.apollo.setOperationName('mutation')
       .setOperationType('create' + this.capitalizeFirstLetter(this.operationType))
       .setPostData(item)
+      .setSelection('id')
+      .clearMetaData()
       .watchQuery();
 
     this.apolloInstnc.subscribe(result => {
@@ -30,9 +34,14 @@ export abstract class BaseApolloService extends BaseService {
   }
 
   pushItemToList(item: any) {
+
+    item = this.removeIdFromItem(item);
+
     this.apolloInstnc = this.apollo.setOperationName('mutation')
       .setOperationType('create' + this.capitalizeFirstLetter(this.operationType))
       .setPostData(item)
+      .setSelection('id')
+      .clearMetaData()
       .watchQuery();
 
     this.apolloInstnc.subscribe(result => {
@@ -88,14 +97,13 @@ export abstract class BaseApolloService extends BaseService {
       .setOperationType(this.operationTypePlural)
       .setParams(this.generateGraphQlParams())
       .setSelection(this.selection)
+      .setMetaData()
       .watchQuery();
 
 
     this.apolloInstnc.valueChanges.subscribe(result => {
       this.setItemList(result.data[this.operationTypePlural].data);
-      // this.setPaging(data['meta']);
-      // this.setItemList();
-      // this.setPaging();
+      this.setPaging(this.apollo.getMetaData(result.data[this.operationTypePlural]));
     });
   }
 
@@ -238,6 +246,11 @@ export abstract class BaseApolloService extends BaseService {
 
   firstLetterUp(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  removeIdFromItem(item) {
+    delete item['id'];
+    return item;
   }
 }
 

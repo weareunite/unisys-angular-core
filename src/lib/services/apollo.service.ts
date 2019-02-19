@@ -6,7 +6,6 @@ import { ApolloLink, concat } from 'apollo-link';
 import { HttpHeaders } from '@angular/common/http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
-import { Observable } from 'apollo-client/util/Observable';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +16,7 @@ export class ApolloService {
   protected params: object;
   protected postData: object;
   protected selection: string;
+  protected metaData: string[];
 
   constructor(
     public apollo: Apollo,
@@ -46,6 +46,19 @@ export class ApolloService {
     });
   }
 
+  getMetaData(result) {
+    let metaArray = [];
+    let meta = this.metaData;
+
+    Object.keys(meta).forEach(function (index) {
+      metaArray[meta[index]] = result[meta[index]];
+    });
+
+    return metaArray;
+
+
+  }
+
   setOperationName(operationName?: string) {
     this.operationName = operationName;
     return this;
@@ -71,6 +84,20 @@ export class ApolloService {
     return this;
   }
 
+  setMetaData(metaData?: string[]) {
+    if (!metaData) {
+      this.metaData = ['total', 'per_page', 'current_page', 'to', 'from'];
+    } else {
+      this.metaData = metaData;
+    }
+    return this;
+  }
+
+  clearMetaData() {
+    this.metaData = [];
+    return this;
+  }
+
   watchQuery() {
     let operationName = '';
     if (!this.operationName) {
@@ -80,6 +107,7 @@ export class ApolloService {
     }
 
     let params = '';
+    let metaData = '';
     if (operationName.includes('query')) {
       params = 'filter:' + JSON.stringify(this.params);
     } else {
@@ -94,7 +122,13 @@ export class ApolloService {
 
     var testString = operationName + '{' + this.operationType + '(' + params + ')';
     if (this.selection) {
-      testString = testString + '{' + this.selection + '}';
+      testString = testString + '{' + this.selection;
+      if (this.metaData.length > 0) {
+        metaData = this.metaData.join(',');
+        testString = testString + ',' + metaData + '}';
+      } else {
+        testString = testString + '}';
+      }
     }
     testString = testString + '}';
     console.log(testString);
