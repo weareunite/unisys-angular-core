@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular-link-http';
 import { AuthService } from './auth.service';
-import { environment } from '../../../../../src/environments/environment';
 import { ApolloLink, concat } from 'apollo-link';
 import { HttpHeaders } from '@angular/common/http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -23,6 +22,7 @@ export class ApolloService {
     public apollo: Apollo,
     public httpLink: HttpLink,
     public auth: AuthService,
+    @Inject('env') private environment,
   ) {
 
     const link = httpLink.create({
