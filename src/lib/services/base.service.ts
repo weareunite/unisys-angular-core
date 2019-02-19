@@ -16,8 +16,8 @@ export abstract class BaseService {
   listChanged = new Subject<any[]>();
   uploadListChanged = new Subject<any[]>();
 
-  public item;
-  public itemList;
+  protected item;
+  protected itemList;
   protected uploadList;
   protected url: string;
   protected page: number = 1;
