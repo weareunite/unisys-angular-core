@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 *ngIf="!item" class="modal-title pull-left" translate>CREATE_NEW</h4>
+  <h4 *ngIf="!item"  class="modal-title pull-left" translate>CREATE_NEW</h4>
   <h4 *ngIf="item" class="modal-title pull-left" translate [translateParams]="{id: item.id}">UPDATE_ITEM_WITH_ID</h4>
   <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
     <span aria-hidden="true">&times;</span>
@@ -8,18 +8,27 @@
 <div class="modal-body">
   <form [formGroup]="defaultForm" (ngSubmit)="onSubmit()">
     <lib-unisys-angular-form-group translation="NAME" fieldName="name" [group]="defaultForm"></lib-unisys-angular-form-group>
+    <lib-unisys-angular-form-group translation="SURNAME" fieldName="surname" [group]="defaultForm"></lib-unisys-angular-form-group>
+    <lib-unisys-angular-form-group translation="USERNAME" fieldName="username" [group]="defaultForm"></lib-unisys-angular-form-group>
+    <lib-unisys-angular-form-group translation="EMAIL" fieldName="email" [group]="defaultForm"></lib-unisys-angular-form-group>
+    <div style='color:#ff7355' *ngIf="defaultForm.value.password != defaultForm.value.password_confirmation" translate>
+      PASSWORD_ARE_NOT_SAME
+    </div>
+    <lib-unisys-angular-form-group translation="PASSWORD" fieldName="password" [group]="defaultForm"></lib-unisys-angular-form-group>
+    <lib-unisys-angular-form-group translation="PASSWORD_AGAIN" fieldName="password_confirmation" [group]="defaultForm"></lib-unisys-angular-form-group>
+    <lib-unisys-angular-input-wrapper translation="ROLE" [group]="defaultForm" >
+      <ng-select [items]="roleList" bindLabel="name" [multiple]="true" [hideSelected]="true"  formControlName="roles"></ng-select>
+    </lib-unisys-angular-input-wrapper>
     <div class="form-footer">
       <button type="button" class="btn btn-sm btn-default" (click)="bsModalRef.hide()" translate>CLOSE</button>
       <div class="pull-right">
         <div class="btn-group">
-          <button type="submit" class="btn btn-sm btn-primary" [disabled]="!defaultForm.valid" translate>
-            SUBMIT_AND_CLOSE
-          </button>
+          <button type="submit" class="btn btn-sm btn-primary" [disabled]="!defaultForm.valid" translate>SUBMIT_AND_CLOSE</button>
           <div class="btn btn-sm btn-primary" appDropdown>
             <span class="caret"></span>
             <ul class="dropdown-menu" role="menu" style="right: 0px;left: inherit">
               <li><a *ngIf="item" (click)="update()" translate>SUBMIT_AND_STAY</a></li>
-              <li><a *ngIf="!item" (click)="create()" translate>SUBMIT_AND_STAY</a></li>
+              <li><a *ngIf="!item"  (click)="create()" translate>SUBMIT_AND_STAY</a></li>
             </ul>
           </div>
         </div>
