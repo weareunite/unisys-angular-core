@@ -73,4 +73,6 @@ Variable | Description
 `OAUTH_CLIENT_SECRET` | Client secret
 `OAUTH_CLIENT_ID` | Client ID
 
+* Copy all entries from **language files located in module/assets/i18n** to associated language files in **your application app/assets/i18n folder**. This will ensure, that all language files from module will be available in your application.
+
 Now you can run your application by command **ng serve**
