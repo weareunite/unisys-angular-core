@@ -111,31 +111,42 @@ export class ApolloService {
 
     let params = '';
     let metaData = '';
-    if (operationName.includes('query')) {
+    if (this.params && operationName.includes('query')) {
       params = 'filter:' + JSON.stringify(this.params);
     } else {
       params = JSON.stringify(this.postData);
     }
-    params = params.replace(/\"([^(\")"]+)\":/g, '$1:');
 
-    if (operationName !== 'query') {
+    if (params) {
+      params = params.replace(/\"([^(\")"]+)\":/g, '$1:')
+    } else {
+      params = '';
+    }
+
+    // if (operationName !== 'query') {
+    if (params.charAt(0) === '{') {
       params = params.replace('{', '');
       params = params.replace('}', '');
     }
 
-    var testString = operationName + '{' + this.operationType + '(' + params + ')';
+    if (params) {
+      var requestString = operationName + '{' + this.operationType + '(' + params + ')';
+    } else {
+      var requestString = operationName + '{' + this.operationType;
+    }
+
     if (this.selection) {
-      testString = testString + '{' + this.selection;
-      if (this.metaData.length > 0) {
+      requestString = requestString + '{' + this.selection;
+      if (this.metaData && this.metaData.length > 0) {
         metaData = this.metaData.join(',');
-        testString = testString + ',' + metaData + '}';
+        requestString = requestString + ',' + metaData + '}';
       } else {
-        testString = testString + '}';
+        requestString = requestString + '}';
       }
     }
-    testString = testString + '}';
-    console.log(testString);
-    const query = gql`${testString}`;
+    requestString = requestString + '}';
+    console.log(requestString);
+    const query = gql`${requestString}`;
 
     if (operationName === 'query') {
       return this.apollo.watchQuery({query: query});
