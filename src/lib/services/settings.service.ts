@@ -41,27 +41,32 @@ export class SettingsService {
         //     this.setSettings(dataToSet);
         // });
 
+        const operationType = 'settings';
+
         this.apolloInstnc = this.apollo.setOperationName('query')
-            .setOperationType('settings')
-            .setSelection(this.selectionSettings,'data')
+            .setOperationType(operationType)
+            .setSelection(this.selectionSettings, 'data')
             .watchQuery();
 
         this.apolloInstnc.valueChanges.subscribe(result => {
-            console.log(result);
-            this.setSettings(result['data']);
+            const data = result['data'][operationType];
+            this.setSettings(data);
         });
 
     }
 
     getCompany() {
+
+        const operationType = 'companyProfile';
+
         this.apolloInstnc = this.apollo.setOperationName('query')
-            .setOperationType('companyProfile')
+            .setOperationType(operationType)
             .setSelection(this.selectionCompany)
             .watchQuery();
 
         this.apolloInstnc.valueChanges.subscribe(result => {
-            console.log(result);
-            this.setCompany(result['data']);
+            const data = result['data'][operationType];
+            this.setCompany(data);
         });
     }
 

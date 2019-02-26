@@ -61,15 +61,19 @@ export class UserService extends BaseApolloService {
     //     this.setPermissionsByProfile(data['data']['frontendPermissions']);
     //   });
 
+    const operationType = 'profile';
+
     this.apolloInstnc = this.apollo.setOperationName('query')
-        .setOperationType('profile')
+        .setOperationType(operationType)
         .setSelection(this.selection)
         .watchQuery();
 
     this.apolloInstnc.valueChanges.subscribe(result => {
-      console.log(result);
-      this.setUser(result['data']);
-      this.setPermissionsByProfile(result['data']['frontendPermissions']);
+
+      const data = result['data'][operationType];
+      console.log(data);
+      this.setUser(data);
+      this.setPermissionsByProfile(data['frontendPermissions']);
     });
   }
 
