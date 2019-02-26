@@ -180,6 +180,46 @@ export class TableComponent implements OnInit {
     return valueToReturn;
   }
 
+  public editClick(item, column) {
+
+    if (this.isEditable(item, column)) {
+      this.setEdit(item, column);
+    }
+
+  }
+
+  public isEditing(item, column) {
+    let valueToReturn: any = '';
+
+    if (typeof column === 'undefined') {
+      return false;
+    }
+
+    let valueClass = item[column.key];
+
+    if (typeof valueClass !== 'undefined' && valueClass !== null) {
+      if (valueClass.hasOwnProperty('edit')) {
+        valueToReturn = valueClass['edit'];
+      }
+    }
+
+    return valueToReturn;
+  }
+
+  public isEditable(item, column) {
+
+    let valueToReturn: any = '';
+    let valueClass = item[column.key];
+
+    if (typeof valueClass !== 'undefined' && valueClass !== null) {
+      if (valueClass.hasOwnProperty('editable')) {
+        valueToReturn = valueClass['editable'];
+      }
+    }
+
+    return valueToReturn;
+  }
+
   public getValue(item, column) {
     let valueToReturn: any = '';
 
@@ -270,6 +310,14 @@ export class TableComponent implements OnInit {
       entry.clicked = false;
     });
     item.clicked = true;
+  }
+
+  setNotEdit(item, column) {
+    item[column.key]['edit'] = false;
+  }
+
+  setEdit(item, column) {
+    item[column.key]['edit'] = true;
   }
 
   // checkbox operations

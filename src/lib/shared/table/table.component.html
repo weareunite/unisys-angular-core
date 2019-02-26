@@ -87,7 +87,7 @@
               <td style="text-align: center;" *ngIf="item.new !== 'yes'">
                 <input type="checkbox" [checked]="item.selected" (click)="onCheckboxSelect(item)"/></td>
               <td style="text-align:center;" *ngIf="item.new === 'yes'"></td>
-              <td *ngFor="let column of columns | filterColumns: settings.visibleColumns" (click)="clickEvent(item,column)" (mouseover)="overEvent(item,column)" [ngClass]="{'hand detail': column.click || column.mouseover, 'text-right': column.type == 'number', 'text-center': column.type == 'attachment', 'text' : column.type == 'string' || column.type == 'list_prop'} && getClass(item,column) ">
+              <td *ngFor="let column of columns | filterColumns: settings.visibleColumns" (click)="clickEvent(item,column); editClick(item,column)" (mouseover)="overEvent(item,column)" [ngClass]="{'hand detail': column.click || column.mouseover, 'text-right': column.type == 'number', 'text-center': column.type == 'attachment', 'text' : column.type == 'string' || column.type == 'list_prop', 'editing' : isEditing(item,column)} && getClass(item,column) ">
               <span *ngIf="item.new === 'yes' && column.key !== 'selected'">
                 <div *ngIf="!isValid(formGroup, column.key) && isTouched(formGroup, column.key)" class="invalid-field">
                   <span *ngIf="!isValidError(formGroup, column.key, 'required')">
@@ -106,7 +106,7 @@
                   <option *ngFor="let key of objectKeys(column.values)" [value]="key">{{column.values[key]}}</option>
                 </select>
               </span>
-                <span *ngIf="column.type != 'action'; else actionType">
+                <span *ngIf="column.type != 'action'; else actionType" [hidden]="isEditable(item,column) && isEditing(item,column)">
               <span *ngIf="column.type == 'number' || column.type == 'date' || column.type == 'select'">{{ getValue(item, column)}}</span>
               <span *ngIf="column.type == 'string' || column.type == 'list_prop'" [tooltip]="getValue(item,column)" placement="top">{{ getValue(item, column)  | truncate : stringLimit : "…"}}</span>
               <span *ngIf="column.type == 'boolean'">
@@ -132,6 +132,7 @@
                 <span translate>{{ getValue(item, column).toUpperCase()}}</span>
               </span>
             </span>
+                <input *ngIf="isEditable(item,column) && isEditing(item,column)" class="editable-field" (keydown.tab)="this.service.editedInputFinished(item,column,$event); setNotEdit(item,column)" (keydown.enter)="this.service.editedInputFinished(item,column,$event); setNotEdit(item,column)">
                 <ng-template #actionType>
                   <div style="display: flex; float: right;">
                     <div *ngFor="let option of column.options | filterVisibility: true">
