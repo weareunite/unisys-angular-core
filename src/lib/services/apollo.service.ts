@@ -69,7 +69,7 @@ export class ApolloService {
     return this;
   }
 
-  setParams(params: object) {
+  setParams(params?: object) {
     this.params = params;
     return this;
   }
@@ -111,6 +111,7 @@ export class ApolloService {
 
     let params = '';
     let metaData = '';
+
     if (this.params && operationName.includes('query')) {
       params = 'filter:' + JSON.stringify(this.params);
     } else {

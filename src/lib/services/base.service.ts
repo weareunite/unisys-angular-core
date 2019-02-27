@@ -161,9 +161,12 @@ export abstract class BaseService {
     return this;
   }
 
-  setPage(page?: number) {
-    this.page = page;
+  setPage(page?: number) {// TODO FIX APP-TABLE FIXATION, SHOULD BE UNIVERSAL
+    this.page = page;if (this.appStateService.getViewState('app-table')) {
     this.appStateService.setViewStateValue(page, 'app-table-measurement.activePage');
+        } else if(this.appStateService.getViewState('app-table-measurement')) {
+            this.appStateService.setViewStateValue(page, 'app-table-measurement.activePage');
+        }
     return this;
   }
 
