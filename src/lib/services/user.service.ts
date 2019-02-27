@@ -54,27 +54,27 @@ export class UserService extends BaseApolloService {
   }
 
   loadProfile() {
-    // this.permissionsService.loadPermissions(this.getLocalPermissions());
-    // this.http.get('user/profile')
-    //   .subscribe(data => {
-    //     this.setUser(data['data']);
-    //     this.setPermissionsByProfile(data['data']['frontendPermissions']);
-    //   });
+    this.permissionsService.loadPermissions(this.getLocalPermissions());
+    this.http.get('user/profile')
+      .subscribe(data => {
+        this.setUser(data['data']);
+        this.setPermissionsByProfile(data['data']['frontendPermissions']);
+      });
 
-    const operationType = 'profile';
-
-    this.apolloInstnc = this.apollo.setOperationName('query')
-        .setOperationType(operationType)
-        .setSelection(this.selection)
-        .watchQuery();
-
-    this.apolloInstnc.valueChanges.subscribe(result => {
-
-      const data = result['data'][operationType];
-      console.log(data);
-      this.setUser(data);
-      this.setPermissionsByProfile(data['frontendPermissions']);
-    });
+    // const operationType = 'profile';
+    //
+    // this.apolloInstnc = this.apollo.setOperationName('query')
+    //     .setOperationType(operationType)
+    //     .setSelection(this.selection)
+    //     .watchQuery();
+    //
+    // this.apolloInstnc.valueChanges.subscribe(result => {
+    //
+    //   const data = result['data'][operationType];
+    //   console.log(data);
+    //   this.setUser(data);
+    //   this.setPermissionsByProfile(data['frontendPermissions']);
+    // });
   }
 
   destroyProfile() {
