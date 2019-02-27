@@ -16,13 +16,13 @@ export abstract class BaseApolloService extends BaseService {
 
 // (C)RUD
 
-  createItem(item: any) {
+  createItem(item: any, postData?: any) {
 
     item = this.removeIdFromItem(item);
 
     this.apolloInstnc = this.apollo.setOperationName('mutation')
       .setOperationType('create' + this.capitalizeFirstLetter(this.operationType))
-      .setPostData(item)
+      .setPostData(postData)
       .setSelection(this.selection)
       .clearMetaData()
       .watchQuery();
@@ -84,8 +84,8 @@ export abstract class BaseApolloService extends BaseService {
       .watchQuery();
 
     this.apolloInstnc.valueChanges.subscribe(result => {
-      this.setItem(result.data);
-      let updatedItem = result['data'];
+      const updatedItem = result.data[this.operationType];
+      this.setItem(updatedItem);
       this.itemList.forEach(function (entry, index, object) {
         if (entry.id === updatedItem.id) {
           Object.keys(updatedItem).forEach(function (key) {
@@ -115,9 +115,8 @@ export abstract class BaseApolloService extends BaseService {
 
 // CR(U)D
 
-  updateItemFromList(item: any, action?: string) {
+  updateItemFromList(item: any, postData?: any, action?: string) {
 
-    // mutation {updateUser(id:8,name:"Gay",surname:"Zilka",username:"vlado.zilka@gmail.com",email:"vlado.zilka@gmail.com")}
     let mutationName = '';
     if (action) {
       mutationName = action + this.firstLetterUp(this.operationType);
@@ -127,7 +126,7 @@ export abstract class BaseApolloService extends BaseService {
 
     this.apolloInstnc = this.apollo.setOperationName('mutation')
       .setOperationType(mutationName)
-      .setPostData(item)
+      .setPostData(postData)
       .setSelection('')
       .watchQuery();
 

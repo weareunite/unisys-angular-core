@@ -549,15 +549,20 @@ export abstract class BaseService{
         return item;
     }
 
-    public createReferenceIdArray(item, key) {
-        const idArray = [];
-        if (item[key] && item[key].length > 0) {
-            item[key].forEach(function(value) {
-                idArray.push(value.id);
-            });
-        }
-        delete item[key];
-        item[key + '_ids'] = idArray;
+    public createReferenceIdArray(item, key: string[]) {
+
+        key.forEach(function(value) {
+            const idArray = [];
+            if (item[value] && item[value].length > 0) {
+                item[value].forEach(function(subvalue) {
+                    idArray.push(subvalue.id);
+                    console.log(idArray);
+                });
+            }
+            item[value + '_ids'] = idArray;
+            delete item[value];
+        });
+
         return item;
     }
 
