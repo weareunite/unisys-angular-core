@@ -17,7 +17,7 @@ export abstract class BaseService {
   uploadListChanged = new Subject<any[]>();
 
   protected item;
-  protected itemList;
+  public itemList;
   protected uploadList;
   protected url: string;
   protected page: number = 1;
