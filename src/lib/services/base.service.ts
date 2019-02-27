@@ -285,7 +285,7 @@ export abstract class BaseService{
         this.itemChanged.next(this.item);
     }
 
-    setItemList(itemList: any[]){
+    setItemList(itemList){
         this.itemList = itemList;
         this.listChanged.next(this.itemList);
     }
