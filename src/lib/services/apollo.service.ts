@@ -6,6 +6,7 @@ import { ApolloLink, concat } from 'apollo-link';
 import { HttpHeaders } from '@angular/common/http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
+import { DefaultOptions } from 'apollo-client/ApolloClient';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,17 @@ export class ApolloService {
       uri: this.environment.GRAPHQL_API_URL
     });
 
+    const defaultOptions: DefaultOptions = {
+      watchQuery: {
+        fetchPolicy: 'no-cache',
+        errorPolicy: 'ignore',
+      },
+      query: {
+        fetchPolicy: 'no-cache',
+        errorPolicy: 'all',
+      },
+    };
+
     const authMiddleware = new ApolloLink((operation, forward) => {
       operation.setContext({
         headers: new HttpHeaders({
@@ -43,6 +55,7 @@ export class ApolloService {
     apollo.create({
       link: concat(authMiddleware, link),
       cache: new InMemoryCache(),
+      defaultOptions: defaultOptions
     });
   }
 
