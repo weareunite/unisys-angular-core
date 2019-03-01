@@ -124,19 +124,17 @@ export class ApolloService {
       params = '';
     }
 
-    console.log(['before', params]);
-    // if (operationName !== 'query') {
     if (params.charAt(0) === '{') {
-      // params = params.replace('{', '');
-      // params = params.replace('}', '');
-      var paramLength = params.length - 1;
+      let paramLength = params.length - 1;
       params = params.substring(1, paramLength);
     }
 
+    let requestString = '';
+
     if (params) {
-      var requestString = operationName + '{' + this.operationType + '(' + params + ')';
+      requestString = operationName + '{' + this.operationType + '(' + params + ')';
     } else {
-      var requestString = operationName + '{' + this.operationType;
+      requestString = operationName + '{' + this.operationType;
     }
 
     if (this.selection) {
