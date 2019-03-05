@@ -137,7 +137,7 @@ export abstract class BaseService {
       }
     }, this);
 
-    if (!alreadyExists) {
+    // if (!alreadyExists) {
       Object.keys(columns).forEach(function (columnKey) {
         newItem[columns[columnKey]['key']] = {
           value: ''
@@ -148,7 +148,7 @@ export abstract class BaseService {
 
       this.itemList.unshift(newItem);
       this.setItemList(this.itemList);
-    }
+    // }
 
   }
 
