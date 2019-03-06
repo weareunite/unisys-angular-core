@@ -125,33 +125,6 @@ export abstract class BaseService {
     });
   }
 
-  addNewRowWithInputs(columns: { header: string, key: string }[]) {
-
-    var newItem = [];
-
-    let alreadyExists = false;
-
-    Object.keys(this.itemList).forEach(function (itemKey) {
-      if (this.itemList[itemKey].hasOwnProperty('new')) {
-        alreadyExists = true;
-      }
-    }, this);
-
-    // if (!alreadyExists) {
-      Object.keys(columns).forEach(function (columnKey) {
-        newItem[columns[columnKey]['key']] = {
-          value: ''
-        };
-      });
-
-      newItem['new'] = 'yes';
-
-      this.itemList.unshift(newItem);
-      this.setItemList(this.itemList);
-    // }
-
-  }
-
 // FILTERS
 
   setFiltersByViewState() {
@@ -164,9 +137,9 @@ export abstract class BaseService {
   setPage(page?: number) {// TODO FIX APP-TABLE FIXATION, SHOULD BE UNIVERSAL
     this.page = page;
     if (this.appStateService.getViewState('app-table')) {
-    this.appStateService.setViewStateValue(page, 'app-table.activePage');
-    } else if(this.appStateService.getViewState('app-table-measurement')) {
-        this.appStateService.setViewStateValue(page, 'app-table-measurement.activePage');
+      this.appStateService.setViewStateValue(page, 'app-table.activePage');
+    } else if (this.appStateService.getViewState('app-table-measurement')) {
+      this.appStateService.setViewStateValue(page, 'app-table-measurement.activePage');
     }
     return this;
   }
@@ -554,10 +527,10 @@ export abstract class BaseService {
   }
 
   public createReferenceIdArray(item, key: string[]) {
-    key.forEach(function(value) {
+    key.forEach(function (value) {
       const idArray = [];
       if (item[value] && item[value].length > 0) {
-        item[value].forEach(function(subvalue) {
+        item[value].forEach(function (subvalue) {
           idArray.push(subvalue.id);
           console.log(idArray);
         });
