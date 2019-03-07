@@ -541,6 +541,13 @@ export abstract class BaseService {
     return item;
   }
 
+  public fixNumbers(item, list: any[]) {
+    list.forEach(function (value) {
+      item[value] = Number(item[value]);
+    });
+    return item;
+  }
+
 
   public sum(array, prop) {
     var total = 0;
