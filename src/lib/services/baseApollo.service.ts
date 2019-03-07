@@ -20,14 +20,15 @@ export abstract class BaseApolloService extends BaseService {
 
     item = this.removeIdFromItem(item);
 
-    this.apolloInstnc = this.apollo.setOperationName('mutation')
+    let apolloInstnc = this.apollo.setOperationName('mutation')
       .setOperationType('create' + this.capitalizeFirstLetter(this.operationType))
       .setPostData(postData)
       .setSelection(this.selection)
       .clearMetaData()
-      .watchQuery();
+      .setQuery()
+      .mutate();
 
-    this.apolloInstnc.subscribe(result => {
+    apolloInstnc.subscribe(result => {
       this.setItem(result.data);
       // this.setPaging();
     });
@@ -39,14 +40,15 @@ export abstract class BaseApolloService extends BaseService {
 
     let itemAction = 'create' + this.capitalizeFirstLetter(this.operationType);
 
-    this.apolloInstnc = this.apollo.setOperationName('mutation')
+    let apolloInstnc = this.apollo.setOperationName('mutation')
       .setOperationType(itemAction)
       .setPostData(item)
       .setSelection(this.selection)
       .clearMetaData()
-      .watchQuery();
+      .setQuery()
+      .mutate();
 
-    this.apolloInstnc.subscribe(result => {
+    apolloInstnc.subscribe(result => {
       const newItem = result['data'][itemAction];
 
       if (isNewItem) {
@@ -64,26 +66,28 @@ export abstract class BaseApolloService extends BaseService {
 // C(R)UD
 
   getItem(id: number) {
-    this.apolloInstnc = this.apollo.setOperationName('query')
+    let apolloInstnc = this.apollo.setOperationName('query')
       .setOperationType(this.operationType)
       .setParams({id: id})
       .setSelection(this.selection)
+      .setQuery()
       .watchQuery();
 
-    this.apolloInstnc.valueChanges.subscribe(result => {
+    apolloInstnc.valueChanges.subscribe(result => {
       this.setItem(result.data);
       // this.setPaging();
     });
   }
 
   getItemFromServerToList(item: any) {
-    this.apolloInstnc = this.apollo.setOperationName('query')
+    let apolloInstnc = this.apollo.setOperationName('query')
       .setOperationType(this.operationType)
       .setParams({id: item.id})
       .setSelection(this.selection)
+      .setQuery()
       .watchQuery();
 
-    this.apolloInstnc.valueChanges.subscribe(result => {
+    apolloInstnc.valueChanges.subscribe(result => {
       const updatedItem = result.data[this.operationType];
       this.setItem(updatedItem);
       this.itemList.forEach(function (entry, index, object) {
@@ -99,15 +103,16 @@ export abstract class BaseApolloService extends BaseService {
 
   getItemList() {
 
-    this.apolloInstnc = this.apollo.setOperationName('query')
+    let apolloInstnc = this.apollo.setOperationName('query')
       .setOperationType(this.operationTypePlural)
       .setParams(this.generateGraphQlParams())
       .setSelection(this.selection, 'data')
       .setMetaData()
+      .setQuery()
       .watchQuery();
 
 
-    this.apolloInstnc.valueChanges.subscribe(result => {
+    apolloInstnc.valueChanges.subscribe(result => {
       this.setItemList(result.data[this.operationTypePlural].data);
       this.setPaging(this.apollo.getMetaData(result.data[this.operationTypePlural]));
     });
@@ -124,13 +129,14 @@ export abstract class BaseApolloService extends BaseService {
       mutationName = 'update' + this.firstLetterUp(this.operationType);
     }
 
-    this.apolloInstnc = this.apollo.setOperationName('mutation')
+    let apolloInstnc = this.apollo.setOperationName('mutation')
       .setOperationType(mutationName)
       .setPostData(postData)
       .setSelection('')
-      .watchQuery();
+      .setQuery()
+      .mutate();
 
-    this.apolloInstnc.subscribe(data => {
+    apolloInstnc.subscribe(data => {
       this.itemList.forEach(function (entry, index, object) {
         if (entry.id === item.id) {
           Object.keys(item).forEach(function (key) {
@@ -145,13 +151,14 @@ export abstract class BaseApolloService extends BaseService {
 // CRU(D)
 
   deleteItemFromList(item: any) {
-    this.apolloInstnc = this.apollo.setOperationName('mutation')
+    let apolloInstnc = this.apollo.setOperationName('mutation')
       .setOperationType('delete' + this.firstLetterUp(this.operationType))
       .setParams({id: item.id})
       .setSelection('')
-      .watchQuery();
+      .setQuery()
+      .mutate();
 
-    this.apolloInstnc.subscribe(data => {
+    apolloInstnc.subscribe(data => {
       this.itemList.forEach(function (entry, index, object) {
         if (entry.id === item.id) {
           object.splice(index, 1);

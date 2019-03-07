@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
+import { Apollo, QueryRef } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular-link-http';
 import { AuthService } from './auth.service';
 import { ApolloLink, concat } from 'apollo-link';
@@ -18,6 +18,7 @@ export class ApolloService {
   protected postData: object;
   protected selection: string;
   protected metaData: string[];
+  protected query;
 
   constructor(
     public apollo: Apollo,
@@ -114,7 +115,8 @@ export class ApolloService {
     return this;
   }
 
-  watchQuery() {
+  setQuery() {
+
     let operationName = '';
     if (!this.operationName) {
       operationName = 'query';
@@ -163,11 +165,16 @@ export class ApolloService {
     console.log(requestString);
     const query = gql`${requestString}`;
 
-    if (operationName === 'query') {
-      return this.apollo.watchQuery({query: query});
-    } else {
-      return this.apollo.mutate({mutation: query});
-    }
+    this.query = query;
+    return this;
+  }
+
+  watchQuery() {
+    return this.apollo.watchQuery({query: this.query});
+  }
+
+  mutate() {
+    return this.apollo.mutate({mutation: this.query});
   }
 
 }

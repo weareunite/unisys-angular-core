@@ -63,12 +63,12 @@ export class UserService extends BaseApolloService {
 
     // const operationType = 'profile';
     //
-    // this.apolloInstnc = this.apollo.setOperationName('query')
+    // let apolloInstnc =  this.apollo.setOperationName('query')
     //     .setOperationType(operationType)
     //     .setSelection(this.selection)
     //     .watchQuery();
     //
-    // this.apolloInstnc.valueChanges.subscribe(result => {
+    // apolloInstnc.valueChanges.subscribe(result => {
     //
     //   const data = result['data'][operationType];
     //   console.log(data);
