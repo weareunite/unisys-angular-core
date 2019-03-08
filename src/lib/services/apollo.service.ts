@@ -126,12 +126,27 @@ export class ApolloService {
 
     let params = '';
     let metaData = '';
+    let queryParams = this.params;
 
-    if (this.params && operationName.includes('query')) {
-      params = 'filter:' + JSON.stringify(this.params);
+    if (queryParams && operationName.includes('query')) {
+
+      let filterParams = {};
+      let paginateParams = {};
+
+      Object.keys(queryParams).forEach(function (index) {
+        if (index === 'limit' || index === 'page') {
+          paginateParams[index] = queryParams[index];
+        } else {
+          filterParams[index] = queryParams[index];
+        }
+      });
+
+      params = 'filter:' + JSON.stringify(filterParams) + ',paging:' + JSON.stringify(paginateParams);
     } else {
       params = JSON.stringify(this.postData);
     }
+
+    console.log(['params', params]);
 
     if (params) {
       params = params.replace(/\"([^(\")"]+)\":/g, '$1:');

@@ -208,6 +208,7 @@ export abstract class BaseApolloService extends BaseService {
     if (Object.keys(this.filter).length > 0) {
       this.paramsObj['conditions'] = this.filter;
     }
+
     return this.paramsObj;
   }
 
