@@ -146,8 +146,6 @@ export class ApolloService {
       params = JSON.stringify(this.postData);
     }
 
-    console.log(['params', params]);
-
     if (params) {
       params = params.replace(/\"([^(\")"]+)\":/g, '$1:');
     } else {
