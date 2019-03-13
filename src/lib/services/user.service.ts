@@ -24,7 +24,7 @@ export class UserService extends BaseApolloService {
   protected url = 'user';
 
   // Apollo
-  protected selection = 'id,name,surname,username, email';
+  protected selection = 'id, name, surname, username, email, roles{ id, name}';
   protected paramsObj = ['id', 'name', 'surname', 'username', 'email'];
   protected operationType = 'user';
   protected operationTypePlural = 'users';
@@ -194,16 +194,16 @@ export class UserService extends BaseApolloService {
   }
 
   updateUserFromList(item: User) {
-    item.password == '' && delete item.password;
-    item.password_confirmation == '' && delete item.password_confirmation;
-    // item.roles_id = this.returnIdArray(item.roles);
-    this.updateItemFromList(item);
+    item.password === '' && delete item.password;
+    item.password_confirmation === '' && delete item.password_confirmation;
+    item = this.createReferenceIdArray(item, ['role'])
+    this.updateItemFromList(item, item);
   }
 
   pushUserToList(item: User) {
     item.password == '' && delete item.password;
     item.password_confirmation == '' && delete item.password_confirmation;
-    // item.roles_id = this.returnIdArray(item.roles);
+    item = this.createReferenceIdArray(item, ['role'])
     this.pushItemToList(item);
   }
 }

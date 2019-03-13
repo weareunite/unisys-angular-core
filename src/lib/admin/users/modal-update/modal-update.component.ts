@@ -52,9 +52,9 @@ export class ModalUpdateComponent implements OnInit {
         surname: [this.item.surname, Validators.required],
         username: [this.item.username, Validators.required],
         email: [this.item.email, Validators.required],
-        password: ['',],
+        password: [''],
         password_confirmation: [''],
-        // roles: [this.item.roles, Validators.required],
+        role: [this.item.role, Validators.required],
       });
     } else {
       this.defaultForm = this.formBuilder.group({
@@ -65,7 +65,7 @@ export class ModalUpdateComponent implements OnInit {
         email: ['', Validators.required],
         password: ['', Validators.required],
         password_confirmation: ['', Validators.required],
-        // roles: ['', Validators.required],
+        role: ['', Validators.required],
       });
     }
   }

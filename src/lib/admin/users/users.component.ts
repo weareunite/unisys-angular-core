@@ -43,7 +43,7 @@ export class UsersComponent implements OnInit {
 
     this.selectedColumns = [
       {translation: 'ID', key: 'id', sortable: true, type: 'number'},
-      {translation: 'NANE', key: 'name', sortable: true, type: 'string'},
+      {translation: 'FIRST_NAME', key: 'name', sortable: true, type: 'string'},
       {translation: 'SURNAME', key: 'surname', sortable: true, type: 'string'},
       {translation: 'USERNAME', key: 'username', sortable: true, type: 'string'},
       {
