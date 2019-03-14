@@ -58,7 +58,7 @@ export class UsersComponent implements OnInit {
     ];
 
     this.settings = {
-      permission: 'users',
+      permission: 'admin.users',
       sortBy: 'name',
       visibleColumns: ['id', 'name', 'surname', 'username', 'action'],
       rowsOnPageOptions: [50, 100, 200],

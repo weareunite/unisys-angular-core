@@ -24,7 +24,7 @@ export class UserService extends BaseApolloService {
   protected url = 'user';
 
   // Apollo
-  protected selection = 'id, name, surname, username, email, roles{ id, name}';
+  protected selection = 'id, name, surname, username, email, roles {id, name}, frontend_permissions {id, name}';
   protected paramsObj = ['id', 'name', 'surname', 'username', 'email'];
   protected operationType = 'user';
   protected operationTypePlural = 'users';
@@ -54,27 +54,20 @@ export class UserService extends BaseApolloService {
   }
 
   loadProfile() {
-    this.permissionsService.loadPermissions(this.getLocalPermissions());
-    this.http.get('user/profile')
-      .subscribe(data => {
-        this.setUser(data['data']);
-        this.setPermissionsByProfile(data['data']['frontendPermissions']);
-      });
+    const operationType = 'profile';
 
-    // const operationType = 'profile';
-    //
-    // let apolloInstnc =  this.apollo.setOperationName('query')
-    //     .setOperationType(operationType)
-    //     .setSelection(this.selection)
-    //     .watchQuery();
-    //
-    // apolloInstnc.valueChanges.subscribe(result => {
-    //
-    //   const data = result['data'][operationType];
-    //   console.log(data);
-    //   this.setUser(data);
-    //   this.setPermissionsByProfile(data['frontendPermissions']);
-    // });
+    let apolloInstnc =  this.apollo.setOperationName('query')
+        .setOperationType(operationType)
+        .setSelection(this.selection)
+        .setQuery()
+        .watchQuery();
+
+    apolloInstnc.valueChanges.subscribe(result => {
+      console.log(result);
+      const data = result['data'][operationType];
+      this.setUser(data);
+      this.setPermissionsByProfile(data['frontend_permissions']);
+    });
   }
 
   destroyProfile() {
@@ -196,14 +189,14 @@ export class UserService extends BaseApolloService {
   updateUserFromList(item: User) {
     item.password === '' && delete item.password;
     item.password_confirmation === '' && delete item.password_confirmation;
-    item = this.createReferenceIdArray(item, ['role'])
+    item = this.createReferenceIdArray(item, ['roles'])
     this.updateItemFromList(item, item);
   }
 
   pushUserToList(item: User) {
     item.password == '' && delete item.password;
     item.password_confirmation == '' && delete item.password_confirmation;
-    item = this.createReferenceIdArray(item, ['role'])
+    item = this.createReferenceIdArray(item, ['roles'])
     this.pushItemToList(item);
   }
 }

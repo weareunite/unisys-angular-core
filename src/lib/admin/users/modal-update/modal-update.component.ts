@@ -54,7 +54,7 @@ export class ModalUpdateComponent implements OnInit {
         email: [this.item.email, Validators.required],
         password: [''],
         password_confirmation: [''],
-        role: [this.item.role, Validators.required],
+        roles: [this.item.roles, Validators.required],
       });
     } else {
       this.defaultForm = this.formBuilder.group({
@@ -65,7 +65,7 @@ export class ModalUpdateComponent implements OnInit {
         email: ['', Validators.required],
         password: ['', Validators.required],
         password_confirmation: ['', Validators.required],
-        role: ['', Validators.required],
+        roles: ['', Validators.required],
       });
     }
   }
