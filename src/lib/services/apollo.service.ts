@@ -115,7 +115,7 @@ export class ApolloService {
     return this;
   }
 
-  setQuery() {
+  setQuery(removeQuotation: boolean = false) {
 
     let operationName = '';
     if (!this.operationName) {
@@ -175,7 +175,13 @@ export class ApolloService {
       }
     }
     requestString = requestString + '}';
+
+    if (removeQuotation) {
+      requestString = requestString.replace(/['"]+/g, '');
+    }
+
     console.log(requestString);
+
     const query = gql`${requestString}`;
 
     this.query = query;
