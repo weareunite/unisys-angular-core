@@ -34,9 +34,9 @@ export abstract class BaseApolloService extends BaseService {
     });
   }
 
-  pushItemToList(item: any, isNewItem?: boolean) {
+  pushItemToList(item: any, isNewItem?: boolean) { // TODO TOTO isNewItem treba dat prec
 
-    item = this.removeIdFromItem(item);
+    item = this.removeIdFromItem(item);   // TODO TOTO tu je asi zbytočné
 
     let itemAction = 'create' + this.capitalizeFirstLetter(this.operationType);
 
