@@ -12,8 +12,10 @@ export class FooterComponent implements OnInit {
   }
 
   ngOnInit() {
-    const currentYear = new Date().getFullYear();
-    this.footerYears = '2018 - ' + currentYear;
+    const currentYear = new Date().getFullYear().toString();
+    if (!this.footerYears) {
+      this.footerYears = currentYear;
+    }
   }
 
 }
