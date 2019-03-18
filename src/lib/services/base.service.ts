@@ -25,6 +25,7 @@ export abstract class BaseService {
   protected order: string = 'id';
   protected search: any = {};
   protected filter: any = {};
+  protected interval: any = {};
   public isFilterSetted: boolean = false;
   protected pageList = [];
   public meta;
@@ -173,6 +174,19 @@ export abstract class BaseService {
     return this;
   }
 
+  setInterval(key?: string, value?: any) {
+    if (!key && !value) {
+      this.interval = {};
+      return this;
+    }
+    if (value == '' || value === null) {
+      delete this.interval[key];
+    } else {
+      this.interval[key] = value;
+    }
+    return this;
+  }
+
   setFilter(key?: string, value?: any) {
     if (!key && !value) {
       this.filter = {};
@@ -183,6 +197,28 @@ export abstract class BaseService {
     } else {
       this.filter[key] = value;
     }
+    return this;
+  }
+
+  setIntervalByForm(formObject) {
+    this.setInterval();
+
+    Object.keys(formObject).forEach(key => {
+      let value = formObject[key];
+
+      if (value instanceof Date) {
+
+        let dateValue = this.returnDatestring(value);
+
+        if (key === 'measurements_from') {
+          dateValue = dateValue + ' 00:00:01';
+        } else if (key === 'measurements_to') {
+          dateValue = dateValue + ' 23:59:59';
+        }
+        this.setInterval(key, dateValue);
+      }
+    });
+
     return this;
   }
 
@@ -205,7 +241,10 @@ export abstract class BaseService {
         if (typeof value === 'string' || typeof value === 'number') {
           this.setFilter(key, value);
         } else if (value instanceof Date) {
-          this.setFilter(key, this.returnDatestring(value));
+          if (key !== 'measurements_from' && key !== 'measurements_to') {
+            let dateValue = this.returnDatestring(value);
+            this.setFilter(key, dateValue);
+          }
         } else if (value.hasOwnProperty('id')) {
           this.setFilter(key, [value.id]);
         } else if (value.length > 0 && value[0].id) {
