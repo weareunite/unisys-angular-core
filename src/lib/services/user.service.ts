@@ -59,6 +59,9 @@ export class UserService extends BaseApolloService {
     let apolloInstnc =  this.apollo.setOperationName('query')
         .setOperationType(operationType)
         .setSelection(this.selection)
+        .setPostData()
+        .setMetaData([]) // TODO SET EMPTY VALUE SHOULD MAKE IT NULL
+        .setParams()
         .setQuery()
         .watchQuery();
 
@@ -67,6 +70,9 @@ export class UserService extends BaseApolloService {
       const data = result['data'][operationType];
       this.setUser(data);
       this.setPermissionsByProfile(data['frontend_permissions']);
+      if (this.router.url === '/signin') {
+        this.router.navigate(['/default']);
+      }
     });
   }
 
@@ -119,9 +125,8 @@ export class UserService extends BaseApolloService {
     })
       .subscribe(data => {
         this.auth.setAccessToken(data['access_token']);
-        this.router.navigate(['']);
-        this.loadProfile();
         this.toastrService.success('', 'Vitajte v systéme UniSys.');
+        this.loadProfile();
       }, error => {
         this.toastrService.error('Neplatné prihlasovacie údaje', 'Chyba');
       });

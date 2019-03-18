@@ -88,8 +88,13 @@ export class ApolloService {
     return this;
   }
 
-  setPostData(postData: object) {
-    this.postData = postData;
+  setPostData(postData?: object) {
+    if (postData) {
+      this.postData = postData;
+    } else {
+      delete this.postData;
+    }
+
     return this;
   }
 

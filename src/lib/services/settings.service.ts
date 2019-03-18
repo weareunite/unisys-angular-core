@@ -64,6 +64,9 @@ export class SettingsService {
     let apolloInstnc =  this.apollo.setOperationName('query')
       .setOperationType(operationType)
       .setSelection(this.selectionCompany)
+      .setPostData()
+      .setMetaData([]) // TODO SET EMPTY VALUE SHOULD MAKE IT NULL
+      .setParams()
       .setQuery()
       .watchQuery();
 
