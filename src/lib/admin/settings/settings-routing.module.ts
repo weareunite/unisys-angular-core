@@ -5,7 +5,6 @@ import {NgxPermissionsGuard} from 'ngx-permissions';
 import {AuthGuard} from '../../services/auth-guard.service';
 import {SettingsComponent} from './settings.component';
 import {CompanyComponent} from './company/company.component';
-import {SubscriptionComponent} from './subscription/subscription.component';
 import {AppComponent} from './app/app.component';
 
 const adminSettingsRoutes: Routes = [
@@ -20,10 +19,6 @@ const adminSettingsRoutes: Routes = [
             },
             {
                 path: 'company', component : CompanyComponent, canActivate: [NgxPermissionsGuard, AuthGuard],
-                data: { permissions: { only: ['admin.settings'], redirectTo: ''}}
-            },
-            {
-                path: 'subscription', component : SubscriptionComponent, canActivate: [NgxPermissionsGuard, AuthGuard],
                 data: { permissions: { only: ['admin.settings'], redirectTo: ''}}
             },
         ] },

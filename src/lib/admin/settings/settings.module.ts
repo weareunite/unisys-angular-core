@@ -4,7 +4,6 @@ import { SettingsComponent } from './settings.component';
 import { UnisysAngularSharedModule } from '../../shared/unisys-angular-shared.module';
 import { AdminSettingsRoutingModule } from './settings-routing.module';
 import { CompanyComponent } from './company/company.component';
-import { SubscriptionComponent } from './subscription/subscription.component';
 import { AppComponent } from './app/app.component';
 import {NgxPermissionsModule} from 'ngx-permissions';
 
@@ -18,7 +17,6 @@ import {NgxPermissionsModule} from 'ngx-permissions';
   declarations: [
       SettingsComponent,
       CompanyComponent,
-      SubscriptionComponent,
       AppComponent
   ]
 })
