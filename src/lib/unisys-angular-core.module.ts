@@ -22,12 +22,14 @@ import { DefaultModule } from './default/default.module';
 import { CoreService } from './services/core.service';
 import { MenuItem } from './models';
 import { ApolloService } from './services/apollo.service';
+import { AdminHelpModule } from './admin/help/admin-help.module';
 
 @NgModule({
   imports: [
     SettingsModule,
     UsersModule,
     RoleModule,
+    AdminHelpModule,
     CoreModule,
     UnisysAngularSharedModule,
     AuthModule,

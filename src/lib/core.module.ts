@@ -13,6 +13,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
 import { HttpLinkModule } from 'apollo-angular-link-http';
 import { ApolloModule } from 'apollo-angular';
+import { HelpComponent } from './help/help.component';
 
 @NgModule({
   imports: [
@@ -34,12 +35,14 @@ import { ApolloModule } from 'apollo-angular';
     FooterComponent,
     HeaderComponent,
     UserProfileComponent,
-    AppSettingsComponent
+    AppSettingsComponent,
+    HelpComponent,
   ],
   exports: [
     AsideComponent,
     FooterComponent,
     HeaderComponent,
+    HelpComponent,
     AppRoutingModule,
     ApolloModule,
     HttpLinkModule,
