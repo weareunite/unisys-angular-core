@@ -43,12 +43,6 @@ export class SettingsComponent implements OnInit {
   public subMenu: MenuItem[] = [
     {routerLink: ['/admin', 'settings', 'app'], permission: 'admin.settings', translation: 'APP_SETTINGS', icon: ''},
     {routerLink: ['/admin', 'settings', 'company'], permission: 'admin.settings', translation: 'PROFILE', icon: ''},
-    {
-      routerLink: ['/admin', 'settings', 'subscription'],
-      permission: 'admin.settings',
-      translation: 'SUBSCRIPTION',
-      icon: ''
-    },
   ];
 
 }
