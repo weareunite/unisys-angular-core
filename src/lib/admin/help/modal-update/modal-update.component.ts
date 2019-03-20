@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {BsModalRef} from 'ngx-bootstrap';
-import { Help, Role } from '../../../models';
+import { Help } from '../../../models';
 import {Subscription} from 'rxjs';
-import {PermissionService} from '../../../services/permission.service';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 @Component({
   selector: 'app-modal-update',
@@ -16,6 +16,32 @@ export class ModalUpdateComponent implements OnInit {
   private service;
   public permissionsListSubscription: Subscription;
   public allPermissionsListSubscription: Subscription;
+
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '25rem',
+    minHeight: '5rem',
+    placeholder: 'Enter text here...',
+    translate: 'no',
+    uploadUrl: 'v1/images', // if needed
+    customClasses: [ // optional
+      {
+        name: "quote",
+        class: "quote",
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: "titleText",
+        class: "titleText",
+        tag: "h1",
+      },
+    ]
+  };
+
 
   defaultForm = new FormGroup({
     id: new FormControl(),
@@ -37,15 +63,15 @@ export class ModalUpdateComponent implements OnInit {
       this.defaultForm = this.formBuilder.group({
         id: [this.item.id],
         name: [this.item.name, Validators.required],
-        url: [this.item.url, Validators.required],
-        content: [this.item.content],
+        key: [this.item.key, Validators.required],
+        body: [this.item.body],
       });
 
     } else {
       this.defaultForm = this.formBuilder.group({
         name: ['', Validators.required],
-        url: ['', Validators.required],
-        content: [''],
+        key: ['', Validators.required],
+        body: [''],
       });
     }
   }

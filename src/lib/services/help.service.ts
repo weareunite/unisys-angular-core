@@ -12,9 +12,10 @@ export class HelpService extends BaseApolloService {
   private Help: Help;
 
   // Apollo
-  protected selection = 'id, name, url, username';
+  protected selection = 'id, name, key, body';
+  protected selectionItem = 'id, name, key, body';
   protected operationType = 'help';
-  protected operationTypePlural = 'help';
+  protected operationTypePlural = 'helps';
 
   constructor(
     protected http: HttpService,
@@ -22,6 +23,21 @@ export class HelpService extends BaseApolloService {
     protected appStateService: UnisysAngularAppStateServiceService,
   ) {
     super(http, appStateService, apollo);
+  }
+
+  getItemByKey(key: string) {
+    const apolloInstnc = this.apollo.setOperationName('query')
+        .setOperationType(this.operationType)
+        .setParams()
+        .setPostData({key: key})
+        .setSelection(this.selectionItem)
+        .setMetaData([])
+        .setQuery()
+        .watchQuery();
+
+    apolloInstnc.valueChanges.subscribe(result => {
+      this.setItem(result.data[this.operationType]);
+    });
   }
 
 }

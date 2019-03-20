@@ -45,7 +45,7 @@ export class AdminHelpComponent implements OnInit {
     this.selectedColumns = [
       {translation: 'ID', key: 'id', sortable: true, type: 'number'},
       {translation: 'NAME', key: 'name', sortable: true, type: 'string'},
-      {translation: 'URI', key: 'uri', sortable: false, type: 'string'},
+      {translation: 'URL', key: 'key', sortable: false, type: 'string'},
       {
         translation: 'ACTION', key: 'action', sortable: false, type: 'action', options: [
           {
@@ -60,7 +60,7 @@ export class AdminHelpComponent implements OnInit {
     this.settings = {
       permission: 'admin.help',
       sortBy: 'id',
-      visibleColumns: ['id', 'name', 'url', 'action'],
+      visibleColumns: ['id', 'name', 'key', 'action'],
       rowsOnPageOptions: [50, 100, 200],
       rowsOnPage: 50,
       activePage: 1,

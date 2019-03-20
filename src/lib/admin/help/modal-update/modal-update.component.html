@@ -8,8 +8,10 @@
 <div class="modal-body">
   <form [formGroup]="defaultForm" (ngSubmit)="onSubmit()">
     <lib-unisys-angular-form-group translation="NAME" fieldName="name" [group]="defaultForm"></lib-unisys-angular-form-group>
-    <lib-unisys-angular-form-group translation="URL" fieldName="url" [group]="defaultForm"></lib-unisys-angular-form-group>
-    <lib-unisys-angular-form-group translation="CONTENT" fieldName="content" type="textarea" [group]="defaultForm" ></lib-unisys-angular-form-group>
+    <lib-unisys-angular-form-group translation="URL" fieldName="key" [group]="defaultForm"></lib-unisys-angular-form-group>
+    <lib-unisys-angular-input-wrapper translation="CONTENT" [group]="defaultForm" >
+      <angular-editor formControlName="body" [config]="editorConfig"></angular-editor>
+    </lib-unisys-angular-input-wrapper>
     <div class="form-footer">
       <button type="button" class="btn btn-sm btn-default" (click)="bsModalRef.hide()" translate>CLOSE</button>
       <div class="pull-right">

@@ -8,23 +8,18 @@
   <div class="modal-body">
     <div class="row">
       <div class="col-sm-2" style="padding: 0px; margin-top: -15px;">
-        <ul class="nav nav-pills nav-stacked nav-pills-stacked-example">
-          <li role="presentation" [ngClass]="{'active': selectedTopic == 'products-product'}">
-            <a (click)="onClickTopic('products-product')">Skupiny</a>
-          </li>
-          <li role="presentation" [ngClass]="{'active': selectedTopic == 'products-design'}">
-            <a (click)="onClickTopic('products-design')">Výkresy</a>
+        <ul class="nav nav-pills nav-stacked nav-pills-stacked-example" >
+          <li role="presentation" [ngClass]="{'active': selectedTopic == item.key}" *ngFor="let item of itemList">
+            <a (click)="onClickTopic(item.key)">{{ item.name}}</a>
           </li>
         </ul>
       </div>
       <div class="col-sm-10">
-        <div class="callout callout-warning" *ngIf="selectedTopic == ''">
+        <div class="callout callout-warning" *ngIf="!item">
           <h4>Vyberte si tému nápovedy</h4>
           <p>Témy nápovedy nájdete v postrannom menu</p>
         </div>
-        <div>
-          Tu bude text
-        </div>
+        <div *ngIf="item" [innerHTML]="item?.body"></div>
       </div>
     </div>
   </div>

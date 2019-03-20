@@ -97,10 +97,9 @@ export interface Role {
 }
 
 export interface Help {
-  id: number,
-  name: string,
-  url: string,
-  content: string,
-  created_at: null,
-  selected?: boolean | undefined,
+  id: number;
+  name: string;
+  key: string;
+  body: string;
+  selected?: boolean | undefined;
 }

@@ -2,6 +2,10 @@ import { Component, HostListener, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { HttpClient } from '@angular/common/http';
+import { HelpService } from '../services/help.service';
+import { Help } from '../models';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-help',
@@ -18,13 +22,31 @@ export class HelpComponent{
         'class': 'modal-lg'
     };
     public content: string;
+    public itemListSubscription: Subscription;
+    public item: Help;
+    public itemList: Help[];
+    public itemSubscription: Subscription;
 
     @ViewChild('template') private template: TemplateRef<any>;
 
     constructor(
         private modalService: BsModalService,
-        private http: HttpClient
-    ){
+        private helpService: HelpService,
+        private router: Router,
+    ) {
+        this.itemListSubscription = this.helpService.listChanged
+            .subscribe(
+                (list: Help[]) => {
+                    this.itemList = list;
+                }
+            )
+
+        this.itemSubscription = this.helpService.itemChanged
+            .subscribe(
+                (item: Help) => {
+                    this.item = item;
+                }
+            );
     }
 
     openModal(template: TemplateRef<any>){
@@ -32,21 +54,18 @@ export class HelpComponent{
     }
 
     @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent){
-        if (event.keyCode === 112){
+        if (event.keyCode === 112) {
             this.openModal(this.template);
+            this.helpService.getItemList();
+            if (this.router.url) {
+                this.onClickTopic(this.router.url.replace(/[0-9]/g,  '*'));
+            }
         }
     }
 
     onClickTopic(topic: string){
         this.selectedTopic = topic;
-        // this.http.get('/assets/docs/' + this.selectedTopic + '.md', {responseType: 'text'})
-        //     .subscribe(data => {
-        //         this.content = data;
-        //     }, error2 => {
-        //         this.content = '';
-        //         this.selectedTopic = '';
-        //     });
-
+        this.helpService.getItemByKey(topic);
     }
 
 }

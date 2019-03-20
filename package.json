@@ -28,6 +28,7 @@
     "@weareunite/unisys-angular-tab-router": "^0.1.0",
     "@weareunite/unisys-angular-view-button": "^0.2.0",
     "@weareunite/unisys-angular-app-state-service": "^0.2.0",
+    "@kolkov/angular-editor": "^0.13.1",
     "admin-lte": "^2.4.8",
     "ngx-bootstrap": "^3.1.4",
     "ngx-permissions": ">=5.0.0",
