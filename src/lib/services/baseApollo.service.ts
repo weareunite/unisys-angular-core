@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 
 import { BaseService } from './base.service';
+import { HttpService } from './http.service';
+import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
+import { ApolloService } from './apollo.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +16,14 @@ export abstract class BaseApolloService extends BaseService {
   protected operationType: string;
   protected operationTypePlural: string;
   protected operationName: string;
+
+  constructor(
+    protected http: HttpService,
+    protected appStateService: UnisysAngularAppStateServiceService,
+    protected apollo: ApolloService
+  ) {
+    super(http, appStateService, apollo);
+  }
 
 // (C)RUD
 
@@ -153,7 +164,7 @@ export abstract class BaseApolloService extends BaseService {
   deleteItemFromList(item: any) {
     let apolloInstnc = this.apollo.setOperationName('mutation')
       .setOperationType('delete' + this.firstLetterUp(this.operationType))
-      .setParams({id: item.id})
+      .setPostData({id: item.id})
       .setSelection('')
       .setQuery()
       .mutate();

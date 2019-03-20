@@ -7,6 +7,9 @@ import { HttpHeaders } from '@angular/common/http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
 import { DefaultOptions } from 'apollo-client/ApolloClient';
+import { onError } from 'apollo-link-error';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +27,7 @@ export class ApolloService {
     public apollo: Apollo,
     public httpLink: HttpLink,
     public auth: AuthService,
+    public toastr: ToastrService,
     @Inject('env') private environment,
   ) {
 
@@ -42,6 +46,18 @@ export class ApolloService {
       },
     };
 
+    const errorMiddleware = onError(({graphQLErrors, networkError}) => {
+      if (graphQLErrors) {
+        graphQLErrors.map(({message, locations, path}) =>
+          toastr.error(message, 'GraphQL Error'),
+        );
+      }
+
+      if (networkError) {
+        toastr.error(networkError.message, 'Network Error');
+      }
+    });
+
     const authMiddleware = new ApolloLink((operation, forward) => {
       operation.setContext({
         headers: new HttpHeaders({
@@ -53,8 +69,14 @@ export class ApolloService {
       return forward(operation);
     });
 
+    const linkWithErrors = ApolloLink.from([
+      authMiddleware,
+      errorMiddleware,
+      link
+    ]);
+
     apollo.create({
-      link: concat(authMiddleware, link),
+      link: linkWithErrors,
       cache: new InMemoryCache(),
       defaultOptions: defaultOptions
     });
