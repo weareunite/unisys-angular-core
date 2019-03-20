@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NotificationService } from './notification.service';
 import { Subject } from 'rxjs/index';
-import { BaseService } from './base.service';
 import { ToastrService } from 'ngx-toastr';
 import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
 import { ApolloService } from './apollo.service';
@@ -17,9 +16,7 @@ import { BaseApolloService } from './baseApollo.service';
   providedIn: 'root'
 })
 export class UserService extends BaseApolloService {
-  public roleListChanged = new Subject();
   public userChanged = new Subject();
-  private roleList;
   private User: User;
   protected url = 'user';
 
@@ -176,19 +173,6 @@ export class UserService extends BaseApolloService {
     this.auth.unsetAccessToken();
     this.destroyProfile();
     this.router.navigate(['/signin']);
-  }
-
-
-  getRoles() {
-    const requestUlr = 'role';
-    return this.http.get(requestUlr).subscribe(data => {
-      this.setRoleList(data['data']);
-    });
-  }
-
-  setRoleList(itemList) {
-    this.roleList = itemList;
-    this.roleListChanged.next(this.roleList);
   }
 
   updateUserFromList(item: User) {

@@ -57,7 +57,7 @@ export class ModalUpdateComponent implements OnInit {
       this.service.getAllPermissions(this.item.id);
     } else {
       // @todo when permission API will be available, load empty permissions here
-      // this.permissionService.getAllPermissions();
+      this.permissionService.getAllPermissions();
     }
   }
 

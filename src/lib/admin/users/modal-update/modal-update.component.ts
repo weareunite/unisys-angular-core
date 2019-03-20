@@ -3,6 +3,7 @@ import {User} from '../../../models';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {BsModalRef} from 'ngx-bootstrap';
 import {Subscription} from 'rxjs';
+import { RoleService } from '../../../services/role.service';
 
 @Component({
   selector: 'app-modal-update',
@@ -30,18 +31,19 @@ export class ModalUpdateComponent implements OnInit {
   constructor(
     public bsModalRef: BsModalRef,
     public formBuilder: FormBuilder,
+    public roleService: RoleService,
   ) {
   }
 
   ngOnInit() {
     this.builForm();
-    this.roleSubscription = this.service.roleListChanged
+    this.roleSubscription = this.roleService.listChanged
       .subscribe(
         (list) => {
           this.roleList = list;
         }
       );
-    this.service.getRoles();
+    this.roleService.getItemList();
   }
 
   private builForm() {

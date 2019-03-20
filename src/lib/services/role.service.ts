@@ -1,26 +1,37 @@
-import {Injectable} from '@angular/core';
-import {Subject} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { BaseApolloService } from './baseApollo.service';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
-export class RoleService extends BaseApolloService {
-  protected url = 'role';
-  public allPermissions;
-  public permissionsChanged = new Subject();
-  protected selection = 'id, name, surname, username, email, roles {id, name}, frontend_permissions {id, name}';
-  protected operationType = 'role';
-  protected operationTypePlural = 'roles';
+export class RoleService extends BaseApolloService{
+    protected url = 'role';
+    public allPermissions;
+    public permissionsChanged = new Subject();
+    protected selection = 'id, name';
+    protected operationType = 'role';
+    protected operationTypePlural = 'roles';
 
-  getAllPermissions($id) {
-    return this.http.get(this.url + '/' + $id).subscribe(data => {
-      this.setAllPermissions(data['data']);
-    });
-  }
+    getAllPermissions(id?: number){
+        const operationType = 'permissions';
 
-  setAllPermissions(itemList) {
-    this.allPermissions = itemList;
-    this.permissionsChanged.next(this.allPermissions);
-  }
+        const apolloInstnc = this.apollo.setOperationName('query')
+            .setOperationType(operationType)
+            .setParams()
+            .setSelection(this.selection, 'data')
+            .setMetaData()
+            .setQuery()
+            .watchQuery();
+
+
+        apolloInstnc.valueChanges.subscribe(result => {
+            this.setAllPermissions(result.data[operationType].data);
+        });
+    }
+
+    setAllPermissions(itemList){
+        this.allPermissions = itemList;
+        this.permissionsChanged.next(this.allPermissions);
+    }
 }
