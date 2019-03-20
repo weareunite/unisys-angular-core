@@ -82,7 +82,7 @@
             </tr>
             </thead>
             <tbody *ngIf="data?.length > 0 ; else noRows">
-            <tr *ngFor="let item of data ; let even = even; let odd = odd" [ngClass]="{ odd: odd, even: even, hightligt: item.selected, clicked: item.clicked, newRow:item.new}">
+            <tr *ngFor="let item of data ; let even = even; let odd = odd" [ngClass]="{ odd: odd, even: even, hightligt: item.selected, clicked: item.clicked}">
               <!--<tr *ngFor="let item of data | orderBy : 'id'">-->
               <td style="text-align: center;" *ngIf="item.new !== 'yes'">
                 <input type="checkbox" [checked]="item.selected" (click)="onCheckboxSelect(item)"/></td>
