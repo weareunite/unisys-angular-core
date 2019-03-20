@@ -5,7 +5,8 @@ import { AuthGuard } from './services/auth-guard.service';
 const appRoutes: Routes = [
   {path: 'admin/roles', loadChildren: './admin/role/role.module#RoleModule'},
   {path: 'admin/settings', loadChildren: './admin/settings/settings.module#SettingsModule'},
-  {path: 'admin/user', loadChildren: './admin/users/users.module#UsersModule'}
+  {path: 'admin/user', loadChildren: './admin/users/users.module#UsersModule'},
+  {path: 'admin/help', loadChildren: './admin/help/admin-help.module#AdminHelpModule'},
 ];
 
 @NgModule({

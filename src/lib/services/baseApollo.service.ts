@@ -77,16 +77,17 @@ export abstract class BaseApolloService extends BaseService {
 // C(R)UD
 
   getItem(id: number) {
-    let apolloInstnc = this.apollo.setOperationName('query')
+    const apolloInstnc = this.apollo.setOperationName('query')
       .setOperationType(this.operationType)
-      .setParams({id: id})
+      .setParams()
+      .setPostData({id: id})
       .setSelection(this.selection)
+      .setMetaData([])
       .setQuery()
       .watchQuery();
 
     apolloInstnc.valueChanges.subscribe(result => {
-      this.setItem(result.data);
-      // this.setPaging();
+      this.setItem(result.data[this.operationType]);
     });
   }
 

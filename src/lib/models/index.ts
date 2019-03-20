@@ -95,3 +95,11 @@ export interface Role {
   apiPermissions: null,
   selected?: boolean | undefined,
 }
+
+export interface Help {
+  id: number;
+  name: string;
+  key: string;
+  body: string;
+  selected?: boolean | undefined;
+}

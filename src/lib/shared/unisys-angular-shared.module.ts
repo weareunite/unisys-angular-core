@@ -20,6 +20,7 @@ import {BsDatepickerModule, BsLocaleService, TooltipModule} from 'ngx-bootstrap'
 import {TruncateModule} from 'ng2-truncate';
 import {defineLocale} from 'ngx-bootstrap/chronos';
 import {skLocale} from 'ngx-bootstrap/locale';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 // UniSys Modules
 import {UnisysAngularTabRouterModule} from '@weareunite/unisys-angular-tab-router';
@@ -50,6 +51,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     NgxPermissionsModule,
     TooltipModule,
     TruncateModule,
+    AngularEditorModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -87,7 +89,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReactiveFormsModule,
     TableComponent,
     BsDatepickerModule,
-    TruncateModule
+    TruncateModule,
+    AngularEditorModule,
   ],
   entryComponents: [
     ModalDeleteComponent,

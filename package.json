@@ -27,6 +27,8 @@
     "@weareunite/unisys-angular-progress-bar": "^0.1.5",
     "@weareunite/unisys-angular-tab-router": "^0.1.0",
     "@weareunite/unisys-angular-view-button": "^0.2.0",
+    "@weareunite/unisys-angular-app-state-service": "^0.2.0",
+    "@kolkov/angular-editor": "^0.13.1",
     "admin-lte": "^2.4.8",
     "apollo-angular": "^1.5.0",
     "apollo-angular-link-http": "^1.3.1",
