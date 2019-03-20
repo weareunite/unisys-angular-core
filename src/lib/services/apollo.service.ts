@@ -61,8 +61,14 @@ export class ApolloService {
   }
 
   getMetaData(result) {
+
     let metaArray = [];
     let meta = this.metaData;
+
+    if (meta.length === 0) {
+      this.setDefaultMetaData();
+      meta = this.metaData;
+    }
 
     Object.keys(meta).forEach(function (index) {
       metaArray[meta[index]] = result[meta[index]];
@@ -106,9 +112,13 @@ export class ApolloService {
     return this;
   }
 
+  setDefaultMetaData() {
+    this.metaData = ['total', 'per_page', 'current_page', 'to', 'from'];
+  }
+
   setMetaData(metaData?: string[]) {
     if (!metaData) {
-      this.metaData = ['total', 'per_page', 'current_page', 'to', 'from'];
+      this.setDefaultMetaData();
     } else {
       this.metaData = metaData;
     }
