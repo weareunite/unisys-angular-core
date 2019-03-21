@@ -53,8 +53,8 @@ export class HelpComponent{
         this.modalRef = this.modalService.show(template, this.config);
     }
 
-    @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent){
-        if (event.keyCode === 112) {
+    @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+        if (event.key === 'F2') {
             this.openModal(this.template);
             this.helpService.getItemList();
             if (this.router.url) {
