@@ -35,7 +35,7 @@ export class HelpService extends BaseApolloService {
         .setQuery()
         .watchQuery();
 
-    apolloInstnc.valueChanges.subscribe(result => {
+    apolloInstnc.subscribe(result => {
       this.setItem(result.data[this.operationType]);
     });
   }

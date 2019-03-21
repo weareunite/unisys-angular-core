@@ -24,7 +24,7 @@ export class ApolloService {
   protected query;
 
   constructor(
-    public apollo: Apollo,
+    private apollo: Apollo,
     public httpLink: HttpLink,
     public auth: AuthService,
     public toastr: ToastrService,
@@ -226,7 +226,7 @@ export class ApolloService {
   }
 
   watchQuery() {
-    return this.apollo.watchQuery({query: this.query});
+    return this.apollo.query({query: this.query});
   }
 
   mutate() {

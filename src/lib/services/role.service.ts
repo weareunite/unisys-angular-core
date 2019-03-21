@@ -25,7 +25,7 @@ export class RoleService extends BaseApolloService{
             .watchQuery();
 
 
-        apolloInstnc.valueChanges.subscribe(result => {
+        apolloInstnc.subscribe(result => {
             this.setAllPermissions(result.data[operationType].data);
         });
     }

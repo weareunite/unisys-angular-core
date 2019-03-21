@@ -86,7 +86,7 @@ export abstract class BaseApolloService extends BaseService {
       .setQuery()
       .watchQuery();
 
-    apolloInstnc.valueChanges.subscribe(result => {
+    apolloInstnc.subscribe(result => {
       this.setItem(result.data[this.operationType]);
     });
   }
@@ -99,7 +99,7 @@ export abstract class BaseApolloService extends BaseService {
       .setQuery()
       .watchQuery();
 
-    apolloInstnc.valueChanges.subscribe(result => {
+    apolloInstnc.subscribe(result => {
       const updatedItem = result.data[this.operationType];
       this.setItem(updatedItem);
       this.itemList.forEach(function (entry, index, object) {
@@ -124,7 +124,7 @@ export abstract class BaseApolloService extends BaseService {
       .watchQuery();
 
 
-    apolloInstnc.valueChanges.subscribe(result => {
+    apolloInstnc.subscribe(result => {
       this.setItemList(result.data[this.operationTypePlural].data);
       this.setPaging(this.apollo.getMetaData(result.data[this.operationTypePlural]));
     });

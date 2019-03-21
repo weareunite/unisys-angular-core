@@ -50,7 +50,7 @@ export class SettingsService {
       .setQuery()
       .watchQuery();
 
-    apolloInstnc.valueChanges.subscribe(result => {
+    apolloInstnc.subscribe(result => {
       const data = result['data'][operationType];
       this.setSettings(data);
     });
@@ -70,7 +70,7 @@ export class SettingsService {
       .setQuery()
       .watchQuery();
 
-    apolloInstnc.valueChanges.subscribe(result => {
+    apolloInstnc.subscribe(result => {
       const data = result['data'][operationType];
       this.setCompany(data);
     });
@@ -89,7 +89,7 @@ export class SettingsService {
     //     .setSelection(this.selectionCompany)
     //     .watchQuery();
     //
-    // apolloInstnc.valueChanges.subscribe(result => {
+    // apolloInstnc.subscribe(result => {
     //     console.log(result);
     //     this.setCompany(result['data']);
     // });

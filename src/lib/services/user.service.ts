@@ -62,7 +62,7 @@ export class UserService extends BaseApolloService {
         .setQuery()
         .watchQuery();
 
-    apolloInstnc.valueChanges.subscribe(result => {
+    apolloInstnc.subscribe(result => {
       console.log(result);
       const data = result['data'][operationType];
       this.setUser(data);
