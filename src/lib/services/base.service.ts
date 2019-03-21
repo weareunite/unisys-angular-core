@@ -388,8 +388,8 @@ export abstract class BaseService {
         idArray['ids'].push(entry.id);
       }
     });
-    return this.http.put(this.url + '/massDelete', idArray).subscribe(data => {
-      for (var i = this.itemList.length - 1; i >= 0; i--) {
+    this.http.put(this.url + '/massDelete', idArray).subscribe(data => {
+      for (let i = this.itemList.length - 1; i >= 0; i--) {
         if (this.itemList[i].selected) {
           this.itemList.splice(i, 1);
         }

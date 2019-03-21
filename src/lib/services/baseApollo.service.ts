@@ -180,6 +180,33 @@ export abstract class BaseApolloService extends BaseService {
     });
   }
 
+  deleteSelected() {
+    const idArray = {
+      ids: []
+    };
+    this.itemList.forEach(function (entry, index) {
+      if (entry.selected) {
+        idArray['ids'].push(entry.id);
+      }
+    });
+
+    const apolloInstnc = this.apollo.setOperationName('mutation')
+        .setOperationType('massDelete' + this.firstLetterUp(this.operationType))
+        .setPostData(idArray)
+        .setSelection('')
+        .setQuery()
+        .mutate();
+
+    apolloInstnc.subscribe(data => {
+      for (let i = this.itemList.length - 1; i >= 0; i--) {
+        if (this.itemList[i].selected) {
+          this.itemList.splice(i, 1);
+        }
+      }
+      this.setItemList(this.itemList);
+    });
+  }
+
 // SETTERS
 
   protected setSelection(selection: string[]) {
