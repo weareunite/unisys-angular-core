@@ -91,7 +91,8 @@ export interface Role {
   guard_name: string,
   created_at: null,
   updated_at: null,
-  frontendPermissions: null,
+  frontend_permissions: null,
+  api_permissions: null,
   apiPermissions: null,
   selected?: boolean | undefined,
 }

@@ -14,21 +14,22 @@ export class RoleService extends BaseApolloService{
     protected operationTypePlural = 'roles';
 
     getAllPermissions(id?: number){
-        const operationType = 'permissions';
 
         const apolloInstnc = this.apollo.setOperationName('query')
-            .setOperationType(operationType)
+            .setOperationType(this.operationType)
             .setParams()
-            .setSelection(this.selection, 'data')
-            .setMetaData()
+            .setPostData({id: id})
+            .setSelection('id,name,frontend_permissions{id, name, guard_name, selected },api_permissions{id, name, guard_name, selected }')
+            .setMetaData([])
             .setQuery()
             .watchQuery();
 
-
         apolloInstnc.subscribe(result => {
-            this.setAllPermissions(result.data[operationType].data);
+            this.setAllPermissions(result.data[this.operationType]);
         });
     }
+
+
 
     setAllPermissions(itemList){
         this.allPermissions = itemList;
