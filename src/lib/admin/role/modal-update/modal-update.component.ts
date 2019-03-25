@@ -37,12 +37,13 @@ export class ModalUpdateComponent implements OnInit {
     this.permissionsListSubscription = this.service.permissionsChanged
       .subscribe(
         (item) => {
+          console.log(item);
           this.item = item;
-          this.pushListToForm('frontendPermissions', this.item.frontendPermissions);
-          this.pushListToForm('apiPermissions', this.item.apiPermissions);
+          this.pushListToForm('frontendPermissions', this.item.frontend_permissions);
+          this.pushListToForm('apiPermissions', this.item.api_permissions);
 
-          this.setValueOfGroup('frontendPermissions', this.item.frontendPermissions, true);
-          this.setValueOfGroup('apiPermissions', this.item.apiPermissions, true);
+          this.setValueOfGroup('frontendPermissions', this.item.frontend_permissions, true);
+          this.setValueOfGroup('apiPermissions', this.item.api_permissions, true);
         }
       );
 
@@ -162,9 +163,9 @@ export class ModalUpdateComponent implements OnInit {
 
     dataToSend['id'] = id;
     dataToSend['name'] = name;
-    dataToSend['permission_ids'] = formValues;
+    dataToSend['permissions_ids'] = formValues; // TODO toto by malo ist do servisu a nie tu
 
-    this.service.updateItemFromList(dataToSend);
+    this.service.updateItemFromList(dataToSend, dataToSend);
   }
 
   public create() {
