@@ -23,8 +23,7 @@ import { skLocale } from 'ngx-bootstrap/locale';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 
 // UniSys Modules
-// import {UnisysAngularTabRouterModule} from '@weareunite/unisys-angular-tab-router';
-import { UnisysAngularTabRouterModule } from '../../../../unisys-angular-tab-router/src/lib/unisys-angular-tab-router.module';
+import { UnisysAngularTabRouterModule } from '@weareunite/unisys-angular-tab-router';
 import { UnisysAngularFormGroupModule } from '@weareunite/unisys-angular-form-group';
 import { UnisysAngularInputWrapperModule } from '@weareunite/unisys-angular-input-wrapper';
 import { UnisysAngularViewButtonModule } from '@weareunite/unisys-angular-view-button';
