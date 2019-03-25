@@ -34,6 +34,12 @@
     "express",
     "express-graphql",
     "graphql",
-    "graphql-tag"
+    "graphql-tag",
+    "gulp",
+    "gulp-scan",
+    "pump",
+    "run-sequence",
+    "chalk",
+    "yargs"
   ]
 }

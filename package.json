@@ -1,6 +1,6 @@
 {
   "name": "@weareunite/unisys-angular-core",
-  "version": "1.0.13",
+  "version": "2.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -44,7 +44,13 @@
     "ngx-bootstrap": "^3.1.4",
     "ngx-permissions": ">=5.0.0",
     "ngx-toastr": ">=8.0.0",
-    "rxjs": "^6.3.3"
+    "rxjs": "^6.3.3",
+    "gulp": "^3.9.1",
+    "gulp-scan": "^0.1.4",
+    "pump": "^3.0.0",
+    "run-sequence": "^2.2.1",
+    "chalk": "^2.4.2",
+    "yargs": "^13.2.2"
   },
   "peerDependencies": {
     "@angular/common": "^7.2.0",
