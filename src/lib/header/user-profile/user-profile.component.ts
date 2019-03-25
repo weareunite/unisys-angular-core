@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {UserService} from '../../services/user.service';
-import {User} from '../../models';
-import {Subscription} from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../services/user.service';
+import { User } from '../../models';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-profile',
@@ -10,7 +10,7 @@ import {Subscription} from 'rxjs';
 })
 export class UserProfileComponent implements OnInit {
   public user;
-  private userSubscription: Subscription
+  private userSubscription: Subscription;
 
   constructor(
     private userService: UserService

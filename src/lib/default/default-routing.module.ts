@@ -1,8 +1,8 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {NgxPermissionsGuard} from 'ngx-permissions';
-import {DefaultComponent} from './default.component';
-import {AuthGuard} from '../services/auth-guard.service';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { NgxPermissionsGuard } from 'ngx-permissions';
+import { DefaultComponent } from './default.component';
+import { AuthGuard } from '../services/auth-guard.service';
 
 const defaultRoutes: Routes = [
   {
