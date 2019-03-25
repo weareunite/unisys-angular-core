@@ -22,7 +22,6 @@ export class UserService extends BaseApolloService {
 
   // Apollo
   protected selection = 'id, name, surname, username, email, roles {id, name}, frontend_permissions {id, name}';
-  protected paramsObj = ['id', 'name', 'surname', 'username', 'email'];
   protected operationType = 'user';
   protected operationTypePlural = 'users';
 
@@ -53,14 +52,14 @@ export class UserService extends BaseApolloService {
   loadProfile() {
     const operationType = 'profile';
 
-    let apolloInstnc =  this.apollo.setOperationName('query')
-        .setOperationType(operationType)
-        .setSelection(this.selection)
-        .setPostData()
-        .setMetaData([]) // TODO SET EMPTY VALUE SHOULD MAKE IT NULL
-        .setParams()
-        .setQuery()
-        .watchQuery();
+    let apolloInstnc = this.apollo.setOperationName('query')
+      .setOperationType(operationType)
+      .setSelection(this.selection)
+      .setPostData()
+      .setMetaData([]) // TODO SET EMPTY VALUE SHOULD MAKE IT NULL
+      .setParams()
+      .setQuery()
+      .watchQuery();
 
     apolloInstnc.subscribe(result => {
       console.log(result);
@@ -178,14 +177,14 @@ export class UserService extends BaseApolloService {
   updateUserFromList(item: User) {
     item.password === '' && delete item.password;
     item.password_confirmation === '' && delete item.password_confirmation;
-    item = this.createReferenceIdArray(item, ['roles'])
+    item = this.createReferenceIdArray(item, ['roles']);
     this.updateItemFromList(item, item);
   }
 
   pushUserToList(item: User) {
     item.password == '' && delete item.password;
     item.password_confirmation == '' && delete item.password_confirmation;
-    item = this.createReferenceIdArray(item, ['roles'])
+    item = this.createReferenceIdArray(item, ['roles']);
     this.pushItemToList(item);
   }
 }
