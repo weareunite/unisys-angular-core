@@ -191,11 +191,11 @@ export abstract class BaseApolloService extends BaseService {
     });
 
     const apolloInstnc = this.apollo.setOperationName('mutation')
-        .setOperationType('massDelete' + this.firstLetterUp(this.operationType))
-        .setPostData(idArray)
-        .setSelection('')
-        .setQuery()
-        .mutate();
+      .setOperationType('massDelete' + this.firstLetterUp(this.operationType))
+      .setPostData(idArray)
+      .setSelection('')
+      .setQuery()
+      .mutate();
 
     apolloInstnc.subscribe(data => {
       for (let i = this.itemList.length - 1; i >= 0; i--) {
@@ -231,21 +231,27 @@ export abstract class BaseApolloService extends BaseService {
   }
 
   protected generateGraphQlParams() {
-    this.paramsObj = {};
-    if (this.page) {
-      this.paramsObj['page'] = this.page;
-    }
-    if (this.limit) {
-      this.paramsObj['limit'] = this.limit;
-    }
-    if (this.order) {
-      this.paramsObj['order'] = this.order;
-    }
-    if (Object.keys(this.search).length > 0) {
-      this.paramsObj['search'] = this.search;
-    }
-    if (Object.keys(this.filter).length > 0) {
-      this.paramsObj['conditions'] = this.filter;
+
+    if (!this.paramsObj) {
+      this.paramsObj = {};
+
+
+      if (this.page) {
+        this.paramsObj['page'] = this.page;
+      }
+      if (this.limit) {
+        this.paramsObj['limit'] = this.limit;
+      }
+      if (this.order) {
+        this.paramsObj['order'] = this.order;
+      }
+
+      if (Object.keys(this.search).length > 0) {
+        this.paramsObj['search'] = this.search;
+      }
+      if (Object.keys(this.filter).length > 0) {
+        this.paramsObj['conditions'] = this.filter;
+      }
     }
 
     return this.paramsObj;
