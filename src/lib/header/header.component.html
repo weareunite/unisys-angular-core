@@ -5,26 +5,26 @@
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
         <!--<li class="dropdown messages-menu" appDropdown>-->
-          <!--<a class="dropdown-toggle" data-toggle="dropdown">-->
-          <!--&lt;!&ndash;<a class="dropdown-toggle" data-toggle="dropdown" (click)="onGetNotifications()">&ndash;&gt;-->
-            <!--<i class="fa fa-bell-o"></i>-->
-            <!--<span class="label label-danger">{{ notificationList?.length}}</span>-->
-          <!--</a>-->
-          <!--<ul class="dropdown-menu">-->
-            <!--<li class="header">počet nových správ : {{ notificationList?.length}}</li>-->
-            <!--<li>-->
-              <!--&lt;!&ndash; inner menu: contains the actual data&ndash;&gt;-->
-              <!--<ul class="menu">-->
-                <!--<li *ngFor="let notification of notificationList">-->
-                  <!--<a>-->
-                    <!--<h4>{{ notification.data.product_title}}<small><i class="fa fa-clock-o"></i> {{ notification.created_at | date : 'dd.M.y HH:mm' }}</small></h4>-->
-                    <!--<p> {{ notification.data.version_title}} - bola vytvorená</p>-->
-                  <!--</a>-->
-                <!--</li>-->
-              <!--</ul>-->
-            <!--</li>-->
-            <!--<li class="footer"><a routerLink="/notifications">Zobraziť všetky</a></li>-->
-          <!--</ul>-->
+        <!--<a class="dropdown-toggle" data-toggle="dropdown">-->
+        <!--&lt;!&ndash;<a class="dropdown-toggle" data-toggle="dropdown" (click)="onGetNotifications()">&ndash;&gt;-->
+        <!--<i class="fa fa-bell-o"></i>-->
+        <!--<span class="label label-danger">{{ notificationList?.length}}</span>-->
+        <!--</a>-->
+        <!--<ul class="dropdown-menu">-->
+        <!--<li class="header">počet nových správ : {{ notificationList?.length}}</li>-->
+        <!--<li>-->
+        <!--&lt;!&ndash; inner menu: contains the actual data&ndash;&gt;-->
+        <!--<ul class="menu">-->
+        <!--<li *ngFor="let notification of notificationList">-->
+        <!--<a>-->
+        <!--<h4>{{ notification.data.product_title}}<small><i class="fa fa-clock-o"></i> {{ notification.created_at | date : 'dd.M.y HH:mm' }}</small></h4>-->
+        <!--<p> {{ notification.data.version_title}} - bola vytvorená</p>-->
+        <!--</a>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--</li>-->
+        <!--<li class="footer"><a routerLink="/notifications">Zobraziť všetky</a></li>-->
+        <!--</ul>-->
         <!--</li>-->
         <li class="dropdown user user-menu" appDropdown>
           <a class="dropdown-toggle" data-toggle="dropdown">
@@ -38,6 +38,10 @@
           </ul>
         </li>
       </ul>
+    </div>
+    <div class="production-warning" *ngIf="!environment.production" translate>
+      <i class="fa fa-warning" aria-hidden="true"></i>
+      PRODUCTION_WARNING
     </div>
   </nav>
 </header>

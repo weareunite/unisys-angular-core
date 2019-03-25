@@ -1,10 +1,10 @@
-import {Component, ViewEncapsulation} from '@angular/core';
-import {AuthService} from './services/auth.service';
-import {Router} from '@angular/router';
-import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
-import {UserService} from './services/user.service';
-import {Subscription} from 'rxjs';
-import {SettingsService} from "./services/settings.service";
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
+import { AuthService } from './services/auth.service';
+import { Router } from '@angular/router';
+import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
+import { UserService } from './services/user.service';
+import { Subscription } from 'rxjs';
+import { SettingsService } from './services/settings.service';
 
 @Component({
   selector: 'app-root',
@@ -25,7 +25,7 @@ export class UnisysAngularCoreComponent {
     private settingsService: SettingsService,
     private appState: UnisysAngularAppStateServiceService,
     private router: Router,
-    public  auth: AuthService,
+    public  auth: AuthService
   ) {
     if (this.auth.isAuthenticated()) {
       this.user.loadProfile();

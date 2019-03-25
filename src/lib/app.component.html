@@ -1,6 +1,6 @@
 <div class="wrapper">
   <app-header *ngIf="auth.isAuthenticated()"></app-header>
-  <app-aside  *ngIf="auth.isAuthenticated()"></app-aside>
+  <app-aside *ngIf="auth.isAuthenticated()"></app-aside>
   <div class="loader" [ngClass]="{'active' : state != '' }">
     <span class="label label-danger" *ngIf="state == 'GET'" translate>LOADING</span>
     <span class="label label-danger" *ngIf="state == 'POST'" translate>SAVING</span>
