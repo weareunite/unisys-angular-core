@@ -128,6 +128,13 @@ export abstract class BaseService {
 
 // FILTERS
 
+  setIntervalsByViewState() {
+    if (this.appStateService.getViewState('app-filter')) {
+      this.setIntervalByForm(this.appStateService.getViewState('app-filter'));
+    }
+    return this;
+  }
+
   setFiltersByViewState() {
     if (this.appStateService.getViewState('app-filter')) {
       this.setFilterByForm(this.appStateService.getViewState('app-filter'));
@@ -197,6 +204,7 @@ export abstract class BaseService {
     } else {
       this.filter[key] = value;
     }
+
     return this;
   }
 
