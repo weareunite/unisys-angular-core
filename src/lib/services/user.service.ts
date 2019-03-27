@@ -50,6 +50,7 @@ export class UserService extends BaseApolloService {
   }
 
   loadProfile() {
+    this.permissionsService.loadPermissions(this.getLocalPermissions());
     const operationType = 'profile';
 
     let apolloInstnc = this.apollo.setOperationName('query')
