@@ -43,5 +43,7 @@
       <i class="fa fa-warning" aria-hidden="true"></i>
       PRODUCTION_WARNING
     </div>
+    <div class="browser-warning" *ngIf="!valid && browser !== undefined && version !== undefined" translate [innerHTML]="'BROWSER_WARNING' | translate: {browser: browser, version: version}">
+    </div>
   </nav>
 </header>

@@ -5,6 +5,7 @@ import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-
 import { UserService } from './services/user.service';
 import { Subscription } from 'rxjs';
 import { SettingsService } from './services/settings.service';
+import { BrowserSupportService } from './services/browser-support.service';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +24,7 @@ export class UnisysAngularCoreComponent {
   constructor(
     private user: UserService,
     private settingsService: SettingsService,
+    private browserSupportService: BrowserSupportService,
     private appState: UnisysAngularAppStateServiceService,
     private router: Router,
     public  auth: AuthService
@@ -36,6 +38,10 @@ export class UnisysAngularCoreComponent {
   }
 
   ngOnInit() {
+    this.browserSupportService.determineBrowser();
+    console.log('Valid browser ? ' + this.browserSupportService.isValid());
+    console.log('Browser : ' + this.browserSupportService.getBrowser());
+    console.log('Version : ' + this.browserSupportService.getVersion());
     this.stateSubscription = this.appState.stateChanged
       .subscribe(
         state => {
