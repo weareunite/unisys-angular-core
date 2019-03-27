@@ -4,6 +4,7 @@ import { AuthGuard } from './services/auth-guard.service';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: 'default', pathMatch: 'full'},
+  {path: 'app', redirectTo: 'default', pathMatch: 'full'},
   {path: 'default', redirectTo: 'admin/products', pathMatch: 'full'},
   {path: 'admin/roles', loadChildren: './admin/role/role.module#RoleModule'},
   {path: 'admin/settings', loadChildren: './admin/settings/settings.module#SettingsModule'},
