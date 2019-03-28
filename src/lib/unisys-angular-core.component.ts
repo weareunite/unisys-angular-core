@@ -39,9 +39,9 @@ export class UnisysAngularCoreComponent {
 
   ngOnInit() {
     this.browserSupportService.determineBrowser();
-    console.log('Valid browser ? ' + this.browserSupportService.isValid());
-    console.log('Browser : ' + this.browserSupportService.getBrowser());
-    console.log('Version : ' + this.browserSupportService.getVersion());
+    console.debug('Valid browser ? ' + this.browserSupportService.isValid());
+    console.debug('Browser : ' + this.browserSupportService.getBrowser());
+    console.debug('Version : ' + this.browserSupportService.getVersion());
     this.stateSubscription = this.appState.stateChanged
       .subscribe(
         state => {

@@ -63,7 +63,6 @@ export class UserService extends BaseApolloService {
       .watchQuery();
 
     apolloInstnc.subscribe(result => {
-      console.log(result);
       const data = result['data'][operationType];
       this.setUser(data);
       this.setPermissionsByProfile(data['frontend_permissions']);

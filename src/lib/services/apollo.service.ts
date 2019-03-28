@@ -216,8 +216,8 @@ export class ApolloService {
     if (removeQuotation) {
       requestString = requestString.replace(/['"]+/g, '');
     }
-
-    console.log(requestString);
+    
+    console.debug(['Apollo : ' + this.operationName + ' ' + this.operationType, requestString]);
 
     const query = gql`${requestString}`;
 
