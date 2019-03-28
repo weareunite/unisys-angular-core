@@ -210,6 +210,7 @@ export abstract class BaseService {
 
   setIntervalByForm(formObject) {
     this.setInterval();
+    this.setSearch();
 
     Object.keys(formObject).forEach(key => {
       let value = formObject[key];
@@ -224,6 +225,8 @@ export abstract class BaseService {
           dateValue = dateValue + ' 23:59:59';
         }
         this.setInterval(key, dateValue);
+      } else {
+        this.setInterval(key, value);
       }
     });
 
