@@ -218,7 +218,12 @@ export class ApolloService {
         }
 
         // Console debug of Apollo request in order - Operation name / Operation type / Query parameters / Full string
-        console.debug([this.operationName, this.operationType, params, requestString]);
+        console.debug('%c---------------------------------------------START----------------------------------------------', 'color:black;');
+        console.debug('%cQuery Type: %c' + this.operationName, 'color:red;font-weight:bold;', 'color:blue;');
+        console.debug('%cQuery Name: %c' + this.operationType, 'color:red;font-weight:bold;', 'color:blue;');
+        console.debug('%cParams: %c' + params, 'color:red;font-weight:bold;', 'color:blue;');
+        console.debug('%cFull Request: %c' + requestString, 'color:red;font-weight:bold;', 'color:blue;');
+        console.debug('%c----------------------------------------------END-----------------------------------------------', 'color:black;');
 
         const query = gql`${requestString}`;
 
