@@ -5,6 +5,7 @@ import { HttpService } from './http.service';
 import { Tag } from '../models';
 import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
 import { ApolloService } from './apollo.service';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -214,6 +215,10 @@ export abstract class BaseService {
 
     Object.keys(formObject).forEach(key => {
       let value = formObject[key];
+
+      if (moment(value, moment.ISO_8601, true).isValid()) {
+        value = new Date(value);
+      }
 
       if (value instanceof Date) {
 
