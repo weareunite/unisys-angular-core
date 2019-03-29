@@ -19,6 +19,12 @@
     <lib-unisys-angular-input-wrapper translation="ROLE" [group]="defaultForm" >
       <ng-select [items]="roleList" bindLabel="name" [multiple]="true" [hideSelected]="true"  formControlName="roles"></ng-select>
     </lib-unisys-angular-input-wrapper>
+    <lib-unisys-angular-input-wrapper translation="ACTIVE" [group]="defaultForm" fieldName="active">
+      <ng-select formControlName="active">
+        <ng-option [value]="true" translate>YES</ng-option>
+        <ng-option [value]="false" translate>NO</ng-option>
+      </ng-select>
+    </lib-unisys-angular-input-wrapper>
     <div class="form-footer">
       <button type="button" class="btn btn-sm btn-default" (click)="bsModalRef.hide()" translate>CLOSE</button>
       <div class="pull-right">
