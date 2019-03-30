@@ -213,6 +213,8 @@ export class ApolloService {
         }
         requestString = requestString + '}';
 
+        console.log(requestString);
+
         if (removeQuotation) {
             requestString = requestString.replace(/['"]+/g, '');
         }
