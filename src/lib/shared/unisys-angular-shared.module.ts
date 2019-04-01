@@ -16,7 +16,7 @@ import { ModalDeleteComponent } from './table/modal-delete/modal-delete.componen
 import { ModalTagComponent } from './table/modal-tag/modal-tag.component';
 import { ModalTagDeleteComponent } from './table/modal-tag-delete/modal-tag-delete.component';
 import { NgxPermissionsModule } from 'ngx-permissions';
-import { BsDatepickerModule, BsLocaleService, TooltipModule } from 'ngx-bootstrap';
+import { BsDatepickerModule, BsLocaleService, TimepickerModule, TooltipModule } from 'ngx-bootstrap';
 import { TruncateModule } from 'ng2-truncate';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { skLocale } from 'ngx-bootstrap/locale';
@@ -31,82 +31,84 @@ import { UnisysAngularProgressBarModule } from '@weareunite/unisys-angular-progr
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule,
-    UnisysAngularTabRouterModule,
-    UnisysAngularFormGroupModule,
-    UnisysAngularInputWrapperModule,
-    UnisysAngularViewButtonModule,
-    UnisysAngularProgressBarModule,
-    BsDatepickerModule,
-    HttpClientModule,
-    NgSelectModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgxPermissionsModule,
-    TooltipModule,
-    TruncateModule,
-    AngularEditorModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
-  ],
-  declarations: [
-    DropdownDirective,
-    FilterColumnsPipe,
-    FilterVisibilityPipe,
-    SlideAssetDirective,
-    SortByPipe,
-    TableComponent,
-    ModalDeleteComponent,
-    ModalTagComponent,
-    ModalTagDeleteComponent
-  ],
-  exports: [
-    CommonModule,
-    UnisysAngularTabRouterModule,
-    UnisysAngularFormGroupModule,
-    UnisysAngularInputWrapperModule,
-    UnisysAngularViewButtonModule,
-    UnisysAngularProgressBarModule,
-    TranslateModule,
-    DropdownDirective,
-    FilterColumnsPipe,
-    FilterVisibilityPipe,
-    SlideAssetDirective,
-    SortByPipe,
-    NgSelectModule,
-    FormsModule,
-    ReactiveFormsModule,
-    TableComponent,
-    BsDatepickerModule,
-    TruncateModule,
-    AngularEditorModule,
-  ],
-  entryComponents: [
-    ModalDeleteComponent,
-    ModalTagComponent,
-    ModalTagDeleteComponent
-  ]
+    imports: [
+        CommonModule,
+        RouterModule,
+        UnisysAngularTabRouterModule,
+        UnisysAngularFormGroupModule,
+        UnisysAngularInputWrapperModule,
+        UnisysAngularViewButtonModule,
+        UnisysAngularProgressBarModule,
+        BsDatepickerModule,
+        TimepickerModule,
+        HttpClientModule,
+        NgSelectModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgxPermissionsModule,
+        TooltipModule,
+        TruncateModule,
+        AngularEditorModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        })
+    ],
+    declarations: [
+        DropdownDirective,
+        FilterColumnsPipe,
+        FilterVisibilityPipe,
+        SlideAssetDirective,
+        SortByPipe,
+        TableComponent,
+        ModalDeleteComponent,
+        ModalTagComponent,
+        ModalTagDeleteComponent
+    ],
+    exports: [
+        CommonModule,
+        UnisysAngularTabRouterModule,
+        UnisysAngularFormGroupModule,
+        UnisysAngularInputWrapperModule,
+        UnisysAngularViewButtonModule,
+        UnisysAngularProgressBarModule,
+        TranslateModule,
+        DropdownDirective,
+        FilterColumnsPipe,
+        FilterVisibilityPipe,
+        SlideAssetDirective,
+        SortByPipe,
+        NgSelectModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TableComponent,
+        BsDatepickerModule,
+        TimepickerModule,
+        TruncateModule,
+        AngularEditorModule,
+    ],
+    entryComponents: [
+        ModalDeleteComponent,
+        ModalTagComponent,
+        ModalTagDeleteComponent
+    ]
 })
 export class UnisysAngularSharedModule {
-  constructor(
-    translate: TranslateService,
-    private localeService: BsLocaleService
-  ) {
-    defineLocale('sk', skLocale);
-    this.localeService.use('sk');
+    constructor(
+        translate: TranslateService,
+        private localeService: BsLocaleService
+    ) {
+        defineLocale('sk', skLocale);
+        this.localeService.use('sk');
 // userLang = translate.getBrowserLang(); for future translations
-    translate.setDefaultLang('sk');
-    translate.use('sk');
-  }
+        translate.setDefaultLang('sk');
+        translate.use('sk');
+    }
 }

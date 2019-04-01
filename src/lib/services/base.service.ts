@@ -216,7 +216,7 @@ export abstract class BaseService {
         this.setSearch();
 
         if (formObject) {
-            this.isIntervalSetted= true;
+            this.isIntervalSetted = true;
         } else {
             this.isIntervalSetted = false;
         }
@@ -239,6 +239,17 @@ export abstract class BaseService {
                 }
                 this.setInterval(key, dateValue);
             } else {
+
+                if (key === 'measurements_from' || key === 'measurements_to') {
+                    value = moment(value, 'DD.MM.YYYY').format('YYYY-MM-DD');
+
+                    if (key === 'measurements_from') {
+                        value = value + ' 00:00:01';
+                    } else if (key === 'measurements_to') {
+                        value = value + ' 23:59:59';
+                    }
+                }
+
                 this.setInterval(key, value);
             }
         });
@@ -568,6 +579,13 @@ export abstract class BaseService {
                 item[value] = '';
             }
             ;
+        });
+        return item;
+    }
+
+    public fixTimes(item, list: any[]) {
+        list.forEach(function (value) {
+            item[value] = moment(new Date(item[value])).format('HH:mm');
         });
         return item;
     }
