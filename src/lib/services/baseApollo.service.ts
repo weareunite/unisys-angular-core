@@ -210,6 +210,11 @@ export abstract class BaseApolloService extends BaseService {
 
 // SETTERS
 
+    protected setConditionFields(conditions: any[]) {
+        this.filter['conditions'] = conditions;
+        return this;
+    }
+
     protected setSelection(selection: string[]) {
         this.selection = this.fixColumnNamesForGraphQl(selection);
         return this;
@@ -236,7 +241,6 @@ export abstract class BaseApolloService extends BaseService {
         if (!this.paramsObj) {
             this.paramsObj = {};
 
-
             if (this.page) {
                 this.paramsObj['page'] = this.page;
             }
@@ -254,6 +258,7 @@ export abstract class BaseApolloService extends BaseService {
                 this.paramsObj['conditions'] = this.filter;
             }
         }
+
 
         return this.paramsObj;
     }

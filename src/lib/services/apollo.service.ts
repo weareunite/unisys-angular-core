@@ -152,7 +152,7 @@ export class ApolloService {
         return this;
     }
 
-    setQuery(removeQuotation: boolean = false) {
+    setQuery(removeQuotation: boolean = false, consolideConditions: boolean = false) {
 
         let operationName = '';
         if (!this.operationName) {
@@ -213,19 +213,24 @@ export class ApolloService {
         }
         requestString = requestString + '}';
 
-        console.log(requestString);
+        if (consolideConditions) {
+            requestString = requestString.replace(/"and"/g, 'and');
+            requestString = requestString.replace(/"or"/g, 'or');
+        }
 
         if (removeQuotation) {
             requestString = requestString.replace(/['"]+/g, '');
         }
 
+        console.log(requestString);
+
         // Console debug of Apollo request in order - Operation name / Operation type / Query parameters / Full string
-        console.debug('%c---------------------------------------------START----------------------------------------------', 'color:black;');
-        console.debug('%cQuery Type: %c' + this.operationName, 'color:red;font-weight:bold;', 'color:blue;');
-        console.debug('%cQuery Name: %c' + this.operationType, 'color:red;font-weight:bold;', 'color:blue;');
-        console.debug('%cParams: %c' + params, 'color:red;font-weight:bold;', 'color:blue;');
-        console.debug('%cFull Request: %c' + requestString, 'color:red;font-weight:bold;', 'color:blue;');
-        console.debug('%c----------------------------------------------END-----------------------------------------------', 'color:black;');
+        // console.debug('%c---------------------------------------------START----------------------------------------------', 'color:black;');
+        // console.debug('%cQuery Type: %c' + this.operationName, 'color:red;font-weight:bold;', 'color:blue;');
+        // console.debug('%cQuery Name: %c' + this.operationType, 'color:red;font-weight:bold;', 'color:blue;');
+        // console.debug('%cParams: %c' + params, 'color:red;font-weight:bold;', 'color:blue;');
+        // console.debug('%cFull Request: %c' + requestString, 'color:red;font-weight:bold;', 'color:blue;');
+        // console.debug('%c----------------------------------------------END-----------------------------------------------', 'color:black;');
 
         const query = gql`${requestString}`;
 
