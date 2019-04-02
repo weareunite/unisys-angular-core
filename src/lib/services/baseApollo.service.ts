@@ -237,30 +237,23 @@ export abstract class BaseApolloService extends BaseService {
     }
 
     protected generateGraphQlParams() {
-
-        if (!this.paramsObj) {
-            this.paramsObj = {};
-
-            if (this.page) {
-                this.paramsObj['page'] = this.page;
-            }
-            if (this.limit) {
-                this.paramsObj['limit'] = this.limit;
-            }
-            if (this.order) {
-                this.paramsObj['order'] = this.order;
-            }
-
-            if (Object.keys(this.search).length > 0) {
-                this.paramsObj['search'] = this.search;
-            }
-            if (Object.keys(this.filter).length > 0) {
-                this.paramsObj['conditions'] = this.filter;
-            }
+        const paramsObj = {};
+        if (this.page) {
+            paramsObj['page'] = this.page;
         }
-
-
-        return this.paramsObj;
+        if (this.limit) {
+            paramsObj['limit'] = this.limit;
+        }
+        if (this.order) {
+            paramsObj['order'] = this.order;
+        }
+        if (Object.keys(this.search).length > 0) {
+            paramsObj['search'] = this.search;
+        }
+        if (Object.keys(this.filter).length > 0) {
+            paramsObj['conditions'] = this.filter;
+        }
+        return paramsObj;
     }
 
     protected fixColumnNamesForGraphQl(input) {
