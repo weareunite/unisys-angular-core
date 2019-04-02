@@ -23,6 +23,7 @@ import { CoreService } from './services/core.service';
 import { MenuItem } from './models';
 import { ApolloService } from './services/apollo.service';
 import { AdminHelpModule } from './admin/help/admin-help.module';
+import { AdminLogModule } from './admin/log/admin-log.module';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { AdminHelpModule } from './admin/help/admin-help.module';
     UsersModule,
     RoleModule,
     AdminHelpModule,
+    AdminLogModule,
     CoreModule,
     UnisysAngularSharedModule,
     AuthModule,

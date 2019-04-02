@@ -1,16 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap';
 import {MenuItem} from '../../models';
-import {ModalUpdateComponent} from './modal-update/modal-update.component';
 import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
-import { HelpService } from '../../services/help.service';
+import { ActivityLogService } from '../../services/activity-log.service';
 
 @Component({
-  selector: 'app-admin-help',
-  templateUrl: './admin-help.component.html',
-  styleUrls: ['./admin-help.component.css']
+  selector: 'lib-app-admin-log',
+  templateUrl: './admin-log.component.html',
+  styleUrls: ['./admin-log.component.css']
 })
-export class AdminHelpComponent implements OnInit {
+export class AdminLogComponent implements OnInit {
 
   public selectedColumns;
   public item;
@@ -23,7 +22,7 @@ export class AdminHelpComponent implements OnInit {
 
   constructor(
     private     modalService: BsModalService,
-    public      helpService: HelpService,
+    public      activityLogService: ActivityLogService,
     protected   appStateService: UnisysAngularAppStateServiceService,
   ) {
     this.context = this;
@@ -35,23 +34,16 @@ export class AdminHelpComponent implements OnInit {
       {routerLink: ['/admin', 'logs'], permission: 'admin.log', translation: 'APP_LOGS', icon: ''},
     ];
 
-    this.actionList = [
-      {
-        translation: 'ADD_NEW_HELP', permission: 'admin.help.create', visibility: true, action: function () {
-          this.openModalCreate();
-        }
-      },
-    ];
-
     this.selectedColumns = [
       {translation: 'ID', key: 'id', sortable: true, type: 'number'},
-      {translation: 'NAME', key: 'name', sortable: true, type: 'string'},
-      {translation: 'URL', key: 'key', sortable: false, type: 'string'},
+      {translation: 'CREATED_AT', key: 'created_at', sortable: true, type: 'number'},
+      {translation: 'DESCRIPTION', key: 'description', sortable: true, type: 'string'},
+      {translation: 'SUBJECT_TYPE', key: 'subject_type', sortable: true, type: 'string'},
       {
-        translation: 'ACTION', key: 'action', sortable: false, type: 'action', options: [
+        translation: 'ACTION', key: 'id', sortable: false, type: 'action', options: [
           {
             translation: 'UPDATE_ITEM', permission: 'admin.help.update', visibility: true, action: function (item) {
-              this.openModalEdit(item);
+              // this.openModalEdit(item);
             }
           }
         ]
@@ -59,9 +51,9 @@ export class AdminHelpComponent implements OnInit {
     ];
 
     this.settings = {
-      permission: 'admin.help',
+      permission: 'admin.log',
       sortBy: 'id',
-      visibleColumns: ['id', 'name', 'key', 'action'],
+      visibleColumns: ['id', 'created_at', 'description', 'subject_type'],
       rowsOnPageOptions: [50, 100, 200],
       rowsOnPage: 50,
       activePage: 1,
@@ -70,22 +62,4 @@ export class AdminHelpComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  public openModalCreate() {
-    let initialState = {
-      context: this.context,
-      service: this.helpService,
-    };
-    this.bsModalRef = this.modalService.show(ModalUpdateComponent, {initialState});
-  }
-
-  public openModalEdit(item) {
-    let initialState = {
-      context: this.context,
-      item: item,
-      service: this.helpService,
-    };
-    this.bsModalRef = this.modalService.show(ModalUpdateComponent, {initialState});
-  }
-
 }
