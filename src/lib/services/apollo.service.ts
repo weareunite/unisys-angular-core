@@ -167,20 +167,33 @@ export class ApolloService {
 
         if (queryParams && operationName.includes('query')) {
 
+            let baseParams = {};
             let filterParams = {};
             let paginateParams = {};
 
             Object.keys(queryParams).forEach(function (index) {
                 if (index === 'limit' || index === 'page') {
                     paginateParams[index] = queryParams[index];
+                } else if (index === 'base') {
+                    baseParams = queryParams[index];
                 } else {
                     filterParams[index] = queryParams[index];
                 }
             });
 
-            params = 'filter:' + JSON.stringify(filterParams) + ',paging:' + JSON.stringify(paginateParams);
+            if (Object.keys(baseParams).length > 0) {
+                params += JSON.stringify(baseParams);
+                params = params.substring(0, params.length - 1);
+                params = params + ',';
+            }
+
+            params = params + 'filter:' + JSON.stringify(filterParams) + ',paging:' + JSON.stringify(paginateParams);
+
+            if (Object.keys(baseParams).length > 0) {
+                params = params + '}';
+            }
         } else {
-            params = JSON.stringify(this.postData);
+            params = params + JSON.stringify(this.postData);
         }
 
         if (params) {
@@ -196,7 +209,7 @@ export class ApolloService {
 
         let requestString = '';
 
-        if (params) {
+        if (params && params !== 'undefined') {
             requestString = operationName + '{' + this.operationType + '(' + params + ')';
         } else {
             requestString = operationName + '{' + this.operationType;
