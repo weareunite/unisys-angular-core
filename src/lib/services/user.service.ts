@@ -13,178 +13,179 @@ import { ApolloService } from './apollo.service';
 import { BaseApolloService } from './baseApollo.service';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class UserService extends BaseApolloService {
-  public userChanged = new Subject();
-  private User: User;
-  protected url = 'user';
+    public userChanged = new Subject();
+    private User: User;
+    protected url = 'user';
 
-  // Apollo
-  protected selection = 'id, name, surname, username, email, roles {id, name}, frontend_permissions {id, name}';
-  protected operationType = 'user';
-  protected operationTypePlural = 'users';
+    // Apollo
+    protected selection = 'id, active,name, surname, username, email, roles {id, name}, frontend_permissions {id, name}';
+    protected paramsObj = {conditions: [{field: 'active', operator: 'and', values: ['true']}]};
+    protected operationType = 'user';
+    protected operationTypePlural = 'users';
 
-  constructor(
-    protected auth: AuthService,
-    protected http: HttpService,
-    protected apollo: ApolloService,
-    protected httpAngular: HttpClient,
-    protected router: Router,
-    protected notificationService: NotificationService,
-    protected toastrService: ToastrService,
-    protected appStateService: UnisysAngularAppStateServiceService,
-    private   permissionsService: NgxPermissionsService,
-    @Inject('env') private environment,
-  ) {
-    super(http, appStateService, apollo);
-  }
-
-
-  getLocalPermissions() {
-    if (localStorage.getItem('permissions')) {
-      return JSON.parse(localStorage.getItem('permissions'));
-    } else {
-      return ['default'];
+    constructor(
+        protected auth: AuthService,
+        protected http: HttpService,
+        protected apollo: ApolloService,
+        protected httpAngular: HttpClient,
+        protected router: Router,
+        protected notificationService: NotificationService,
+        protected toastrService: ToastrService,
+        protected appStateService: UnisysAngularAppStateServiceService,
+        private   permissionsService: NgxPermissionsService,
+        @Inject('env') private environment,
+    ) {
+        super(http, appStateService, apollo);
     }
-  }
-
-  loadProfile() {
-    this.permissionsService.loadPermissions(this.getLocalPermissions());
-    const operationType = 'profile';
-
-    let apolloInstnc = this.apollo.setOperationName('query')
-      .setOperationType(operationType)
-      .setSelection(this.selection)
-      .setPostData()
-      .setMetaData([]) // TODO SET EMPTY VALUE SHOULD MAKE IT NULL
-      .setParams()
-      .setQuery()
-      .watchQuery();
-
-    apolloInstnc.subscribe(result => {
-      const data = result['data'][operationType];
-      this.setUser(data);
-      this.setPermissionsByProfile(data['frontend_permissions']);
-      if (this.router.url === '/signin') {
-        this.router.navigate(['/default']);
-      }
-    });
-  }
-
-  destroyProfile() {
-    this.destroyPermisions();
-    this.setUser(null);
-  }
-
-  getUser() {
-    return this.User;
-  }
-
-  setUser(user) {
-    this.User = user;
-    this.userChanged.next(this.User);
-  }
-
-  setPermissionsByProfile(permissions) {
-
-    const permissionNames = [];
-
-    Object.keys(permissions).forEach(key => {
-      permissionNames.push(permissions[key]['name']);
-    });
-
-    localStorage.setItem('permissions', JSON.stringify(permissionNames));
-    this.permissionsService.loadPermissions(permissionNames);
-
-  }
-
-  destroyPermisions() {
-    localStorage.removeItem('permissions');
-    this.permissionsService.flushPermissions();
-  }
 
 
-  singinUser(email: string, password: string) {
+    getLocalPermissions() {
+        if (localStorage.getItem('permissions')) {
+            return JSON.parse(localStorage.getItem('permissions'));
+        } else {
+            return ['default'];
+        }
+    }
 
-    const postData = {
-      grant_type: 'password',
-      client_id: this.environment.OAUTH_CLIENT_ID,
-      client_secret: this.environment.OAUTH_CLIENT_SECRET,
-      username: email,
-      password: password,
-      scope: ''
-    };
+    loadProfile() {
+        this.permissionsService.loadPermissions(this.getLocalPermissions());
+        const operationType = 'profile';
 
-    return this.httpAngular.post(this.environment.OAUTH_TOKEN_URL, postData, {
-      headers: new HttpHeaders().set('Content-Type', 'application/json'),
-    })
-      .subscribe(data => {
-        this.auth.setAccessToken(data['access_token']);
-        this.toastrService.success('', 'Vitajte v systéme UniSys.');
-        this.loadProfile();
-      }, error => {
-        this.toastrService.error('Neplatné prihlasovacie údaje', 'Chyba');
-      });
-  }
+        let apolloInstnc = this.apollo.setOperationName('query')
+            .setOperationType(operationType)
+            .setSelection(this.selection)
+            .setPostData()
+            .setMetaData([]) // TODO SET EMPTY VALUE SHOULD MAKE IT NULL
+            .setParams()
+            .setQuery()
+            .watchQuery();
 
-  quickSinginUser(code: string) {
-    const postData = {
-      short_code: code,
-    };
+        apolloInstnc.subscribe(result => {
+            const data = result['data'][operationType];
+            this.setUser(data);
+            this.setPermissionsByProfile(data['frontend_permissions']);
+            if (this.router.url === '/signin') {
+                this.router.navigate(['/default']);
+            }
+        });
+    }
 
-    return this.httpAngular.post(this.environment.OAUTH_FAST_TOKEN_URL, postData, {
-      headers: new HttpHeaders()
-        .set('Content-Type', 'application/json')
-        .append('Accept', 'application/json')
-        .append('Authorization', 'Bearer ' + this.auth.getOneTimeToken())
-    })
-      .subscribe(data => {
-        this.auth.setAccessToken(data['access_token']);
-        this.loadProfile();
-        this.router.navigate(['/']);
-        this.auth.unsetOneTimeToken();
-        this.toastrService.success('Vitajte v systéme UniSys', 'Bolo použité rýchle prihlásenie');
-      }, error => {
-        this.toastrService.error('Neplatné prihlasovacie údaje', 'Chyba');
-      });
-  }
+    destroyProfile() {
+        this.destroyPermisions();
+        this.setUser(null);
+    }
 
-  getOneTimeToken() {
-    const postData = {
-      grant_type: 'client_credentials',
-      client_id: this.environment.OAUTH_CLIENT_ID,
-      client_secret: this.environment.OAUTH_CLIENT_SECRET,
-      scope: ''
-    };
+    getUser() {
+        return this.User;
+    }
 
-    return this.httpAngular.post(this.environment.OAUTH_TOKEN_URL, postData, {
-      headers: new HttpHeaders().set('Content-Type', 'application/json'),
-    })
-      .subscribe(data => {
-        this.auth.setOneTimeToken(data['access_token']);
-      }, error => {
-      });
-  }
+    setUser(user) {
+        this.User = user;
+        this.userChanged.next(this.User);
+    }
+
+    setPermissionsByProfile(permissions) {
+
+        const permissionNames = [];
+
+        Object.keys(permissions).forEach(key => {
+            permissionNames.push(permissions[key]['name']);
+        });
+
+        localStorage.setItem('permissions', JSON.stringify(permissionNames));
+        this.permissionsService.loadPermissions(permissionNames);
+
+    }
+
+    destroyPermisions() {
+        localStorage.removeItem('permissions');
+        this.permissionsService.flushPermissions();
+    }
 
 
-  logOut() {
-    this.auth.unsetAccessToken();
-    this.destroyProfile();
-    this.router.navigate(['/signin']);
-  }
+    singinUser(email: string, password: string) {
 
-  updateUserFromList(item: User) {
-    item.password === '' && delete item.password;
-    item.password_confirmation === '' && delete item.password_confirmation;
-    item = this.createReferenceIdArray(item, ['roles']);
-    this.updateItemFromList(item, item);
-  }
+        const postData = {
+            grant_type: 'password',
+            client_id: this.environment.OAUTH_CLIENT_ID,
+            client_secret: this.environment.OAUTH_CLIENT_SECRET,
+            username: email,
+            password: password,
+            scope: ''
+        };
 
-  pushUserToList(item: User) {
-    item.password == '' && delete item.password;
-    item.password_confirmation == '' && delete item.password_confirmation;
-    item = this.createReferenceIdArray(item, ['roles']);
-    this.pushItemToList(item);
-  }
+        return this.httpAngular.post(this.environment.OAUTH_TOKEN_URL, postData, {
+            headers: new HttpHeaders().set('Content-Type', 'application/json'),
+        })
+            .subscribe(data => {
+                this.auth.setAccessToken(data['access_token']);
+                this.toastrService.success('', 'Vitajte v systéme UniSys.');
+                this.loadProfile();
+            }, error => {
+                this.toastrService.error('Neplatné prihlasovacie údaje', 'Chyba');
+            });
+    }
+
+    quickSinginUser(code: string) {
+        const postData = {
+            short_code: code,
+        };
+
+        return this.httpAngular.post(this.environment.OAUTH_FAST_TOKEN_URL, postData, {
+            headers: new HttpHeaders()
+                .set('Content-Type', 'application/json')
+                .append('Accept', 'application/json')
+                .append('Authorization', 'Bearer ' + this.auth.getOneTimeToken())
+        })
+            .subscribe(data => {
+                this.auth.setAccessToken(data['access_token']);
+                this.loadProfile();
+                this.router.navigate(['/']);
+                this.auth.unsetOneTimeToken();
+                this.toastrService.success('Vitajte v systéme UniSys', 'Bolo použité rýchle prihlásenie');
+            }, error => {
+                this.toastrService.error('Neplatné prihlasovacie údaje', 'Chyba');
+            });
+    }
+
+    getOneTimeToken() {
+        const postData = {
+            grant_type: 'client_credentials',
+            client_id: this.environment.OAUTH_CLIENT_ID,
+            client_secret: this.environment.OAUTH_CLIENT_SECRET,
+            scope: ''
+        };
+
+        return this.httpAngular.post(this.environment.OAUTH_TOKEN_URL, postData, {
+            headers: new HttpHeaders().set('Content-Type', 'application/json'),
+        })
+            .subscribe(data => {
+                this.auth.setOneTimeToken(data['access_token']);
+            }, error => {
+            });
+    }
+
+
+    logOut() {
+        this.auth.unsetAccessToken();
+        this.destroyProfile();
+        this.router.navigate(['/signin']);
+    }
+
+    updateUserFromList(item: User) {
+        item.password === '' && delete item.password;
+        item.password_confirmation === '' && delete item.password_confirmation;
+        item = this.createReferenceIdArray(item, ['roles']);
+        this.updateItemFromList(item, item);
+    }
+
+    pushUserToList(item: User) {
+        item.password == '' && delete item.password;
+        item.password_confirmation == '' && delete item.password_confirmation;
+        item = this.createReferenceIdArray(item, ['roles']);
+        this.pushItemToList(item);
+    }
 }
