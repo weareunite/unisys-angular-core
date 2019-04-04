@@ -28,6 +28,7 @@ import { UnisysAngularFormGroupModule } from '@weareunite/unisys-angular-form-gr
 import { UnisysAngularInputWrapperModule } from '@weareunite/unisys-angular-input-wrapper';
 import { UnisysAngularViewButtonModule } from '@weareunite/unisys-angular-view-button';
 import { UnisysAngularProgressBarModule } from '@weareunite/unisys-angular-progress-bar';
+import { LogViewComponent } from './log-view/log-view.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -36,23 +37,23 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
     imports: [
-        CommonModule,
-        RouterModule,
-        UnisysAngularTabRouterModule,
-        UnisysAngularFormGroupModule,
-        UnisysAngularInputWrapperModule,
-        UnisysAngularViewButtonModule,
-        UnisysAngularProgressBarModule,
+        AngularEditorModule,
         BsDatepickerModule,
-        TimepickerModule,
+        CommonModule,
+        FormsModule,
         HttpClientModule,
         NgSelectModule,
-        FormsModule,
-        ReactiveFormsModule,
         NgxPermissionsModule,
+        ReactiveFormsModule,
+        RouterModule,
+        TimepickerModule,
         TooltipModule,
         TruncateModule,
-        AngularEditorModule,
+        UnisysAngularFormGroupModule,
+        UnisysAngularInputWrapperModule,
+        UnisysAngularProgressBarModule,
+        UnisysAngularTabRouterModule,
+        UnisysAngularViewButtonModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -65,34 +66,36 @@ export function HttpLoaderFactory(http: HttpClient) {
         DropdownDirective,
         FilterColumnsPipe,
         FilterVisibilityPipe,
+        ModalDeleteComponent,
+        ModalTagComponent,
+        ModalTagDeleteComponent,
         SlideAssetDirective,
         SortByPipe,
         TableComponent,
-        ModalDeleteComponent,
-        ModalTagComponent,
-        ModalTagDeleteComponent
+        LogViewComponent,
     ],
     exports: [
+        AngularEditorModule,
+        BsDatepickerModule,
         CommonModule,
-        UnisysAngularTabRouterModule,
-        UnisysAngularFormGroupModule,
-        UnisysAngularInputWrapperModule,
-        UnisysAngularViewButtonModule,
-        UnisysAngularProgressBarModule,
-        TranslateModule,
         DropdownDirective,
         FilterColumnsPipe,
         FilterVisibilityPipe,
+        FormsModule,
+        NgSelectModule,
+        ReactiveFormsModule,
         SlideAssetDirective,
         SortByPipe,
-        NgSelectModule,
-        FormsModule,
-        ReactiveFormsModule,
         TableComponent,
-        BsDatepickerModule,
         TimepickerModule,
+        TranslateModule,
         TruncateModule,
-        AngularEditorModule,
+        UnisysAngularFormGroupModule,
+        UnisysAngularInputWrapperModule,
+        UnisysAngularProgressBarModule,
+        UnisysAngularTabRouterModule,
+        UnisysAngularViewButtonModule,
+        LogViewComponent,
     ],
     entryComponents: [
         ModalDeleteComponent,

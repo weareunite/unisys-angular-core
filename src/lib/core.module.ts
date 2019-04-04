@@ -14,6 +14,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { HttpLinkModule } from 'apollo-angular-link-http';
 import { ApolloModule } from 'apollo-angular';
 import { HelpComponent } from './help/help.component';
+import { LogEverywhereComponent } from './log-everywhere/log-everywhere.component';
 
 @NgModule({
     imports: [
@@ -29,7 +30,7 @@ import { HelpComponent } from './help/help.component';
         TabsModule.forRoot(),
         TooltipModule.forRoot(),
         ApolloModule,
-        HttpLinkModule
+        HttpLinkModule,
     ],
     declarations: [
         AsideComponent,
@@ -38,6 +39,7 @@ import { HelpComponent } from './help/help.component';
         UserProfileComponent,
         AppSettingsComponent,
         HelpComponent,
+        LogEverywhereComponent,
     ],
     exports: [
         AsideComponent,
@@ -47,6 +49,7 @@ import { HelpComponent } from './help/help.component';
         AppRoutingModule,
         ApolloModule,
         HttpLinkModule,
+        LogEverywhereComponent,
     ]
 })
 export class CoreModule {

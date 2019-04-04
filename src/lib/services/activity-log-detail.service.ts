@@ -8,7 +8,7 @@ import { BaseApolloService } from './baseApollo.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ActivityLogService extends BaseApolloService {
+export class ActivityLogDetailService extends BaseApolloService {
   private activityLog: activityLog;
 
   // Apollo
@@ -16,6 +16,10 @@ export class ActivityLogService extends BaseApolloService {
   protected selectionPlural = 'id, description, subject_type, subject_id, properties, created_at, causer_id';
   protected operationType = 'activityLog';
   protected operationTypePlural = 'activityLogs';
+  protected page: number = 1;
+  protected limit: number = 100;
+  protected order: string = 'id';
+  protected search: any = {};
 
   constructor(
     protected http: HttpService,

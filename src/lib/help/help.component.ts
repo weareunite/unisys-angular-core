@@ -1,7 +1,6 @@
 import { Component, HostListener, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalService } from 'ngx-bootstrap/modal';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import { HttpClient } from '@angular/common/http';
 import { HelpService } from '../services/help.service';
 import { Help } from '../models';
 import { Subscription } from 'rxjs';
@@ -55,6 +54,7 @@ export class HelpComponent{
 
     @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
         if (event.key === 'F2') {
+            console.log(this.template);
             this.openModal(this.template);
             this.helpService.getItemList();
             if (this.router.url) {

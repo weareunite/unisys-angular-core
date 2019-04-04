@@ -17,7 +17,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ApolloService {
     protected operationName: string;
     protected operationType: string;
-    protected params: object;
+    protected params: object = null;
     protected postData: object;
     protected selection: string;
     protected metaData: string[];
@@ -154,29 +154,41 @@ export class ApolloService {
 
     setQuery(removeQuotation: boolean = false, consolideConditions: boolean = false) {
 
-        let operationName = '';
         if (!this.operationName) {
-            operationName = 'query';
-        } else {
-            operationName = this.operationName;
+            this.setOperationName('query');
         }
 
         let params = '';
         let metaData = '';
-        let queryParams = this.params;
 
-        if (queryParams && operationName.includes('query')) {
+        console.log(this.params)
+
+        if (this.params && this.operationName.includes('query')) {
 
             let filterParams = {};
             let paginateParams = {};
 
-            Object.keys(queryParams).forEach(function (index) {
+            Object.keys(this.params).forEach(function (index) {
                 if (index === 'limit' || index === 'page') {
-                    paginateParams[index] = queryParams[index];
+                    paginateParams[index] = this.params[index];
+                }else if(index === 'order') {
+                    filterParams[index] = this.params[index];
                 } else {
-                    filterParams[index] = queryParams[index];
+                    if (!filterParams['conditions']) {
+                        filterParams['conditions'] = [];
+                    }
+                    Object.keys(this.params[index]).forEach(function (subIndex) {
+                        let data = [];
+                        if (Array.isArray(this.params[index][subIndex])) {
+                            data = this.params[index][subIndex];
+                        } else {
+                            data.push(this.params[index][subIndex]);
+                        }
+                        filterParams['conditions'].push({field: subIndex, values: data.map(String)});
+                    }, this);
+                    console.log(filterParams);
                 }
-            });
+            }, this);
 
             params = 'filter:' + JSON.stringify(filterParams) + ',paging:' + JSON.stringify(paginateParams);
         } else {
@@ -197,9 +209,9 @@ export class ApolloService {
         let requestString = '';
 
         if (params) {
-            requestString = operationName + '{' + this.operationType + '(' + params + ')';
+            requestString = this.operationName + '{' + this.operationType + '(' + params + ')';
         } else {
-            requestString = operationName + '{' + this.operationType;
+            requestString = this.operationName + '{' + this.operationType;
         }
 
         if (this.selection) {
