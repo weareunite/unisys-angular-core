@@ -162,8 +162,8 @@
       <!-- /.box-body -->
       <div class="box-footer clearfix" *ngIf="service.pageList.length">
         <div class="col-sm-5">
-          <div class="dataTables_info" translate [translateParams]="{from: service.meta?.from, to: service.meta?.to, total: service.meta?.total}">
-            SHOWING_FROM_TO_OF
+          <div class="dataTables_info">
+            <span translate>SHOWING:</span> {{ service.meta?.from}} - {{ service.meta?.to}} <span translate>OF</span> {{ service.meta?.total}}
           </div>
         </div>
         <div class="col-sm-7">

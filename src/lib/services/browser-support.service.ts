@@ -44,7 +44,7 @@ export class BrowserSupportService {
     let valid = null;
 
     if (browser === 'Chrome') {
-      if (version >= 70) {
+      if (version >= 70) { // TODO this could be in enviroment
         valid = true;
       }
     } else if (browser === 'Firefox') {

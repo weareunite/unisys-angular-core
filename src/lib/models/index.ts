@@ -105,3 +105,16 @@ export interface Help {
     body: string;
     selected?: boolean | undefined;
 }
+
+export interface activityLog {
+    id: number;
+    log_name: string;
+    description: string;
+    properties: string;
+    subject_id: string;
+    subject_type: string;
+    causer_id: number;
+    causer_type: string;
+    created_at: Date;
+    selected?: boolean | undefined;
+}

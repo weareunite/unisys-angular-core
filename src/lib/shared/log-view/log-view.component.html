@@ -1,0 +1,91 @@
+<div [ngClass]="customClass">
+
+    <div class="box">
+        <div class="box-header" style="height: 35px;">
+            <h3 class="box-title">{{ subjectType}} - ({{ subjectId}})</h3>
+            <div class="box-tools pull-right">
+                <div appDropdown [autoclose]=false style="position: relative;float: left; margin-left: 3px;">
+                    <a class="btn btn-xs btn-default" data-toggle="dropdown"> <i class="fa fa-cog"></i> </a>
+                    <ul class="dropdown-menu row-select" style="left: inherit; right: 0px">
+                        <div>
+                            <h5 translate>ROWS</h5>
+                            <select (change)="setPageSize(settings.rowsOnPage)" [(ngModel)]="settings.rowsOnPage">
+                                <option *ngFor="let item of settings.rowsOnPageOptions" [ngValue]="item">{{item}}</option>
+                            </select>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding table-responsive box-comments">
+            <div *ngIf="data?.length > 0 ; else noRows">
+                <div class="box-comment" *ngFor="let item of data">
+                    <div class="comment-text">
+                        <span class="username">
+                            <span translate>{{ item.description}}</span>  <span class="text-muted" style="margin-left: 10px" translate>USER</span><span class="text-muted" translate>: {{ item.causer_id}}</span><span class="text-muted pull-right">{{ item.created_at | date:'dd.MM yyyy HH:mm'}}</span>
+                        </span>
+                        <div class="row" *ngIf="item.properties">
+                            <div *ngIf="parseString(item.properties).attributes" class="detail col-sm-6">
+                                <h6 translate>NEW_VALUE</h6>
+                                <ul>
+                                    <li *ngFor="let attribute of parseString(item.properties).attributes | keyvalue">
+                                        <b translate>{{attribute.key}}</b> : <span *ngIf="attribute.value ; else noValue">{{attribute.value}}</span></li>
+                                </ul>
+                            </div>
+                            <div *ngIf="parseString(item.properties).old" class="detail col-sm-6">
+                                <h6 translate>OLD_VALUE</h6>
+                                <ul>
+                                    <li *ngFor="let attribute of parseString(item.properties).old | keyvalue">
+                                        <b translate>{{attribute.key}}</b> :<span *ngIf="attribute.value ; else noValue">{{attribute.value}}</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--<button class="btn btn-primary btn-xs pull-right" (click)="setReference(1)" translate>-->
+                            <!--SET_REFERENCE >>-->
+                        <!--</button>-->
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix">
+                <div class="col-sm-5">
+                    <div class="dataTables_info">
+                        <span translate>SHOWING:</span> {{ service.meta?.from}} - {{ service.meta?.to}} <span translate>OF</span> {{ service.meta?.total}}
+                    </div>
+                </div>
+                <div class="col-sm-7" *ngIf="service.pageList.length">
+                    <ul class="pagination pagination-sm no-margin pull-right" *ngIf="service.pageList.length > 1">
+                        <li><a (click)="setPrevPage()">«</a></li>
+                        <li *ngIf="showDotsAtBegin()"><a (click)="setPage(1)">1</a></li>
+                        <li *ngIf="showDotsAtBegin()"><a>...</a></li>
+                        <li *ngFor="let page of service.pageList" [ngClass]="{'active': page == service.page , 'disalowed': !showPageAsOption(page)}">
+                            <a (click)="setPage(page)">{{ page}}</a></li>
+                        <li *ngIf="showDotsAtEnd()"><a>...</a></li>
+                        <li *ngIf="showDotsAtEnd()">
+                            <a (click)="setPage(service.pageList[service.pageList.length-1])">{{ service.pageList[service.pageList.length - 1]}}</a>
+                        </li>
+                        <li><a (click)="setNextPage()">»</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #noRows>
+        <tbody>
+        <tr>
+            <td colspan="100" style="text-align: center" *ngIf="appStateService.state == ''; else loading" translate>
+                NO_RECORDS
+            </td>
+        </tr>
+        </tbody>
+    </ng-template>
+
+    <ng-template #noValue>
+        <span>--</span>
+    </ng-template>
+
+    <ng-template #loading>
+        <td colspan="100" style="text-align: center" translate>LOADING</td>
+    </ng-template>

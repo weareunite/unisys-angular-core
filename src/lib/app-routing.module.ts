@@ -10,6 +10,7 @@ const appRoutes: Routes = [
   {path: 'admin/settings', loadChildren: './admin/settings/settings.module#SettingsModule'},
   {path: 'admin/user', loadChildren: './admin/users/users.module#UsersModule'},
   {path: 'admin/help', loadChildren: './admin/help/admin-help.module#AdminHelpModule'},
+  {path: 'admin/logs', loadChildren: './admin/log/admin-log.module#AdminLogModule'},
 ];
 
 @NgModule({

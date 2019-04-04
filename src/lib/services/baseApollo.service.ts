@@ -10,10 +10,8 @@ import { ApolloService } from './apollo.service';
 })
 export abstract class BaseApolloService extends BaseService {
 
-    protected apolloInstnc;
+    protected selectionPlural: string;
     protected selection: string;
-    protected paramsObj: object;
-    protected pagingObj: object;
     protected operationType: string;
     protected operationTypePlural: string;
     protected operationName: string;
@@ -119,7 +117,7 @@ export abstract class BaseApolloService extends BaseService {
         let apolloInstnc = this.apollo.setOperationName('query')
             .setOperationType(this.operationTypePlural)
             .setParams(this.generateGraphQlParams())
-            .setSelection(this.selection, 'data')
+            .setSelection(this.selectionPlural ? this.selectionPlural : this.selection, 'data')
             .setMetaData()
             .setQuery(false, true)
             .watchQuery();
@@ -210,11 +208,6 @@ export abstract class BaseApolloService extends BaseService {
 
 // SETTERS
 
-    protected setConditionFields(conditions: any[]) {
-        this.filter['conditions'] = conditions;
-        return this;
-    }
-
     protected setSelection(selection: string[]) {
         this.selection = this.fixColumnNamesForGraphQl(selection);
         return this;
@@ -237,30 +230,24 @@ export abstract class BaseApolloService extends BaseService {
     }
 
     protected generateGraphQlParams() {
-
-        if (!this.paramsObj) {
-            this.paramsObj = {};
-
-            if (this.page) {
-                this.paramsObj['page'] = this.page;
-            }
-            if (this.limit) {
-                this.paramsObj['limit'] = this.limit;
-            }
-            if (this.order) {
-                this.paramsObj['order'] = this.order;
-            }
-
-            if (Object.keys(this.search).length > 0) {
-                this.paramsObj['search'] = this.search;
-            }
-            if (Object.keys(this.filter).length > 0) {
-                this.paramsObj['conditions'] = this.filter;
-            }
+        const paramsObj = {};
+        if (this.page) {
+            paramsObj['page'] = this.page;
+        }
+        if (this.limit) {
+            paramsObj['limit'] = this.limit;
+        }
+        if (this.order) {
+            paramsObj['order'] = this.order;
+        }
+        if (Object.keys(this.search).length > 0) {
+            paramsObj['search'] = this.search;
+        }
+        if (Object.keys(this.filter).length > 0) {
+            paramsObj['conditions'] = this.filter;
         }
 
-
-        return this.paramsObj;
+        return paramsObj;
     }
 
     protected fixColumnNamesForGraphQl(input) {

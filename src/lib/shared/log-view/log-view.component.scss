@@ -1,0 +1,63 @@
+.hand {
+  cursor: pointer;
+}
+
+.box-comments .box-comment{
+  padding: 8px;
+  &:first-of-type{
+    padding-top: 8px;
+  }
+  .comment-text{
+    margin-left: 10px;
+    position: relative;
+    .detail{
+      h6{
+        margin-top: 7px;
+        margin-bottom: 3px;
+      }
+      ul{
+        margin-top: 0px;
+        list-style: none;
+        padding-left: 10px;
+        font-size: 12px;
+      }
+    }
+    button{
+      display: none;
+      position: absolute;
+      right: 0px;
+      bottom: 0px;
+    }
+    &:hover{
+      button{
+        display: block;
+      }
+    }
+  }
+}
+
+.selected {
+  position: relative;
+  padding: 5px 20px 5px 5px !important;
+
+  &:before {
+    position: absolute;
+    content: "";
+    right: 5px;
+    bottom: 10px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 5px 5px 0 5px;
+    border-color: #000000 transparent transparent transparent;
+  }
+
+  &.desc:before {
+    border-width: 0 5px 5px 5px;
+    border-color: transparent transparent #000000 transparent;
+  }
+}
+
+
+
+
