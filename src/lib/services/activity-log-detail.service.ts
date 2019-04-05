@@ -16,6 +16,8 @@ export class ActivityLogDetailService extends BaseApolloService {
     protected selectionPlural = 'id, description, subject_type, subject_id, properties, created_at, causer_id';
     protected operationType = 'activityLog';
     protected operationTypePlural = 'activityLogs';
+    public subjectId: number;
+    public subjectType: string;
 
     constructor(
         protected http: HttpService,
