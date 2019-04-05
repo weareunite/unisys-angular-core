@@ -22,7 +22,6 @@ export class UserService extends BaseApolloService {
 
     // Apollo
     protected selection = 'id, active,name, surname, username, email, roles {id, name}, frontend_permissions {id, name}';
-    protected paramsObj = {conditions: [{field: 'active', operator: 'and', values: ['true']}]};
     protected operationType = 'user';
     protected operationTypePlural = 'users';
 

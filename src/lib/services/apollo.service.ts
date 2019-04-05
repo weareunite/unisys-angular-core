@@ -82,6 +82,16 @@ export class ApolloService {
         });
     }
 
+    replaceSelectionParams(selection: string, params: any[]) {
+
+        Object.keys(params).forEach(function (index) {
+            selection = selection.replace('%VARIABLE%', params[index]);
+        });
+
+        this.selection = selection;
+        return this.selection;
+    }
+
     getMetaData(result) {
 
         let metaArray = [];
@@ -126,10 +136,16 @@ export class ApolloService {
         return this;
     }
 
-    setSelection(selection: string, wrapper?: string) {
+    setSelection(selection: string, wrapper?: string, replaceParams?: any[]) {
+
+        if (replaceParams) {
+            selection = this.replaceSelectionParams(selection, replaceParams);
+        }
+
         if (wrapper) {
             selection = wrapper + '{' + selection + '}';
         }
+
         this.selection = selection;
         return this;
     }
@@ -161,7 +177,7 @@ export class ApolloService {
         let params = '';
         let metaData = '';
 
-        console.log(this.params)
+        console.log(this.params);
 
         if (this.params && this.operationName.includes('query')) {
 
@@ -171,7 +187,7 @@ export class ApolloService {
             Object.keys(this.params).forEach(function (index) {
                 if (index === 'limit' || index === 'page') {
                     paginateParams[index] = this.params[index];
-                }else if(index === 'order') {
+                } else if (index === 'order') {
                     filterParams[index] = this.params[index];
                 } else {
                     if (!filterParams['conditions']) {
