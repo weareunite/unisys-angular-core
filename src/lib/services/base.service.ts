@@ -40,6 +40,72 @@ export abstract class BaseService {
     ) {
     }
 
+    // Getters and Setters
+
+    setUrl(url: string) {
+        this.url = url;
+    }
+
+    getUrl() {
+        return this.url;
+    }
+
+    setPage(page?: number) {// TODO FIX APP-TABLE FIXATION, SHOULD BE UNIVERSAL
+        this.page = page;
+        if (this.appStateService.getViewState('app-table')) {
+            this.appStateService.setViewStateValue(page, 'app-table.activePage');
+        } else if (this.appStateService.getViewState('app-table-measurement')) {
+            this.appStateService.setViewStateValue(page, 'app-table-measurement.activePage');
+        }
+        return this;
+    }
+
+    getPage() {
+        return this.page;
+    }
+
+    setLimit(limit?: number) {
+        this.limit = limit;
+        return this;
+    }
+
+    getLimit() {
+        return this.limit;
+    }
+
+    setOrder(order?: string) {
+        this.order = order;
+        return this;
+    }
+
+    getOrder() {
+        return this.order;
+    }
+
+    setSearch(query?: string, fields?: string) {
+        if (!query && !fields) {
+            this.search = {};
+        } else {
+            this.search = {
+                query: query,
+                fields: fields.split(',')
+            };
+        }
+        return this;
+    }
+
+    getSearch() {
+        return this.search;
+    }
+
+    setPageList(pageList: any[]) {
+        this.pageList = pageList;
+    }
+
+    getPageList() {
+        return this.pageList;
+    }
+
 //(C)RUD
 
     createItem(item: any) {
@@ -144,42 +210,11 @@ export abstract class BaseService {
         return this;
     }
 
-    setPage(page?: number) {// TODO FIX APP-TABLE FIXATION, SHOULD BE UNIVERSAL
-        this.page = page;
-        if (this.appStateService.getViewState('app-table')) {
-            this.appStateService.setViewStateValue(page, 'app-table.activePage');
-        } else if (this.appStateService.getViewState('app-table-measurement')) {
-            this.appStateService.setViewStateValue(page, 'app-table-measurement.activePage');
-        }
-        return this;
-    }
 
     setPaging(reguestMetadata) {
         let pagesTotal = Math.ceil(reguestMetadata.total / reguestMetadata.per_page);
         this.pageList = Array.from(new Array(pagesTotal), (val, index) => index + 1);
         this.meta = reguestMetadata;
-        return this;
-    }
-
-    setLimit(limit?: number) {
-        this.limit = limit;
-        return this;
-    }
-
-    setOrder(order?: string) {
-        this.order = order;
-        return this;
-    }
-
-    setSearch(query?: string, fields?: string) {
-        if (!query && !fields) {
-            this.search = {};
-        } else {
-            this.search = {
-                query: query,
-                fields: fields.split(',')
-            };
-        }
         return this;
     }
 
