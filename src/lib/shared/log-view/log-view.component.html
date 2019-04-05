@@ -54,16 +54,16 @@
                         <span translate>SHOWING:</span> {{ service.meta?.from}} - {{ service.meta?.to}} <span translate>OF</span> {{ service.meta?.total}}
                     </div>
                 </div>
-                <div class="col-sm-7" *ngIf="service.pageList.length">
-                    <ul class="pagination pagination-sm no-margin pull-right" *ngIf="service.pageList.length > 1">
+                <div class="col-sm-7" *ngIf="service.getPageList().length">
+                    <ul class="pagination pagination-sm no-margin pull-right" *ngIf="service.getPageList().length > 1">
                         <li><a (click)="setPrevPage()">«</a></li>
                         <li *ngIf="showDotsAtBegin()"><a (click)="setPage(1)">1</a></li>
                         <li *ngIf="showDotsAtBegin()"><a>...</a></li>
-                        <li *ngFor="let page of service.pageList" [ngClass]="{'active': page == service.page , 'disalowed': !showPageAsOption(page)}">
+                        <li *ngFor="let page of service.getPageList()" [ngClass]="{'active': page == service.getPage() , 'disalowed': !showPageAsOption(page)}">
                             <a (click)="setPage(page)">{{ page}}</a></li>
                         <li *ngIf="showDotsAtEnd()"><a>...</a></li>
                         <li *ngIf="showDotsAtEnd()">
-                            <a (click)="setPage(service.pageList[service.pageList.length-1])">{{ service.pageList[service.pageList.length - 1]}}</a>
+                            <a (click)="setPage(service.getPageList()[service.getPageList().length-1])">{{ service.getPageList()[service.getPageList().length - 1]}}</a>
                         </li>
                         <li><a (click)="setNextPage()">»</a></li>
                     </ul>
