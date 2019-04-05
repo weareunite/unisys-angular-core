@@ -177,8 +177,6 @@ export class ApolloService {
         let params = '';
         let metaData = '';
 
-        console.log(this.params);
-
         if (this.params && this.operationName.includes('query')) {
 
             let filterParams = {};
@@ -202,7 +200,6 @@ export class ApolloService {
                         }
                         filterParams['conditions'].push({field: subIndex, values: data.map(String)});
                     }, this);
-                    console.log(filterParams);
                 }
             }, this);
 
