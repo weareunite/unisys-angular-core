@@ -6,8 +6,7 @@
   </div>
   <div class="modal-body">
     <div class="row">
-      <!--<lib-log-view [subjectId]="item.subject_id" [subjectType]="item.subject_type"></lib-log-view>-->
-      <lib-log-view [subjectId]="272" [subjectType]="'App\\Models\\Measurement'"></lib-log-view>
+      <lib-log-view [subjectId]="activityLogDetailService.subjectId" [subjectType]="activityLogDetailService.subjectType"></lib-log-view>
     </div>
   </div>
 </ng-template>
