@@ -4,6 +4,7 @@ import { activityLog } from '../models';
 import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
 import { ApolloService } from './apollo.service';
 import { BaseApolloService } from './baseApollo.service';
+import { Subject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -18,6 +19,7 @@ export class ActivityLogDetailService extends BaseApolloService {
     protected operationTypePlural = 'activityLogs';
     public subjectId: number;
     public subjectType: string;
+    public modalOpened = new Subject();
 
     constructor(
         protected http: HttpService,
@@ -25,11 +27,15 @@ export class ActivityLogDetailService extends BaseApolloService {
         protected appStateService: UnisysAngularAppStateServiceService,
     ) {
         super(http, appStateService, apollo);
-        
+
         this.page = 1;
         this.limit = 100;
         this.order = 'id';
         this.search = {};
+    }
+
+    openModal() {
+        this.modalOpened.next();
     }
 
 }

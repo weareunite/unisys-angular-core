@@ -1,6 +1,7 @@
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { Component, HostListener, TemplateRef, ViewChild } from '@angular/core';
 import { ActivityLogDetailService } from '../services/activity-log-detail.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-log-everywhere',
@@ -11,6 +12,7 @@ export class LogEverywhereComponent {
 
     private itemSubscription;
     private item;
+    private modalOpenSubscription: Subscription;
 
     modalRef: BsModalRef;
     config = {
@@ -32,6 +34,11 @@ export class LogEverywhereComponent {
                     this.item = item;
                 }
             );
+
+        this.modalOpenSubscription = this.activityLogDetailService.modalOpened
+            .subscribe(() => {
+                this.openModal(this.template);
+            });
     }
 
     openModal(template: TemplateRef<any>) {
