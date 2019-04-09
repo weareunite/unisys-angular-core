@@ -41,7 +41,6 @@ export class AsideComponent implements OnInit {
             });
 
         this.categoryService.getItemList();
-        console.log(['abc', this.asideMenu]);
     }
 }
 
