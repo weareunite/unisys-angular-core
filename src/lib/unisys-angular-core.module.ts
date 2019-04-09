@@ -26,54 +26,54 @@ import { AdminHelpModule } from './admin/help/admin-help.module';
 import { AdminLogModule } from './admin/log/admin-log.module';
 
 @NgModule({
-  imports: [
-    SettingsModule,
-    UsersModule,
-    RoleModule,
-    AdminHelpModule,
-    AdminLogModule,
-    CoreModule,
-    UnisysAngularSharedModule,
-    AuthModule,
-    DefaultModule,
-    HttpClientModule
-  ],
-  declarations: [
-    UnisysAngularCoreComponent
-  ],
-  providers: [
-    AuthService,
-    HttpService,
-    UserService,
-    UnisysAngularAppStateServiceService,
-    NotificationService,
-    TagService,
-    CountryService,
-    SettingsService,
-    RoleService,
-    CoreService,
-    ApolloService,
-    {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true},
-  ],
+    imports: [
+        SettingsModule,
+        UsersModule,
+        RoleModule,
+        AdminHelpModule,
+        AdminLogModule,
+        CoreModule,
+        UnisysAngularSharedModule,
+        AuthModule,
+        DefaultModule,
+        HttpClientModule
+    ],
+    declarations: [
+        UnisysAngularCoreComponent
+    ],
+    providers: [
+        AuthService,
+        HttpService,
+        UserService,
+        UnisysAngularAppStateServiceService,
+        NotificationService,
+        TagService,
+        CountryService,
+        SettingsService,
+        RoleService,
+        CoreService,
+        ApolloService,
+        {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true},
+    ],
 })
 
 export class UnisysAngularCoreModule {
-  public static forRoot(environment: any, menu: MenuItem[]): ModuleWithProviders {
-    return {
-      ngModule: UnisysAngularCoreModule,
-      providers: [
-        HttpService,
-        UserService,
-        CoreService,
-        {
-          provide: 'env',
-          useValue: environment
-        },
-        {
-          provide: 'menu',
-          useValue: menu
-        },
-      ]
-    };
-  }
+    public static forRoot(environment: any, menu: MenuItem[]): ModuleWithProviders {
+        return {
+            ngModule: UnisysAngularCoreModule,
+            providers: [
+                HttpService,
+                UserService,
+                CoreService,
+                {
+                    provide: 'env',
+                    useValue: environment
+                },
+                {
+                    provide: 'menu',
+                    useValue: menu
+                }
+            ]
+        };
+    }
 }

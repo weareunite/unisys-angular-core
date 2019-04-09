@@ -1,8 +1,21 @@
 <aside class="main-sidebar">
-  <section class="sidebar">
-    <ul class="sidebar-menu">
-      <li class="header" translate>MAIN_MENU</li>
-      <li *ngFor="let mainMenu of itemList" routerLinkActive="active"><a [routerLink]="mainMenu.routerLink" *ngxPermissionsOnly="mainMenu.permission"><i [ngClass]="mainMenu.icon"></i><span translate>{{ mainMenu.translation}}</span></a></li>
-    </ul>
-  </section>
+    <section class="sidebar">
+        <ul class="sidebar-menu">
+            <li class="header" translate>MAIN_MENU</li>
+            <li *ngFor="let mainMenu of itemList" class="menu-open" routerLinkActive="active">
+                <a [routerLink]="mainMenu.routerLink" *ngxPermissionsOnly="mainMenu.permission"><i [ngClass]="mainMenu.icon">
+                </i>
+                    <span translate>{{ mainMenu.translation}}</span>
+                </a>
+                <ul class="treeview-menu" *ngIf="mainMenu.submenuItems">
+                    <li *ngFor="let subMenu of mainMenu.submenuItems">
+                        <a [routerLink]="subMenu.routerLink">
+                            <i class="fa fa-circle-o"></i>
+                            {{ subMenu.name}}
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </section>
 </aside>
