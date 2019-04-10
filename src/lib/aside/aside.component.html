@@ -9,7 +9,11 @@
                 </a>
                 <ul class="treeview-menu" *ngIf="mainMenu.submenuItems">
                     <li *ngFor="let subMenu of mainMenu.submenuItems">
-                        <a [routerLink]="subMenu.routerLink">
+                        <a [routerLink]="subMenu.routerLink" routerLinkActive="active" *ngIf="router.url === '/'+subMenu.routerLinkString">
+                            <i class="fa fa-circle"></i>
+                            {{ subMenu.name}}
+                        </a>
+                        <a [routerLink]="subMenu.routerLink" routerLinkActive="active" *ngIf="router.url !== '/'+subMenu.routerLinkString">
                             <i class="fa fa-circle-o"></i>
                             {{ subMenu.name}}
                         </a>

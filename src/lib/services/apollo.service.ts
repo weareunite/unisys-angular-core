@@ -179,6 +179,7 @@ export class ApolloService {
 
         if (this.params && this.operationName.includes('query')) {
 
+            let baseParams = {};
             let filterParams = {};
             let paginateParams = {};
 
@@ -193,17 +194,71 @@ export class ApolloService {
                     }
                     Object.keys(this.params[index]).forEach(function (subIndex) {
                         let data = [];
-                        if (Array.isArray(this.params[index][subIndex])) {
-                            data = this.params[index][subIndex];
+                        let params = this.params[index][subIndex];
+
+                        if (this.params[index][subIndex].hasOwnProperty('base') && this.params[index][subIndex].hasOwnProperty('base') === true) {
+                            baseParams[subIndex] = params['value'];
                         } else {
-                            data.push(this.params[index][subIndex]);
+
+                            if (this.params[index][subIndex].hasOwnProperty('value')) {
+                                params = params['value'];
+                            }
+
+                            if (Array.isArray(params)) {
+                                data = params;
+                            } else {
+                                data.push(params);
+                            }
+
+                            filterParams['conditions'].push({field: subIndex, values: data.map(String)});
                         }
-                        filterParams['conditions'].push({field: subIndex, values: data.map(String)});
                     }, this);
                 }
             }, this);
 
-            params = 'filter:' + JSON.stringify(filterParams) + ',paging:' + JSON.stringify(paginateParams);
+            if (Object.keys(baseParams).length > 0) {
+
+                let baseStringified = JSON.stringify(baseParams);
+                let haveFilter = false;
+                let havePaging = false;
+
+                if (Object.keys(filterParams).length > 0) {
+
+                    if (Object.keys(filterParams).length === 1 && filterParams.hasOwnProperty('conditions') && filterParams['conditions'].length === 0) {
+                        haveFilter = false;
+                    } else {
+                        haveFilter = true;
+                    }
+                }
+
+                if (haveFilter || havePaging) {
+                    baseStringified = baseStringified.substring(0, baseStringified.length - 1);
+                }
+
+                params = baseStringified;
+
+                if (Object.keys(paginateParams).length > 0) {
+                    havePaging = true;
+                }
+
+                if (haveFilter) {
+                    params += ',filter:' + JSON.stringify(filterParams);
+                }
+
+                if (havePaging) {
+                    params += ',paging:' + JSON.stringify(paginateParams);
+                }
+
+                if (haveFilter || havePaging) {
+                    params += '}';
+                }
+            } else {
+                params = 'filter:' + JSON.stringify(filterParams);
+
+                if (Object.keys(paginateParams).length > 0) {
+                    params += ',paging:' + JSON.stringify(paginateParams);
+                }
+            }
         } else {
             params = JSON.stringify(this.postData);
         }

@@ -229,22 +229,61 @@ export abstract class BaseApolloService extends BaseService {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
-    protected generateGraphQlParams() {
+    protected generateGraphQlParams(group?: string, forcedArgs?: {}) {
         const paramsObj = {};
         if (this.page) {
-            paramsObj['page'] = this.page;
+
+            if (!group) {
+                paramsObj['page'] = this.page;
+            }
+
+            if (forcedArgs && forcedArgs.hasOwnProperty('page')) {
+                paramsObj['page'] = forcedArgs['page'];
+            }
+
         }
         if (this.limit) {
-            paramsObj['limit'] = this.limit;
+
+            if (!group) {
+                paramsObj['limit'] = this.limit;
+            }
+
+            if (forcedArgs && forcedArgs.hasOwnProperty('limit')) {
+                paramsObj['limit'] = forcedArgs['limit'];
+            }
+
         }
         if (this.order) {
-            paramsObj['order'] = this.order;
+
+            if (!group) {
+                paramsObj['order'] = this.order;
+            }
+
+            if (forcedArgs && forcedArgs.hasOwnProperty('order')) {
+                paramsObj['order'] = forcedArgs['order'];
+            }
         }
         if (Object.keys(this.search).length > 0) {
-            paramsObj['search'] = this.search;
+            if (!group) {
+                paramsObj['search'] = this.search;
+            }
         }
         if (Object.keys(this.filter).length > 0) {
-            paramsObj['conditions'] = this.filter;
+
+            if (group) {
+                paramsObj['conditions'] = this.filter[group];
+            } else {
+
+                paramsObj['conditions'] = {};
+
+                console.log(['filter', this.filter]);
+
+                Object.keys(this.filter).forEach(function (index) {
+                    if (!this.filterNames.includes(index)) {
+                        paramsObj['conditions'][index] = this.filter[index];
+                    }
+                }, this);
+            }
         }
 
         return paramsObj;

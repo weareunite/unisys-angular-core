@@ -26,6 +26,7 @@ export abstract class BaseService {
     protected order: string = 'id';
     protected search: any = {};
     public filter: any = {};
+    public filterNames: any[] = [];
     public interval: any = {};
     public isFilterSetted: boolean = false;
     public isIntervalSetted: boolean = false;
@@ -203,6 +204,7 @@ export abstract class BaseService {
         return this;
     }
 
+
     setFiltersByViewState() {
         if (this.appStateService.getViewState('app-filter')) {
             this.setFilterByForm(this.appStateService.getViewState('app-filter'));
@@ -231,15 +233,36 @@ export abstract class BaseService {
         return this;
     }
 
-    setFilter(key?: string, value?: any) {
+    setFilter(key?: string, value?: any, group: string = '', base?: boolean) {
         if (!key && !value) {
             this.filter = {};
             return this;
         }
+
         if (value == '' || value === null) {
             delete this.filter[key];
         } else {
-            this.filter[key] = value;
+            if (group !== '') {
+                if (this.filter.hasOwnProperty(group)) {
+                    this.filter[group][key] = {};
+                    this.filter[group][key]['value'] = value;
+
+                    if (base) {
+                        this.filter[group][key]['base'] = true;
+                    }
+                } else {
+                    this.filterNames.push(group);
+                    this.filter[group] = {};
+                    this.filter[group][key] = {};
+                    this.filter[group][key]['value'] = value;
+
+                    if (base) {
+                        this.filter[group][key]['base'] = true;
+                    }
+                }
+            } else {
+                this.filter[key] = value;
+            }
         }
 
         return this;

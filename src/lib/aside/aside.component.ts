@@ -3,6 +3,7 @@ import { MenuItem } from '../models';
 import { CoreService } from '../services/core.service';
 import { CategoryService } from '../../../../../src/app/services/category.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -21,6 +22,7 @@ export class AsideComponent implements OnInit {
     constructor(
         public coreService: CoreService,
         public categoryService: CategoryService,
+        public router: Router,
         @Inject('menu') private asideMenu,
     ) {
     }
@@ -34,7 +36,8 @@ export class AsideComponent implements OnInit {
                     this.asideMenu[0]['submenuItems'].push(
                         {
                             name: categories[index]['name'],
-                            routerLink: ['admin', 'products', 'category', categories[index]['id']]
+                            routerLink: ['admin', 'products', 'category', categories[index]['id']],
+                            routerLinkString: 'admin/products/category/' + categories[index]['id']
                         }
                     );
                 }, this);
