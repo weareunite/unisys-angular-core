@@ -4,6 +4,7 @@ import { BaseService } from './base.service';
 import { HttpService } from './http.service';
 import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
 import { ApolloService } from './apollo.service';
+import { Subject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -15,6 +16,8 @@ export abstract class BaseApolloService extends BaseService {
     protected operationType: string;
     protected operationTypePlural: string;
     protected operationName: string;
+    public distinctList;
+    public distinctListChanged = new Subject<any[]>();
 
     constructor(
         protected http: HttpService,
@@ -30,7 +33,7 @@ export abstract class BaseApolloService extends BaseService {
 
         item = this.removeIdFromItem(item);
 
-        let apolloInstnc = this.apollo.setOperationName('mutation')
+        const apolloInstnc = this.apollo.setOperationName('mutation')
             .setOperationType('create' + this.capitalizeFirstLetter(this.operationType))
             .setPostData(postData)
             .setSelection(this.selection)
@@ -48,9 +51,9 @@ export abstract class BaseApolloService extends BaseService {
 
         item = this.removeIdFromItem(item);   // TODO TOTO tu je asi zbytočné
 
-        let itemAction = 'create' + this.capitalizeFirstLetter(this.operationType);
+        const itemAction = 'create' + this.capitalizeFirstLetter(this.operationType);
 
-        let apolloInstnc = this.apollo.setOperationName('mutation')
+        const apolloInstnc = this.apollo.setOperationName('mutation')
             .setOperationType(itemAction)
             .setPostData(item)
             .setSelection(this.selection)
@@ -91,7 +94,7 @@ export abstract class BaseApolloService extends BaseService {
     }
 
     getItemFromServerToList(item: any) {
-        let apolloInstnc = this.apollo.setOperationName('query')
+        const apolloInstnc = this.apollo.setOperationName('query')
             .setOperationType(this.operationType)
             .setParams({id: item.id})
             .setSelection(this.selection)
@@ -113,8 +116,7 @@ export abstract class BaseApolloService extends BaseService {
     }
 
     getItemList() {
-
-        let apolloInstnc = this.apollo.setOperationName('query')
+        const apolloInstnc = this.apollo.setOperationName('query')
             .setOperationType(this.operationTypePlural)
             .setParams(this.generateGraphQlParams())
             .setSelection(this.selectionPlural ? this.selectionPlural : this.selection, 'data')
@@ -126,6 +128,22 @@ export abstract class BaseApolloService extends BaseService {
         apolloInstnc.subscribe(result => {
             this.setItemList(result.data[this.operationTypePlural].data);
             this.setPaging(this.apollo.getMetaData(result.data[this.operationTypePlural]));
+        });
+    }
+
+    getDistinctList(selection: string) {
+
+        const apolloInstnc = this.apollo.setOperationName('query')
+            .setOperationType(this.operationTypePlural)
+            .setParams({distinct : true})
+            .setSelection(selection, 'data')
+            .setMetaData([])
+            .setQuery()
+            .watchQuery();
+
+
+        apolloInstnc.subscribe(result => {
+            this.setDistinctList(result.data[this.operationTypePlural].data);
         });
     }
 
@@ -221,6 +239,11 @@ export abstract class BaseApolloService extends BaseService {
     protected setOperationName(operationName: string) {
         this.operationName = operationName;
         return this;
+    }
+
+    setDistinctList(distinctList: any[]) {
+        this.distinctList = distinctList;
+        this.distinctListChanged.next(this.distinctList);
     }
 
 // HELPERS

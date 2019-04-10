@@ -6,6 +6,7 @@ import { NgxPermissionsModule } from 'ngx-permissions';
 import { AdminLogRoutingModule } from './admin-log-routing.module';
 import { TabsModule } from 'ngx-bootstrap';
 import { ModalViewComponent } from './modal-view/modal-view.component';
+import { FilterComponent } from './filter/filter.component';
 
 @NgModule({
     imports: [
@@ -18,6 +19,7 @@ import { ModalViewComponent } from './modal-view/modal-view.component';
     declarations: [
         AdminLogComponent,
         ModalViewComponent,
+        FilterComponent,
     ],
     entryComponents: [
         ModalViewComponent,
