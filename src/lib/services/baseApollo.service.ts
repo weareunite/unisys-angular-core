@@ -135,7 +135,7 @@ export abstract class BaseApolloService extends BaseService {
 
         const apolloInstnc = this.apollo.setOperationName('query')
             .setOperationType(this.operationTypePlural)
-            .setParams({distinct : true})
+            .setParams({distinct: true})
             .setSelection(selection, 'data')
             .setMetaData([])
             .setQuery()
@@ -298,8 +298,6 @@ export abstract class BaseApolloService extends BaseService {
             } else {
 
                 paramsObj['conditions'] = {};
-
-                console.log(['filter', this.filter]);
 
                 Object.keys(this.filter).forEach(function (index) {
                     if (!this.filterNames.includes(index)) {

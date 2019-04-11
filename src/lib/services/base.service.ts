@@ -338,8 +338,6 @@ export abstract class BaseService {
 
             const value = formObject[key];
 
-            console.log(['value', value]);
-
             if (value && key.indexOf('fulltext') > -1) {
                 const array = key.split('/');
                 this.setSearch('%' + value, array[1]);
