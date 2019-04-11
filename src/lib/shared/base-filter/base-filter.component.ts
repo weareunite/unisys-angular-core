@@ -1,4 +1,4 @@
-import { UnisysAngularAppStateServiceService } from '../../../../../unisys-angular-app-state-service/src/lib/unisys-angular-app-state-service.service';
+import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ElementRef } from '@angular/core';
 import * as moment from 'moment';

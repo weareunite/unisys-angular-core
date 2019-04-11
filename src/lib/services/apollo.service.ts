@@ -168,7 +168,7 @@ export class ApolloService {
         return this;
     }
 
-    setQuery(removeQuotation: boolean = false, consolideConditions: boolean = false) {
+    setQuery() {
 
         if (!this.operationName) {
             this.setOperationName('query');
@@ -202,12 +202,8 @@ export class ApolloService {
                         let params = this.params[index][subIndex];
 
                         if (this.params[index][subIndex].hasOwnProperty('base') && this.params[index][subIndex].hasOwnProperty('base') === true) {
-                            baseParams[subIndex] = params['value'];
-                        }else {
-
-                            if (this.params[index][subIndex].hasOwnProperty('value')) {
-                                params = params['value'];
-                            }
+                            baseParams[subIndex] = params['values'];
+                        } else {
 
                             if (Array.isArray(this.params[index][subIndex]) && !this.params[index][subIndex].values) {
                                 data = this.params[index][subIndex];
@@ -309,15 +305,9 @@ export class ApolloService {
         }
         requestString = requestString + '}';
 
-        if (consolideConditions) {
-            requestString = requestString.replace(/"between"/g, 'between');
-            requestString = requestString.replace(/"and"/g, 'and');
-            requestString = requestString.replace(/"or"/g, 'or');
-        }
-
-        if (removeQuotation) {
-            requestString = requestString.replace(/['"]+/g, '');
-        }
+        requestString = requestString.replace(/"between"/g, 'between');
+        requestString = requestString.replace(/"and"/g, 'and');
+        requestString = requestString.replace(/"or"/g, 'or');
 
         console.log(requestString);
 

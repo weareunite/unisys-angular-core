@@ -4,7 +4,7 @@ import { Subject, Subscription } from 'rxjs';
 import { ActivityLogService } from '../../../services/activity-log.service';
 import { User } from '@weareunite/unisys-angular-core/lib/models';
 import { UserService } from '../../../services/user.service';
-import { UnisysAngularAppStateServiceService } from '../../../../../../unisys-angular-app-state-service/src/lib/unisys-angular-app-state-service.service';
+import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
 import { BaseFilterComponent } from '../../../shared/base-filter/base-filter.component';
 
 @Component({
@@ -12,7 +12,7 @@ import { BaseFilterComponent } from '../../../shared/base-filter/base-filter.com
     templateUrl: './filter.component.html',
     styleUrls: ['../../../shared/base-filter/base-filter.component.scss']
 })
-export class FilterComponent extends BaseFilterComponent implements OnInit{
+export class FilterComponent extends BaseFilterComponent implements OnInit {
 
     public userList: User[];
     protected userSubscription: Subscription;
@@ -27,7 +27,7 @@ export class FilterComponent extends BaseFilterComponent implements OnInit{
         protected appStateService: UnisysAngularAppStateServiceService,
         protected formBuilder: FormBuilder,
         protected elem: ElementRef,
-    ){
+    ) {
         super(appStateService, formBuilder, elem);
         this.bsConfig = {
             containerClass: 'theme-dark-blue',
@@ -36,7 +36,7 @@ export class FilterComponent extends BaseFilterComponent implements OnInit{
         };
     }
 
-    ngOnInit(){
+    ngOnInit() {
         this.userSubscription = this.userService.listChanged
             .subscribe(
                 (list) => {
@@ -64,7 +64,7 @@ export class FilterComponent extends BaseFilterComponent implements OnInit{
             'operator': new FormControl('between'),
         }),
         'causer_id': new FormControl(),
-        'subject_type' : new FormControl(),
+        'subject_type': new FormControl(),
     });
 
 }

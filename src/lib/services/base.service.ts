@@ -234,6 +234,14 @@ export abstract class BaseService {
         return this;
     }
 
+    /**
+     * Add key - value pair to filter
+     *
+     * @param key Key of filter
+     * @param value Value of filter
+     * @param group Group of filter to be key assigned to
+     * @param base If key should be passed as single parameter - not included in filter or paging
+     */
     setFilter(key?: string, value?: any, group: string = '', base?: boolean) {
         if (!key && !value) {
             this.filter = {};
@@ -246,7 +254,7 @@ export abstract class BaseService {
             if (group !== '') {
                 if (this.filter.hasOwnProperty(group)) {
                     this.filter[group][key] = {};
-                    this.filter[group][key]['value'] = value;
+                    this.filter[group][key]['values'] = value;
 
                     if (base) {
                         this.filter[group][key]['base'] = true;
@@ -255,7 +263,7 @@ export abstract class BaseService {
                     this.filterNames.push(group);
                     this.filter[group] = {};
                     this.filter[group][key] = {};
-                    this.filter[group][key]['value'] = value;
+                    this.filter[group][key]['values'] = value;
 
                     if (base) {
                         this.filter[group][key]['base'] = true;

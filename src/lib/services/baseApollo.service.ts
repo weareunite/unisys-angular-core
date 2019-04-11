@@ -121,7 +121,7 @@ export abstract class BaseApolloService extends BaseService {
             .setParams(this.generateGraphQlParams())
             .setSelection(this.selectionPlural ? this.selectionPlural : this.selection, 'data')
             .setMetaData()
-            .setQuery(false, true)
+            .setQuery()
             .watchQuery();
 
 
