@@ -46,7 +46,7 @@ export class AdminLogComponent implements OnInit{
             {
                 translation: 'ACTION', key: 'id', sortable: false, type: 'action', options: [
                     {
-                        translation: 'Open', permission: 'admin.help.update', visibility: true, action: function(item){
+                        translation: 'OPEN', permission: 'admin.log', visibility: true, action: function(item){
                             this.openModalView(item);
                         }
                     }

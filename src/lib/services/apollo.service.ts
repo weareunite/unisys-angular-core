@@ -183,10 +183,14 @@ export class ApolloService {
             let filterParams = {};
             let paginateParams = {};
 
+            console.log(this.params);
+
             Object.keys(this.params).forEach(function (index) {
                 if (index === 'limit' || index === 'page') {
                     paginateParams[index] = this.params[index];
                 } else if (index === 'order') {
+                    filterParams[index] = this.params[index];
+                } else if (index === 'distinct') {
                     filterParams[index] = this.params[index];
                 } else {
                     if (!filterParams['conditions']) {
@@ -194,23 +198,35 @@ export class ApolloService {
                     }
                     Object.keys(this.params[index]).forEach(function (subIndex) {
                         let data = [];
+                        let conditionItem = {};
                         let params = this.params[index][subIndex];
 
                         if (this.params[index][subIndex].hasOwnProperty('base') && this.params[index][subIndex].hasOwnProperty('base') === true) {
                             baseParams[subIndex] = params['value'];
-                        } else {
+                        }else {
 
                             if (this.params[index][subIndex].hasOwnProperty('value')) {
                                 params = params['value'];
                             }
 
-                            if (Array.isArray(params)) {
-                                data = params;
+                            if (Array.isArray(this.params[index][subIndex]) && !this.params[index][subIndex].values) {
+                                data = this.params[index][subIndex];
+                            } else if (this.params[index][subIndex].values) {
+                                data = this.params[index][subIndex].values;
                             } else {
-                                data.push(params);
+                                data.push(this.params[index][subIndex]);
                             }
 
-                            filterParams['conditions'].push({field: subIndex, values: data.map(String)});
+                            if (this.params[index][subIndex].operator) {
+                                conditionItem = {
+                                    field: subIndex,
+                                    values: data.map(String),
+                                    operator: this.params[index][subIndex].operator
+                                };
+                            } else {
+                                conditionItem = {field: subIndex, values: data.map(String)};
+                            }
+                            filterParams['conditions'].push(conditionItem);
                         }
                     }, this);
                 }
@@ -294,6 +310,7 @@ export class ApolloService {
         requestString = requestString + '}';
 
         if (consolideConditions) {
+            requestString = requestString.replace(/"between"/g, 'between');
             requestString = requestString.replace(/"and"/g, 'and');
             requestString = requestString.replace(/"or"/g, 'or');
         }

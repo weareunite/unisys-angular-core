@@ -58,7 +58,7 @@ export class HelpComponent{
             this.openModal(this.template);
             this.helpService.getItemList();
             if (this.router.url) {
-                this.onClickTopic(this.router.url.replace(/[0-9]/g,  '*'));
+                this.onClickTopic(this.router.url.replace(/\d+/g,  '*'));
             }
         }
     }
