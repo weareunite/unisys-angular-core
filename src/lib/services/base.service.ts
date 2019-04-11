@@ -6,7 +6,7 @@ import { Tag } from '../models';
 import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
 import { ApolloService } from './apollo.service';
 import * as moment from 'moment';
-import { formatDate } from "@angular/common";
+import { formatDate } from '@angular/common';
 
 @Injectable({
     providedIn: 'root'
@@ -335,7 +335,11 @@ export abstract class BaseService {
         }
 
         Object.keys(formObject).forEach(key => {
+
             const value = formObject[key];
+
+            console.log(['value', value]);
+
             if (value && key.indexOf('fulltext') > -1) {
                 const array = key.split('/');
                 this.setSearch('%' + value, array[1]);
@@ -362,7 +366,7 @@ export abstract class BaseService {
                     const objectAsValue = {
                         values: value.values[0] instanceof Date || new Date(value.values[0]) instanceof Date ? this.returnDatestringArray(value.values) : value.values,
                         operator: value.operator ? value.operator : 'or'
-                    }
+                    };
                     this.setFilter(key, objectAsValue);
                 } else if (value.length > 0 && value[0] instanceof Date) {
                     this.setFilter(key, this.returnDatestringArray(value));
@@ -628,7 +632,7 @@ export abstract class BaseService {
 
     public returnDatestringArray(list: Date[]) {
         const arrayToReturn = [];
-        list.forEach(function(value){
+        list.forEach(function (value) {
             arrayToReturn.push(formatDate(value, 'yyyy-MM-dd', 'en-US', 'UTC+1'));
         });
         return arrayToReturn;
@@ -642,8 +646,8 @@ export abstract class BaseService {
         return moment(date).format(format);
     }
 
-    public fixDates(item, list: any[]){
-        list.forEach(function(value) {
+    public fixDates(item, list: any[]) {
+        list.forEach(function (value) {
             if (typeof item[value] === 'object' && item[value] != null) {
                 item[value] = formatDate(item[value], 'yyyy-MM-dd', 'en-US', 'UTC+1');
             } else if (typeof item[value] === 'string' && item[value] !== '') {

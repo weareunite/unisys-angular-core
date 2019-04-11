@@ -41,7 +41,6 @@ export class LogViewComponent implements OnInit {
         this.subscription = this.service.listChanged
             .subscribe(
                 (list) => {
-                    console.log(list);
                     this.data = list;
                 }
             );

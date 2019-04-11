@@ -22,6 +22,15 @@ export class ApolloService {
     protected selection: string;
     protected metaData: string[];
     protected query;
+    public enumOperators = {
+        operators: [
+            'and',
+            'or',
+            'between'
+        ],
+        custom: {}
+
+    };
 
     constructor(
         private apollo: Apollo,
@@ -183,8 +192,6 @@ export class ApolloService {
             let filterParams = {};
             let paginateParams = {};
 
-            console.log(this.params);
-
             Object.keys(this.params).forEach(function (index) {
                 if (index === 'limit' || index === 'page') {
                     paginateParams[index] = this.params[index];
@@ -214,6 +221,7 @@ export class ApolloService {
                             }
 
                             if (this.params[index][subIndex].operator) {
+
                                 conditionItem = {
                                     field: subIndex,
                                     values: data.map(String),
@@ -304,12 +312,11 @@ export class ApolloService {
             }
         }
         requestString = requestString + '}';
+        requestString = this.fixEnumOperators(requestString);
 
-        requestString = requestString.replace(/"between"/g, 'between');
-        requestString = requestString.replace(/"and"/g, 'and');
-        requestString = requestString.replace(/"or"/g, 'or');
-
-        console.log(requestString);
+        // requestString = requestString.replace(/"between"/g, 'between');
+        // requestString = requestString.replace(/"and"/g, 'and');
+        // requestString = requestString.replace(/"or"/g, 'or');
 
         // Console debug of Apollo request in order - Operation name / Operation type / Query parameters / Full string
         // console.debug('%c---------------------------------------------START----------------------------------------------', 'color:black;');
@@ -319,10 +326,34 @@ export class ApolloService {
         // console.debug('%cFull Request: %c' + requestString, 'color:red;font-weight:bold;', 'color:blue;');
         // console.debug('%c----------------------------------------------END-----------------------------------------------', 'color:black;');
 
+        console.log([this.operationName + ' ' + this.operationType, requestString]);
+
         const query = gql`${requestString}`;
 
         this.query = query;
+
         return this;
+    }
+
+    fixEnumOperators(string: string) {
+
+        let enumOperators = this.enumOperators;
+
+        Object.keys(enumOperators['operators']).forEach(function (index) {
+            let regex = new RegExp('operator:"' + enumOperators['operators'][index] + '"', 'g');
+            string = string.replace(regex, 'operator:' + enumOperators['operators'][index]);
+        });
+
+        Object.keys(enumOperators['custom']).forEach(function (index) {
+
+            Object.keys(enumOperators['custom'][index]).forEach(function (subIndex) {
+
+                let customRegex = new RegExp(index + ':"' + enumOperators['custom'][index][subIndex] + '"', 'g');
+                string = string.replace(customRegex, index + ':' + enumOperators['custom'][index][subIndex]);
+            });
+        });
+
+        return string;
     }
 
     watchQuery() {

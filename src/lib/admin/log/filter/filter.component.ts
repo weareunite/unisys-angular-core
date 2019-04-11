@@ -50,7 +50,6 @@ export class FilterComponent extends BaseFilterComponent implements OnInit {
             .subscribe(
                 (list) => {
                     this.subjectTypeList = list;
-                    console.log(list);
                     this.subjectTypeListSubscription.unsubscribe();
                 }
             );
