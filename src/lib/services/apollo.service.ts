@@ -326,7 +326,7 @@ export class ApolloService {
         // console.debug('%cFull Request: %c' + requestString, 'color:red;font-weight:bold;', 'color:blue;');
         // console.debug('%c----------------------------------------------END-----------------------------------------------', 'color:black;');
 
-        console.log([this.operationName + ' ' + this.operationType, requestString]);
+        console.debug([this.operationName + ' ' + this.operationType, requestString]);
 
         const query = gql`${requestString}`;
 
