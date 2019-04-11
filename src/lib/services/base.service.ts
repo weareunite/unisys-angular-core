@@ -6,6 +6,7 @@ import { Tag } from '../models';
 import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
 import { ApolloService } from './apollo.service';
 import * as moment from 'moment';
+import { formatDate } from "@angular/common";
 
 @Injectable({
     providedIn: 'root'
@@ -303,9 +304,9 @@ export abstract class BaseService {
         }
 
         Object.keys(formObject).forEach(key => {
-            let value = formObject[key];
+            const value = formObject[key];
             if (value && key.indexOf('fulltext') > -1) {
-                let array = key.split('/');
+                const array = key.split('/');
                 this.setSearch('%' + value, array[1]);
             } else if (value) {
                 if (typeof value === 'string' || typeof value === 'number') {
@@ -326,6 +327,12 @@ export abstract class BaseService {
                         data: this.returnIdArray(value.data),
                         operator: value.operator ? value.operator : 'or'
                     });
+                } else if (value.values && value.values.length > 0) {
+                    const objectAsValue = {
+                        values: value.values[0] instanceof Date || new Date(value.values[0]) instanceof Date ? this.returnDatestringArray(value.values) : value.values,
+                        operator: value.operator ? value.operator : 'or'
+                    }
+                    this.setFilter(key, objectAsValue);
                 } else if (value.length > 0 && value[0] instanceof Date) {
                     this.setFilter(key, this.returnDatestringArray(value));
                 } else {
@@ -573,7 +580,7 @@ export abstract class BaseService {
 // HELPERS
 
     public returnIdArray(list: any[]) {
-        let arrayToReturn = [];
+        const arrayToReturn = [];
         list.forEach(function (value) {
             arrayToReturn.push(value.id);
         });
@@ -581,7 +588,7 @@ export abstract class BaseService {
     }
 
     public returnValueArray(list: any[]) {
-        let arrayToReturn = [];
+        const arrayToReturn = [];
         list.forEach(function (value) {
             arrayToReturn.push(value.value);
         });
@@ -589,27 +596,27 @@ export abstract class BaseService {
     }
 
     public returnDatestringArray(list: Date[]) {
-        let arrayToReturn = [];
-        list.forEach(function (value) {
-            arrayToReturn.push(value.toISOString().substring(0, 10));
+        const arrayToReturn = [];
+        list.forEach(function(value){
+            arrayToReturn.push(formatDate(value, 'yyyy-MM-dd', 'en-US', 'UTC+1'));
         });
         return arrayToReturn;
     }
 
     public returnDatestring(value: Date) {
-        return value.toISOString().substring(0, 10);
+        return formatDate(value, 'yyyy-MM-dd', 'en-US', 'UTC+1');
     }
 
     public formatMomentDate(date, format) {
         return moment(date).format(format);
     }
 
-    public fixDates(item, list: any[]) {
-        list.forEach(function (value) {
-            if (typeof item[value] == 'object' && item[value] != null) {
-                item[value] = item[value].toISOString().substring(0, 10);
-            } else if (typeof item[value] == 'string' && item[value] != '') {
-                item[value] = new Date(item[value]).toISOString().substring(0, 10);
+    public fixDates(item, list: any[]){
+        list.forEach(function(value) {
+            if (typeof item[value] === 'object' && item[value] != null) {
+                item[value] = formatDate(item[value], 'yyyy-MM-dd', 'en-US', 'UTC+1');
+            } else if (typeof item[value] === 'string' && item[value] !== '') {
+                item[value] = formatDate(new Date(item[value]), 'yyyy-MM-dd', 'en-US', 'UTC+1');
             } else {
                 item[value] = '';
             }
@@ -627,9 +634,9 @@ export abstract class BaseService {
 
     public fixDateTimes(item, list: any[]) {
         list.forEach(function (value) {
-            if (typeof item[value] == 'object' && item[value] != null) {
+            if (typeof item[value] === 'object' && item[value] != null) {
                 item[value] = item[value].toJSON().slice(0, 19).replace('T', ' ');
-            } else if (typeof item[value] == 'string' && item[value] != '') {
+            } else if (typeof item[value] === 'string' && item[value] !== '') {
                 item[value] = new Date(item[value]).toJSON().slice(0, 19).replace('T', ' ');
             } else {
                 item[value] = '';
@@ -652,7 +659,6 @@ export abstract class BaseService {
             if (item[value] && item[value].length > 0) {
                 item[value].forEach(function (subvalue) {
                     idArray.push(subvalue.id);
-                    console.log(idArray);
                 });
             }
             item[value + '_ids'] = idArray;

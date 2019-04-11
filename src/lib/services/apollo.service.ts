@@ -182,6 +182,8 @@ export class ApolloService {
             let filterParams = {};
             let paginateParams = {};
 
+            console.log(this.params);
+
             Object.keys(this.params).forEach(function (index) {
                 if (index === 'limit' || index === 'page') {
                     paginateParams[index] = this.params[index];
@@ -195,12 +197,21 @@ export class ApolloService {
                     }
                     Object.keys(this.params[index]).forEach(function (subIndex) {
                         let data = [];
-                        if (Array.isArray(this.params[index][subIndex])) {
+                        let conditionItem = {};
+                        if (Array.isArray(this.params[index][subIndex]) && !this.params[index][subIndex].values) {
                             data = this.params[index][subIndex];
+                        } else if (this.params[index][subIndex].values) {
+                            data = this.params[index][subIndex].values;
                         } else {
                             data.push(this.params[index][subIndex]);
                         }
-                        filterParams['conditions'].push({field: subIndex, values: data.map(String)});
+
+                        if (this.params[index][subIndex].operator) {
+                            conditionItem = {field: subIndex, values: data.map(String), operator: this.params[index][subIndex].operator};
+                        } else {
+                            conditionItem = {field: subIndex, values: data.map(String)};
+                        }
+                        filterParams['conditions'].push(conditionItem);
                     }, this);
                 }
             }, this);
@@ -241,6 +252,7 @@ export class ApolloService {
         requestString = requestString + '}';
 
         if (consolideConditions) {
+            requestString = requestString.replace(/"between"/g, 'between');
             requestString = requestString.replace(/"and"/g, 'and');
             requestString = requestString.replace(/"or"/g, 'or');
         }
