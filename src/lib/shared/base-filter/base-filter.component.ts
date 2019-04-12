@@ -8,6 +8,11 @@ export class BaseFilterComponent {
     public defaultService;
     public selector;
     public isVisilbe = false;
+
+    /**
+     * Initial values form
+     * We need this to set default values when form is cleared
+     */
     protected initialValues = {};
 
     constructor(
@@ -77,8 +82,6 @@ export class BaseFilterComponent {
     }
 
     public clearAndSearch() {
-
-        console.log(['initialValues', this.initialValues]);
 
         this.builForm(true);
         this.defaultForm.reset(this.initialValues);
