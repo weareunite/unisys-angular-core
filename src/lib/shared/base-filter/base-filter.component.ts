@@ -8,6 +8,7 @@ export class BaseFilterComponent {
     public defaultService;
     public selector;
     public isVisilbe = false;
+    protected initialValues = {};
 
     constructor(
         protected appStateService: UnisysAngularAppStateServiceService,
@@ -24,8 +25,13 @@ export class BaseFilterComponent {
 
     public defaultForm = new FormGroup({});
 
-    protected builForm() {
-        const rawData = this.appStateService.getViewState(this.selector);
+    protected builForm(initial: boolean = false) {
+        let rawData = this.appStateService.getViewState(this.selector);
+
+        if (initial) {
+            rawData = false;
+        }
+
         if (rawData) {
             const recoveredFormValues = {};
             Object.keys(rawData).forEach(key => {
@@ -36,14 +42,16 @@ export class BaseFilterComponent {
                     recoveredFormValues[key] = new FormGroup(subForm);
                 } else if (rawData[key] !== null && (rawData[key].hasOwnProperty('values') && rawData[key].hasOwnProperty('operator'))) {
                     const subForm = {};
-                    if (moment(rawData[key].values[0], moment.ISO_8601, true).isValid()) {
-                        const datesToReturn = [];
-                        rawData[key].values.forEach(function (value) {
-                            datesToReturn.push(new Date(value));
-                        });
-                        subForm['values'] = this.formBuilder.control(datesToReturn);
-                    } else {
-                        subForm['values'] = this.formBuilder.control(rawData[key].values ? rawData[key].values : '');
+                    if (rawData[key].values !== null) {
+                        if (moment(rawData[key].values[0], moment.ISO_8601, true).isValid()) {
+                            const datesToReturn = [];
+                            rawData[key].values.forEach(function (value) {
+                                datesToReturn.push(new Date(value));
+                            });
+                            subForm['values'] = this.formBuilder.control(datesToReturn);
+                        } else {
+                            subForm['values'] = this.formBuilder.control(rawData[key].values ? rawData[key].values : '');
+                        }
                     }
                     subForm['operator'] = this.formBuilder.control(rawData[key].operator ? rawData[key].operator : '');
                     recoveredFormValues[key] = new FormGroup(subForm);
@@ -69,10 +77,14 @@ export class BaseFilterComponent {
     }
 
     public clearAndSearch() {
-        this.defaultForm.reset();
+
+        console.log(['initialValues', this.initialValues]);
+
+        this.builForm(true);
+        this.defaultForm.reset(this.initialValues);
         this.defaultService.isFilterSetted = false;
         this.defaultService.isIntervalSetted = false;
-        this.appStateService.setViewState(null, this.selector);
+        this.appStateService.setViewState(this.defaultForm.value, this.selector);
         this.defaultService.setFilter().setPage(1).getItemList();
     }
 

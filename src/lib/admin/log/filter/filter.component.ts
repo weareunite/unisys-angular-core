@@ -34,6 +34,13 @@ export class FilterComponent extends BaseFilterComponent implements OnInit {
             rangeInputFormat: 'DD.MM.YYYY',
             placement: 'top',
         };
+
+        this.initialValues = {
+            created_at: {
+                operator: 'between',
+                values: []
+            }
+        };
     }
 
     ngOnInit() {
