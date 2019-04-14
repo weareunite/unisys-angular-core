@@ -53,10 +53,12 @@ export abstract class BaseApolloService extends BaseService {
 
         const itemAction = 'create' + this.capitalizeFirstLetter(this.operationType);
 
+        let unvariabledSelection = this.selection.replace('%VARIABLE%', '');
+
         const apolloInstnc = this.apollo.setOperationName('mutation')
             .setOperationType(itemAction)
             .setPostData(item)
-            .setSelection(this.selection)
+            .setSelection(unvariabledSelection)
             .clearMetaData()
             .setQuery()
             .mutate();

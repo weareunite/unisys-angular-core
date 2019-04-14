@@ -228,7 +228,12 @@ export class ApolloService {
                                     operator: this.params[index][subIndex].operator
                                 };
                             } else {
-                                conditionItem = {field: subIndex, values: data.map(String)};
+
+                                if (Array.isArray(data)) {
+                                    conditionItem = {field: subIndex, values: data.map(String)};
+                                } else {
+                                    conditionItem = {field: subIndex, values: [String(data)]};
+                                }
                             }
                             filterParams['conditions'].push(conditionItem);
                         }
