@@ -71,8 +71,6 @@ gulp.task('postPermissions', function () {
     return permissions.indexOf(item) == pos;
   });
 
-  console.log(uniquePermission);
-
 
   let count = uniquePermission.length;
   uniquePermission.sort();
@@ -103,7 +101,6 @@ gulp.task('postPermissions', function () {
     const req = http.request(options, (res) => {
       res.setEncoding('utf8');
       res.on('data', (chunk) => {
-        console.log(chunk);
       });
       res.on('end', () => {
         log('Request to API ' + chalk.blue.bold(options.protocol + '//' + apiHost + ':' + apiPort + apiPath) + ' with secret ' + chalk.blue.bold(apiSecret) + ' was sent ' + chalk.green.bold('successfully'));
@@ -120,7 +117,6 @@ gulp.task('postPermissions', function () {
     const req = https.request(options, (res) => {
       res.setEncoding('utf8');
       res.on('data', (chunk) => {
-        console.log(chunk);
       });
       res.on('end', () => {
         log('Request to API ' + chalk.blue.bold(options.protocol + '//' + apiHost + apiPath) + ' with secret ' + chalk.blue.bold(apiSecret) + ' was sent ' + chalk.green.bold('successfully'));

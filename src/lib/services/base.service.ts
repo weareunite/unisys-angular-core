@@ -390,11 +390,9 @@ export abstract class BaseService {
             }
         }
         if (Object.keys(this.search).length > 0) {
-            console.log(JSON.stringify(this.search));
             stringToAppent.push('search=' + encodeURIComponent(JSON.stringify(this.search)));
         }
         if (Object.keys(this.filter).length > 0) {
-            console.log(JSON.stringify(this.filter));
             stringToAppent.push('filter=' + encodeURIComponent(JSON.stringify(this.filter)));
         }
         if (stringToAppent.length > 0) {

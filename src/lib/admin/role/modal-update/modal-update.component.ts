@@ -37,7 +37,6 @@ export class ModalUpdateComponent implements OnInit {
     this.permissionsListSubscription = this.service.permissionsChanged
       .subscribe(
         (item) => {
-          console.log(item);
           this.item = item;
           this.pushListToForm('frontendPermissions', this.item.frontend_permissions);
           this.pushListToForm('apiPermissions', this.item.api_permissions);

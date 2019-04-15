@@ -54,7 +54,6 @@ export class HelpComponent{
 
     @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
         if (event.key === 'F2') {
-            console.log(this.template);
             this.openModal(this.template);
             this.helpService.getItemList();
             if (this.router.url) {
