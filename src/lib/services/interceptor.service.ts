@@ -26,19 +26,22 @@ export class InterceptorService implements HttpInterceptor {
      */
     translateError(error: string) {
 
-        let legacyError = error;
         let errorMessage = '';
 
-        error = error.toUpperCase();
-        error = error.split(' ').join('_');
-        error = 'ERROR_' + error;
+        if (typeof error !== 'undefined') {
+            let legacyError = error;
 
-        this.translate.get(error).subscribe((translatedString: string) => {
-            errorMessage = translatedString;
-        });
+            error = error.toUpperCase();
+            error = error.split(' ').join('_');
+            error = 'ERROR_' + error;
 
-        if (errorMessage === error) {
-            errorMessage = legacyError;
+            this.translate.get(error).subscribe((translatedString: string) => {
+                errorMessage = translatedString;
+            });
+
+            if (errorMessage === error) {
+                errorMessage = legacyError;
+            }
         }
 
         return errorMessage;
