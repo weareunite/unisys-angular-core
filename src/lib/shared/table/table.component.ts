@@ -158,8 +158,10 @@ export class TableComponent implements OnInit {
         } else {
             valueToReturn = item[key];
 
-            if (valueToReturn.hasOwnProperty('value')) {
-                valueToReturn = valueToReturn.value;
+            if (valueToReturn !== null) {
+                if (valueToReturn.hasOwnProperty('value')) {
+                    valueToReturn = valueToReturn.value;
+                }
             }
         }
 
