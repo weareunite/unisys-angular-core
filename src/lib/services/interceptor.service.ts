@@ -1,20 +1,49 @@
-import { catchError, map} from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
-import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
-import {ToastrService} from 'ngx-toastr';
-import {TranslateService} from '@ngx-translate/core';
+import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class InterceptorService implements HttpInterceptor {
 
     constructor(
         protected toastrService: ToastrService,
-        protected appState : UnisysAngularAppStateServiceService,
+        protected appState: UnisysAngularAppStateServiceService,
         protected translate: TranslateService,
-    ){}
+    ) {
+    }
+
+    /**
+     * Translate error from server and add prefix 'ERROR_' before translation string
+     *
+     * @param error Error message from server
+     */
+    translateError(error: string) {
+
+        let legacyError = error;
+        let errorMessage = '';
+
+        error = error.toUpperCase();
+        error = error.split(' ').join('_');
+        error = 'ERROR_' + error;
+
+        this.translate.get(error).subscribe((translatedString: string) => {
+            errorMessage = translatedString;
+        });
+
+        if (errorMessage === error) {
+            errorMessage = legacyError;
+        }
+
+        return errorMessage;
+
+    }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -42,26 +71,21 @@ export class InterceptorService implements HttpInterceptor {
                     // }
                 }
                 return event;
-            }),catchError((response: any) => {
+            }), catchError((response: any) => {
                 if (response instanceof HttpErrorResponse) {
                     let htmlToReturn = '';
-                    console.log(response);
-                    if(response.error.errors){
-                        Object.keys(response.error.errors).forEach(function(key){
-                            this.translate.get(response.error.errors[key][0]).subscribe((message: string) => {
-                                htmlToReturn = htmlToReturn+message+'<br>';
-                            });
-                        }.bind( this ));
-                    }else if(response.error.message){
-                        this.translate.get(response.error.message).subscribe((message: string) => {
-                            htmlToReturn = htmlToReturn+message+'<br>';
-                        });
+                    if (response.error.errors) {
+                        Object.keys(response.error.errors).forEach(function (key) {
+                            htmlToReturn = this.translateError(response.error.errors[key][0]);
+                        }.bind(this));
+                    } else if (response.error.message) {
+                        htmlToReturn = this.translateError(response.error.message);
                     }
 
-                    this.translate.get(response.statusText).subscribe((title: string) => {
-                        this.toastrService.error(htmlToReturn,title,{enableHtml:true});
-                        this.appState.removeRequest(request);
-                    });
+                    let title = this.translateError(response.statusText);
+
+                    this.toastrService.error(htmlToReturn, title, {enableHtml: true});
+                    this.appState.removeRequest(request);
                 }
                 return throwError(response);
             }));

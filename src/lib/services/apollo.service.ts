@@ -9,6 +9,8 @@ import gql from 'graphql-tag';
 import { DefaultOptions } from 'apollo-client/ApolloClient';
 import { onError } from 'apollo-link-error';
 import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
+import { InterceptorService } from './interceptor.service';
 
 
 @Injectable({
@@ -37,6 +39,8 @@ export class ApolloService {
         public httpLink: HttpLink,
         public auth: AuthService,
         public toastr: ToastrService,
+        public translateService: TranslateService,
+        public interceptorService: InterceptorService,
         @Inject('env') private environment,
     ) {
 
@@ -57,13 +61,28 @@ export class ApolloService {
 
         const errorMiddleware = onError(({graphQLErrors, networkError}) => {
             if (graphQLErrors) {
-                graphQLErrors.map(({message, locations, path}) =>
-                    toastr.error(message, 'GraphQL Error'),
-                );
+
+                Object.keys(graphQLErrors).forEach(function (index) {
+
+                    let message = graphQLErrors[index]['message'];
+                    let debugMessage = graphQLErrors[index]['debugMessage'];
+
+                    let translatedMessage = this.interceptorService.translateError(message);
+                    let translatedDebug = this.interceptorService.translateError(debugMessage);
+
+                    toastr.error(translatedDebug, translatedMessage);
+                }, this);
             }
 
             if (networkError) {
-                toastr.error(networkError.message, 'Network Error');
+
+                let message = networkError['error']['message'];
+                let debugMessage = networkError.message;
+
+                let translatedMessage = this.interceptorService.translateError(message);
+                let translatedDebug = this.interceptorService.translateError(debugMessage);
+
+                toastr.error(translatedDebug, translatedMessage);
             }
         });
 

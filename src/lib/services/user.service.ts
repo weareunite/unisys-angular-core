@@ -11,6 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
 import { ApolloService } from './apollo.service';
 import { BaseApolloService } from './baseApollo.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
     providedIn: 'root'
@@ -35,6 +36,7 @@ export class UserService extends BaseApolloService {
         protected toastrService: ToastrService,
         protected appStateService: UnisysAngularAppStateServiceService,
         private   permissionsService: NgxPermissionsService,
+        public translate: TranslateService,
         @Inject('env') private environment,
     ) {
         super(http, appStateService, apollo);
@@ -121,10 +123,28 @@ export class UserService extends BaseApolloService {
         })
             .subscribe(data => {
                 this.auth.setAccessToken(data['access_token']);
-                this.toastrService.success('', 'Vitajte v systéme UniSys.');
+
+                let welcomeMessage = '';
+
+                this.translate.get('WELCOME_IN_UNISYS').subscribe((translatedString: string) => {
+                    welcomeMessage = translatedString;
+                });
+
+                this.toastrService.success('', welcomeMessage);
                 this.loadProfile();
             }, error => {
-                this.toastrService.error('Neplatné prihlasovacie údaje', 'Chyba');
+                let message = '';
+                let errorTitle = '';
+
+                this.translate.get('ERROR').subscribe((translatedString: string) => {
+                    errorTitle = translatedString;
+                });
+
+                this.translate.get('WRONG_LOGIN_CREDENTIALS').subscribe((translatedString: string) => {
+                    message = translatedString;
+                });
+
+                this.toastrService.error(message, errorTitle);
             });
     }
 
@@ -144,9 +164,26 @@ export class UserService extends BaseApolloService {
                 this.loadProfile();
                 this.router.navigate(['/']);
                 this.auth.unsetOneTimeToken();
-                this.toastrService.success('Vitajte v systéme UniSys', 'Bolo použité rýchle prihlásenie');
+                let welcomeMessage = '';
+
+                this.translate.get('WELCOME_IN_UNISYS').subscribe((translatedString: string) => {
+                    welcomeMessage = translatedString;
+                });
+
+                this.toastrService.success('', welcomeMessage);
             }, error => {
-                this.toastrService.error('Neplatné prihlasovacie údaje', 'Chyba');
+                let message = '';
+                let errorTitle = '';
+
+                this.translate.get('ERROR').subscribe((translatedString: string) => {
+                    errorTitle = translatedString;
+                });
+
+                this.translate.get('WRONG_LOGIN_CREDENTIALS').subscribe((translatedString: string) => {
+                    message = translatedString;
+                });
+
+                this.toastrService.error(message, errorTitle);
             });
     }
 
