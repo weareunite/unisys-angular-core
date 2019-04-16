@@ -1,40 +1,47 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { BrowserSupportService } from '../services/browser-support.service';
+import { VersionCheckService } from '../services/version-check.service';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
 
-  valid = null;
-  browser = null;
-  version = null;
+    valid = null;
+    browser = null;
+    version = null;
 
-  constructor(
-    private browserSupportService: BrowserSupportService,
-    @Inject('env') public environment
-  ) {
-  }
+    constructor(
+        private browserSupportService: BrowserSupportService,
+        private versionCheckControl: VersionCheckService,
+        @Inject('env') public environment
+    ) {
+    }
 
-  ngOnInit() {
-    this.browserSupportService.determineBrowser();
-    this.setValid(this.browserSupportService.isValid());
-    this.setBrowser(this.browserSupportService.getBrowser());
-    this.setVersion(this.browserSupportService.getVersion());
-  }
+    ngOnInit() {
+        // Check if browser is valid and supported by application
+        this.browserSupportService.determineBrowser();
 
-  setBrowser(title) {
-    this.browser = title;
-  }
+        // Check if application have new version
+        // this.versionCheckControl.checkVersion();
 
-  setVersion(version) {
-    this.version = version;
-  }
+        this.setValid(this.browserSupportService.isValid());
+        this.setBrowser(this.browserSupportService.getBrowser());
+        this.setVersion(this.browserSupportService.getVersion());
+    }
 
-  setValid(valid: boolean) {
-    this.valid = valid;
-  }
+    setBrowser(title) {
+        this.browser = title;
+    }
+
+    setVersion(version) {
+        this.version = version;
+    }
+
+    setValid(valid: boolean) {
+        this.valid = valid;
+    }
 
 }

@@ -1,16 +1,20 @@
-.navbar-nav>li>a {
+.navbar-nav > li > a {
     line-height: 24px;
 }
 
-.fa, .sidebar-toggle{
+.fa, .sidebar-toggle {
     font-size: 18px;
 }
 
-.navbar-nav>.messages-menu>.dropdown-menu>li .menu>li>a>p,.navbar-nav>.messages-menu>.dropdown-menu>li .menu>li>a>h4 {
+.navbar-nav > .messages-menu > .dropdown-menu > li .menu > li > a > p, .navbar-nav > .messages-menu > .dropdown-menu > li .menu > li > a > h4 {
     margin: 0 0 0 0px;
 }
 
-.navbar-nav>.user-menu>.dropdown-menu{
+.navbar-nav > .user-menu > .dropdown-menu {
     width: 600px;
     padding-left: 15px;
+}
+
+.core-warning.clickable {
+    cursor: pointer;
 }
