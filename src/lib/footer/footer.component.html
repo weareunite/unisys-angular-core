@@ -1,8 +1,10 @@
 <footer class="main-footer">
-  <div class="pull-right hidden-xs">
-    <!--<b>Build</b> {{ deployInfo.GIT_BUILD_NUMBER }},-->
-    <!--<b>Version</b> {{ deployInfo.GIT_COMMIT }} @ {{ deployInfo.GIT_BRANCH }},-->
-    <!--<b>Timestamp</b> {{ deployInfo.TIMESTAMP }}-->
-  </div>
-  <strong>Copyright © {{footerYears}}<a href="http://unite.sk" target="_blank"> Unite s.r.o</a></strong>
+    <div class="pull-right hidden-xs">
+        <!--<b>Build</b> {{ deployInfo.GIT_BUILD_NUMBER }},-->
+        <!--<b>Version</b> {{ deployInfo.GIT_COMMIT }} @ {{ deployInfo.GIT_BRANCH }},-->
+        <!--<b>Timestamp</b> {{ deployInfo.TIMESTAMP }}-->
+    </div>
+    <strong>Copyright © {{footerYears}}<a href="http://unite.sk" target="_blank"> Unite s.r.o</a></strong>
+    <small class="version" *ngIf="versionCheckService.getLocalVersion()">
+        v.{{versionCheckService.getLocalVersion()}}</small>
 </footer>
