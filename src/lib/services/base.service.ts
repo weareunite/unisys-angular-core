@@ -28,9 +28,7 @@ export abstract class BaseService {
     protected search: any = {};
     public filter: any = {};
     public filterNames: any[] = [];
-    public interval: any = {};
     public isFilterSetted: boolean = false;
-    public isIntervalSetted: boolean = false;
     protected pageList = [];
     public meta;
 
@@ -198,14 +196,6 @@ export abstract class BaseService {
 
 // FILTERS
 
-    setIntervalsByViewState() {
-        if (this.appStateService.getViewState('app-filter')) {
-            this.setIntervalByForm(this.appStateService.getViewState('app-filter'));
-        }
-        return this;
-    }
-
-
     setFiltersByViewState() {
         if (this.appStateService.getViewState('app-filter')) {
             this.setFilterByForm(this.appStateService.getViewState('app-filter'));
@@ -218,19 +208,6 @@ export abstract class BaseService {
         let pagesTotal = Math.ceil(reguestMetadata.total / reguestMetadata.per_page);
         this.pageList = Array.from(new Array(pagesTotal), (val, index) => index + 1);
         this.meta = reguestMetadata;
-        return this;
-    }
-
-    setInterval(key?: string, value?: any) {
-        if (!key && !value) {
-            this.interval = {};
-            return this;
-        }
-        if (value == '' || value === null) {
-            delete this.interval[key];
-        } else {
-            this.interval[key] = value;
-        }
         return this;
     }
 
@@ -277,53 +254,6 @@ export abstract class BaseService {
         return this;
     }
 
-
-    setIntervalByForm(formObject) {
-        this.setInterval();
-        this.setSearch();
-
-        if (formObject) {
-            this.isIntervalSetted = true;
-        } else {
-            this.isIntervalSetted = false;
-        }
-
-        Object.keys(formObject).forEach(key => {
-            let value = formObject[key];
-
-            if (moment(value, moment.ISO_8601, true).isValid()) {
-                value = new Date(value);
-            }
-
-            if (value instanceof Date) {
-
-                let dateValue = this.returnDatestring(value);
-
-                if (key === 'measurements_from') {
-                    dateValue = dateValue + ' 00:00:01';
-                } else if (key === 'measurements_to') {
-                    dateValue = dateValue + ' 23:59:59';
-                }
-                this.setInterval(key, dateValue);
-            } else {
-
-                if (key === 'measurements_from' || key === 'measurements_to') {
-                    value = moment(value, 'DD.MM.YYYY').format('YYYY-MM-DD');
-
-                    if (key === 'measurements_from') {
-                        value = value + ' 00:00:01';
-                    } else if (key === 'measurements_to') {
-                        value = value + ' 23:59:59';
-                    }
-                }
-
-                this.setInterval(key, value);
-            }
-        });
-
-        return this;
-    }
-
     setFilterByForm(formObject) {
         this.setFilter();
         this.setSearch();
@@ -344,11 +274,6 @@ export abstract class BaseService {
             } else if (value) {
                 if (typeof value === 'string' || typeof value === 'number') {
                     this.setFilter(key, value);
-                } else if (value instanceof Date) {
-                    if (key !== 'measurements_from' && key !== 'measurements_to') {
-                        let dateValue = this.returnDatestring(value);
-                        this.setFilter(key, dateValue);
-                    }
                 } else if (value.hasOwnProperty('id')) {
                     this.setFilter(key, [value.id]);
                 } else if (value.length > 0 && value[0].id) {
