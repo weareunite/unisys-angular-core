@@ -1,34 +1,34 @@
 <div class="main-buttons">
-  <button class="btn btn-sm btn-default" (click)="toggleFilter()">
-    <span translate>FILTER</span>
-    <small class="label pull-right bg-red" *ngIf="defaultService.isFilterSetted"> {{ +defaultService.meta?.total}}</small>
-  </button>
-  <button style="margin-left: 5px" class="btn btn-sm btn-default" *ngIf="defaultService.isFilterSetted || defaultService.isIntervalSetted" (click)="clearAndSearch()" translate>
-    CLEAR_FILTER
-  </button>
+    <button class="btn btn-sm btn-default" (click)="toggleFilter()">
+        <span translate>FILTER</span>
+        <small class="label pull-right bg-red" *ngIf="defaultService.isFilterSetted"> {{ +defaultService.meta?.total}}</small>
+    </button>
+    <button style="margin-left: 5px" class="btn btn-sm btn-default" *ngIf="defaultService.isFilterSetted" (click)="clearAndSearch()" translate>
+        CLEAR_FILTER
+    </button>
 </div>
 <div class="box" [hidden]='!isVisilbe'>
-  <div class="box-body">
-    <form class="row" [formGroup]="defaultForm" (ngSubmit)="onSubmit()">
-      <div formGroupName="created_at">
-        <lib-unisys-angular-input-wrapper translation="DATE_FROM" [group]="defaultForm" customClass="col-sm-2">
-          <input class="form-control" formControlName="values" bsDaterangepicker placement="right" [bsConfig]="bsConfig">
-        </lib-unisys-angular-input-wrapper>
-      </div>
-      <lib-unisys-angular-input-wrapper translation="SUBJECT_TYPE" [group]="defaultForm" customClass="col-sm-3">
-        <ng-select [items]="subjectTypeList" bindLabel="subject_type" bindValue="subject_type" formControlName="subject_type"></ng-select>
-      </lib-unisys-angular-input-wrapper>
-      <lib-unisys-angular-input-wrapper translation="USER" [group]="defaultForm" customClass="col-sm-2">
-        <ng-select [items]="userList" bindLabel="name" bindValue="id" formControlName="causer_id"></ng-select>
-      </lib-unisys-angular-input-wrapper>
-      <div class="col-sm-12" style="margin-top: 10px; padding-left: 5px">
-        <button type="submit" class="btn btn-sm btn-primary" translate>
-          SET_FILTER
-        </button>
-        <button style="margin-left: 5px" class="btn btn-sm btn-default" *ngIf="defaultService.isFilterSetted || defaultService.isIntervalSetted" (click)="clearAndSearch()" translate>
-          CLEAR_FILTER
-        </button>
-      </div>
-    </form>
-  </div>
+    <div class="box-body">
+        <form class="row" [formGroup]="defaultForm" (ngSubmit)="onSubmit()">
+            <div formGroupName="created_at">
+                <lib-unisys-angular-input-wrapper translation="DATE_FROM" [group]="defaultForm" customClass="col-sm-2">
+                    <input class="form-control" formControlName="values" bsDaterangepicker placement="right" [bsConfig]="bsConfig">
+                </lib-unisys-angular-input-wrapper>
+            </div>
+            <lib-unisys-angular-input-wrapper translation="SUBJECT_TYPE" [group]="defaultForm" customClass="col-sm-3">
+                <ng-select [items]="subjectTypeList" bindLabel="subject_type" bindValue="subject_type" formControlName="subject_type"></ng-select>
+            </lib-unisys-angular-input-wrapper>
+            <lib-unisys-angular-input-wrapper translation="USER" [group]="defaultForm" customClass="col-sm-2">
+                <ng-select [items]="userList" bindLabel="name" bindValue="id" formControlName="causer_id"></ng-select>
+            </lib-unisys-angular-input-wrapper>
+            <div class="col-sm-12" style="margin-top: 10px; padding-left: 5px">
+                <button type="submit" class="btn btn-sm btn-primary" translate>
+                    SET_FILTER
+                </button>
+                <button style="margin-left: 5px" class="btn btn-sm btn-default" *ngIf="defaultService.isFilterSetted" (click)="clearAndSearch()" translate>
+                    CLEAR_FILTER
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
