@@ -623,9 +623,27 @@ export abstract class BaseService {
         return item;
     }
 
-    public fixNumbers(item, list: any[]) {
+    public fixEmptyToNull(item, list: any[]) {
+
         list.forEach(function (value) {
-            item[value] = Number(item[value]);
+            if (item[value] === '') {
+                item[value] = null;
+            }
+        });
+
+        return item;
+    }
+
+    public fixNumbers(item, list: any[], allowNull: boolean = false) {
+        list.forEach(function (value) {
+
+            if (!allowNull) {
+                item[value] = Number(item[value]);
+            } else {
+                if (item[value] !== null) {
+                    item[value] = Number(item[value]);
+                }
+            }
         });
         return item;
     }

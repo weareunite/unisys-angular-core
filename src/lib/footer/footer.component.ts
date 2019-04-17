@@ -10,7 +10,7 @@ export class FooterComponent implements OnInit {
     @Input() footerYears: string;
 
     constructor(
-        private versionCheckService: VersionCheckService,
+        public versionCheckService: VersionCheckService,
     ) {
     }
 

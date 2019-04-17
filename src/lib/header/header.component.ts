@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
 
     constructor(
         private browserSupportService: BrowserSupportService,
-        private versionCheckControl: VersionCheckService,
+        public versionCheckControl: VersionCheckService,
         @Inject('env') public environment
     ) {
     }
