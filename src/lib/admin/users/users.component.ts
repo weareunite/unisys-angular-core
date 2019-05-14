@@ -4,6 +4,9 @@ import { MenuItem } from '../../models';
 import { ModalUpdateComponent } from './modal-update/modal-update.component';
 import { UserService } from '../../services/user.service';
 import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
+import { Subscription } from 'rxjs';
+import { ApolloService } from '../../services/apollo.service';
+import { BulkService } from '../../services/bulk.service';
 
 @Component({
     selector: 'app-users',

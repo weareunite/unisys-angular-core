@@ -5,13 +5,13 @@ import { AuthService } from './auth.service';
 import { User } from '../models';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { NotificationService } from './notification.service';
-import { Subject } from 'rxjs/index';
+import { Subject, Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
 import { ApolloService } from './apollo.service';
 import { BaseApolloService } from './baseApollo.service';
 import { TranslateService } from '@ngx-translate/core';
+import { InterceptorService } from './interceptor.service';
 
 @Injectable({
     providedIn: 'root'
@@ -32,9 +32,9 @@ export class UserService extends BaseApolloService {
         protected apollo: ApolloService,
         protected httpAngular: HttpClient,
         protected router: Router,
-        protected notificationService: NotificationService,
         protected toastrService: ToastrService,
         protected appStateService: UnisysAngularAppStateServiceService,
+        private interceptorService: InterceptorService,
         private   permissionsService: NgxPermissionsService,
         public translate: TranslateService,
         @Inject('env') private environment,

@@ -1,21 +1,22 @@
 import { catchError, map } from 'rxjs/operators';
-import { Observable, throwError } from 'rxjs';
+import { Observable, Subject, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
+import { BulkService } from './bulk.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class InterceptorService implements HttpInterceptor {
-
     constructor(
         protected toastrService: ToastrService,
         protected appState: UnisysAngularAppStateServiceService,
-        protected translate: TranslateService
+        protected translate: TranslateService,
+        private bulkService: BulkService,
     ) {
     }
 
@@ -89,8 +90,7 @@ export class InterceptorService implements HttpInterceptor {
                     let status = response.status;
 
                     if (status === 401) {
-                        //@todo Dependency injection error when UserService is called, this should be fixed !
-                        // this.userService.logOut();
+                        this.bulkService.onLogout();
                     }
 
                     this.toastrService.error(htmlToReturn, title, {enableHtml: true});

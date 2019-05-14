@@ -1,16 +1,16 @@
 import { Inject, Injectable } from '@angular/core';
-import { Apollo, QueryRef } from 'apollo-angular';
+import { Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular-link-http';
 import { AuthService } from './auth.service';
-import { ApolloLink, concat } from 'apollo-link';
+import { ApolloLink } from 'apollo-link';
 import { HttpHeaders } from '@angular/common/http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
 import { DefaultOptions } from 'apollo-client/ApolloClient';
 import { onError } from 'apollo-link-error';
 import { ToastrService } from 'ngx-toastr';
-import { TranslateService } from '@ngx-translate/core';
 import { InterceptorService } from './interceptor.service';
+import { Subject } from 'rxjs';
 
 
 @Injectable({
@@ -39,7 +39,6 @@ export class ApolloService {
         public httpLink: HttpLink,
         public auth: AuthService,
         public toastr: ToastrService,
-        public translateService: TranslateService,
         public interceptorService: InterceptorService,
         @Inject('env') private environment,
     ) {
@@ -75,10 +74,8 @@ export class ApolloService {
             }
 
             if (networkError) {
-
                 let message = networkError['error']['message'];
                 let debugMessage = networkError.message;
-
                 let translatedMessage = this.interceptorService.translateError(message);
                 let translatedDebug = this.interceptorService.translateError(debugMessage);
 
