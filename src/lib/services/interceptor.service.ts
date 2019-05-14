@@ -6,6 +6,7 @@ import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent, HttpResponse, Htt
 import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
+import { UserService } from './user.service';
 
 @Injectable({
     providedIn: 'root'
@@ -16,6 +17,7 @@ export class InterceptorService implements HttpInterceptor {
         protected toastrService: ToastrService,
         protected appState: UnisysAngularAppStateServiceService,
         protected translate: TranslateService,
+        protected userService: UserService
     ) {
     }
 
@@ -86,6 +88,11 @@ export class InterceptorService implements HttpInterceptor {
                     }
 
                     let title = this.translateError(response.statusText);
+                    let status = response.status;
+
+                    if (status === 401) {
+                        this.userService.logOut();
+                    }
 
                     this.toastrService.error(htmlToReturn, title, {enableHtml: true});
                     this.appState.removeRequest(request);
