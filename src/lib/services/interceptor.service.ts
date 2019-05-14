@@ -6,7 +6,6 @@ import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent, HttpResponse, Htt
 import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
-import { UserService } from './user.service';
 
 @Injectable({
     providedIn: 'root'
@@ -16,8 +15,7 @@ export class InterceptorService implements HttpInterceptor {
     constructor(
         protected toastrService: ToastrService,
         protected appState: UnisysAngularAppStateServiceService,
-        protected translate: TranslateService,
-        protected userService: UserService
+        protected translate: TranslateService
     ) {
     }
 
@@ -91,7 +89,8 @@ export class InterceptorService implements HttpInterceptor {
                     let status = response.status;
 
                     if (status === 401) {
-                        this.userService.logOut();
+                        //@todo Dependency injection error when UserService is called, this should be fixed !
+                        // this.userService.logOut();
                     }
 
                     this.toastrService.error(htmlToReturn, title, {enableHtml: true});
