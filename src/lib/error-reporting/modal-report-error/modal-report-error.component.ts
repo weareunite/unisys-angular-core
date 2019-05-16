@@ -79,8 +79,6 @@ export class ModalReportErrorComponent implements OnInit {
 
         let stringifiedErrorData = JSON.stringify(errorData);
 
-        console.log([errorData, stringifiedErrorData]);
-
         let errorMessage = '';
 
         this.translate.get('ERROR_WAS_REPORTED').subscribe((translatedString: string) => {
