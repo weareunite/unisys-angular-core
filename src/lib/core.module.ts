@@ -15,6 +15,9 @@ import { HttpLinkModule } from 'apollo-angular-link-http';
 import { ApolloModule } from 'apollo-angular';
 import { HelpComponent } from './help/help.component';
 import { LogEverywhereComponent } from './log-everywhere/log-everywhere.component';
+import { ErrorReportingComponent } from './error-reporting/error-reporting.component';
+import { ModalReportErrorComponent } from './error-reporting/modal-report-error/modal-report-error.component';
+import { ErrorReportingModule } from './error-reporting/error-reporting.module';
 
 @NgModule({
     imports: [
@@ -31,6 +34,7 @@ import { LogEverywhereComponent } from './log-everywhere/log-everywhere.componen
         TooltipModule.forRoot(),
         ApolloModule,
         HttpLinkModule,
+        ErrorReportingModule
     ],
     declarations: [
         AsideComponent,

@@ -34,6 +34,9 @@ export class ApolloService {
 
     };
 
+    public lastApolloCalls = [];
+    private lastApolloCallsLimit = 10;
+
     constructor(
         private apollo: Apollo,
         public httpLink: HttpLink,
@@ -349,6 +352,14 @@ export class ApolloService {
 
         console.debug([this.operationName + ' ' + this.operationType, requestString]);
 
+        this.pushIntoLatestCall({
+            name: this.operationName,
+            type: this.operationType,
+            string: requestString,
+            params: params,
+            selection: this.selection
+        });
+
         const query = gql`${requestString}`;
 
         this.query = query;
@@ -375,6 +386,14 @@ export class ApolloService {
         });
 
         return string;
+    }
+
+    pushIntoLatestCall(query) {
+        if (Object.keys(this.lastApolloCalls).length === this.lastApolloCallsLimit) {
+            this.lastApolloCalls.shift();
+        }
+
+        this.lastApolloCalls.push(query);
     }
 
     watchQuery() {

@@ -1,0 +1,14 @@
+li {
+  display: inline-block;
+  float: left;
+  padding: 17px 20px;
+  cursor: pointer;
+
+  &:hover {
+    background: #ffff00;
+
+    a i.fa {
+      color: black !important;
+    }
+  }
+}

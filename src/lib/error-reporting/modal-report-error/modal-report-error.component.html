@@ -1,0 +1,45 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left" translate>ERROR_REPORTING</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-xs-5">
+            <div class="row">
+                <div class="col-xs-10" translate>
+                    FETCHING_STORAGE_DATA
+                </div>
+                <div class="col-xs-2">
+                    <i class="fa fa-circle-o state-icon" aria-hidden="true" *ngIf="!fetchedStorage"></i>
+                    <i class="fa fa-check-circle-o state-icon state-success" aria-hidden="true" *ngIf="fetchedStorage"></i>
+                </div>
+                <div class="col-xs-10" translate>
+                    FETCHING_BROWSER_DATA
+                </div>
+                <div class="col-xs-2">
+                    <i class="fa fa-circle-o state-icon" aria-hidden="true" *ngIf="!fetchedBrowser"></i>
+                    <i class="fa fa-check-circle-o state-icon state-success" aria-hidden="true" *ngIf="fetchedBrowser"></i>
+                </div>
+                <div class="col-xs-10" translate>
+                    FETCHING_SYSTEM_DATA
+                </div>
+                <div class="col-xs-2">
+                    <i class="fa fa-circle-o state-icon" aria-hidden="true" *ngIf="!fetchedData"></i>
+                    <i class="fa fa-check-circle-o state-icon state-success" aria-hidden="true" *ngIf="fetchedData"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-7">
+            <div class="row">
+                <div class="col-xs-12">
+                    <textarea #issue class="form-control" rows="10" [disabled]="!fetchedData || !fetchedBrowser || !fetchedStorage" [placeholder]="'ADD_ERROR_DESCRIPTION' | translate"></textarea>
+                    <button class="form-control btn btn-success" style="margin-top:10px;" [disabled]="!fetchedData || !fetchedBrowser || !fetchedStorage" translate (click)="sendError(issue.value)">
+                        SEND_ERROR
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

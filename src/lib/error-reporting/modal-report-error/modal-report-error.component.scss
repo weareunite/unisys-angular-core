@@ -1,0 +1,12 @@
+.state-icon {
+  font-size: 18px;
+
+  &.state-success {
+    color: #8bc34a;
+  }
+}
+
+.btn[disabled] {
+  background-color: inherit;
+}
+

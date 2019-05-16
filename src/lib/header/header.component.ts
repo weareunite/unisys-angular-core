@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { BrowserSupportService } from '../services/browser-support.service';
 import { VersionCheckService } from '../services/version-check.service';
+import { ErrorReportService } from '../services/error-report.service';
 
 @Component({
     selector: 'app-header',

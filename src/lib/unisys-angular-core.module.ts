@@ -24,6 +24,8 @@ import { MenuItem } from './models';
 import { ApolloService } from './services/apollo.service';
 import { AdminHelpModule } from './admin/help/admin-help.module';
 import { AdminLogModule } from './admin/log/admin-log.module';
+import { ErrorReportingModule } from './error-reporting/error-reporting.module';
+import { ErrorReportService } from './services/error-report.service';
 
 @NgModule({
     imports: [
@@ -36,7 +38,8 @@ import { AdminLogModule } from './admin/log/admin-log.module';
         UnisysAngularSharedModule,
         AuthModule,
         DefaultModule,
-        HttpClientModule
+        HttpClientModule,
+        ErrorReportingModule
     ],
     declarations: [
         UnisysAngularCoreComponent
@@ -53,6 +56,7 @@ import { AdminLogModule } from './admin/log/admin-log.module';
         RoleService,
         CoreService,
         ApolloService,
+        ErrorReportService,
         {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true},
     ],
 })
