@@ -62,6 +62,7 @@ import { ErrorReportService } from './services/error-report.service';
 })
 
 export class UnisysAngularCoreModule {
+
     public static forRoot(environment: any, menu: MenuItem[]): ModuleWithProviders {
         return {
             ngModule: UnisysAngularCoreModule,

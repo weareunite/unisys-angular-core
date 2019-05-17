@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { BrowserSupportService } from '../services/browser-support.service';
 import { VersionCheckService } from '../services/version-check.service';
 import { ErrorReportService } from '../services/error-report.service';
+import { PluginService } from '../services/plugin.service';
 
 @Component({
     selector: 'app-header',
@@ -16,6 +17,7 @@ export class HeaderComponent implements OnInit {
 
     constructor(
         private browserSupportService: BrowserSupportService,
+        public pluginService: PluginService,
         public versionCheckControl: VersionCheckService,
         @Inject('env') public environment
     ) {
