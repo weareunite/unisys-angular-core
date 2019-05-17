@@ -113,7 +113,7 @@
                 <i class="fa" [ngClass]="getValue(item,column) ? 'fa-check-square-o' : 'fa-square-o'"></i>
               </span>
               <span *ngIf="column.type == 'file'">
-                <a class="table-download-icon" (click)="downloadFile(getValue(item,column), column.file_type)">
+                <a class="table-download-icon" (click)="downloadFile(getValue(item,column), column.file_type, item.name)">
                   <i class="fa fa-file-excel-o" *ngIf="getValue(item,column) && column.file_type === 'excel'"></i>
                   <i class="fa fa-file-archive-o" *ngIf="getValue(item,column) && column.file_type === 'archive'"></i>
                   <i class="fa fa-file-word-o" *ngIf="getValue(item,column) && column.file_type === 'word'"></i>

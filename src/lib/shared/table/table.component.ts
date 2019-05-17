@@ -254,7 +254,7 @@ export class TableComponent implements OnInit {
     return valueToReturn;
   }
 
-  public downloadFile(url, type) {
+  public downloadFile(url, type, fileName: string = 'export') {
 
     let contentType = '';
     let contentExtensions = '';
@@ -287,7 +287,7 @@ export class TableComponent implements OnInit {
 
     }
 
-    this.httpService.download(url, contentType, 'backup.' + contentExtensions);
+    this.httpService.download(url, contentType, fileName + '.' + contentExtensions);
   }
 
   transformToString(valueToReturn) {
