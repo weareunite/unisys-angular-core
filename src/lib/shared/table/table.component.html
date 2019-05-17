@@ -112,6 +112,16 @@
               <span *ngIf="column.type == 'boolean'">
                 <i class="fa" [ngClass]="getValue(item,column) ? 'fa-check-square-o' : 'fa-square-o'"></i>
               </span>
+              <span *ngIf="column.type == 'file'">
+                <a class="table-download-icon" (click)="downloadFile(getValue(item,column), column.file_type)">
+                  <i class="fa fa-file-excel-o" *ngIf="getValue(item,column) && column.file_type === 'excel'"></i>
+                  <i class="fa fa-file-archive-o" *ngIf="getValue(item,column) && column.file_type === 'archive'"></i>
+                  <i class="fa fa-file-word-o" *ngIf="getValue(item,column) && column.file_type === 'word'"></i>
+                  <i class="fa fa-file-image-o" *ngIf="getValue(item,column) && column.file_type === 'image'"></i>
+                  <i class="fa fa-file-video-o" *ngIf="getValue(item,column) && column.file_type === 'video'"></i>
+                  <i class="fa fa-file-pdf-o" *ngIf="getValue(item,column) && column.file_type === 'pdf'"></i>
+                </a>
+              </span>
               <span *ngIf="column.type == 'attachment'">
                 <i class="fa fa-check" *ngIf="getValue(item,column)"></i>
               </span>
@@ -163,7 +173,8 @@
       <div class="box-footer clearfix" *ngIf="service.pageList.length">
         <div class="col-sm-5">
           <div class="dataTables_info">
-            <span translate>SHOWING:</span> {{ service.meta?.from}} - {{ service.meta?.to}} <span translate>OF</span> {{ service.meta?.total}}
+            <span translate>SHOWING:</span> {{ service.meta?.from}} - {{ service.meta?.to}}
+            <span translate>OF</span> {{ service.meta?.total}}
           </div>
         </div>
         <div class="col-sm-7">
