@@ -33,7 +33,7 @@ export class ReportListComponent implements OnInit {
 
     this.selectedColumns = [
       {translation: 'ID', key: 'id', sortable: true, type: 'number'},
-      {translation: 'REPORT_DATE', key: 'created_at', sortable: true, type: 'date'},
+      {translation: 'REPORT_DATE', key: 'created_at', sortable: true, type: 'datetime'},
       {translation: 'DETAIL', key: 'detail', sortable: false, type: 'detail'},
     ];
   }

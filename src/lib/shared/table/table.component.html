@@ -108,6 +108,7 @@
               </span>
                 <span *ngIf="column.type != 'action'; else actionType" [hidden]="isEditable(item,column) && isEditing(item,column)">
               <span *ngIf="column.type == 'number' || column.type == 'date' || column.type == 'select'">{{ getValue(item, column)}}</span>
+              <span *ngIf="column.type == 'datetime'">{{getValue(item, column) | date : 'dd.M.y HH:mm'}}</span>
               <span *ngIf="column.type == 'string' || column.type == 'list_prop'" [tooltip]="getValue(item,column)" placement="top">{{ getValue(item, column)  | truncate : stringLimit : "…"}}</span>
               <span *ngIf="column.type == 'boolean'">
                 <i class="fa" [ngClass]="getValue(item,column) ? 'fa-check-square-o' : 'fa-square-o'"></i>
