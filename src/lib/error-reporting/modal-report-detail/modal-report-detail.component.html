@@ -1,0 +1,97 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left" translate>REPORTED_ERROR_DETAIL</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-xs-12">
+      <h5 translate>ISSUE_DETAIL</h5>
+    </div>
+    <div class="col-xs-12">
+      <table class="table table-striped table-responsive">
+        <tr>
+          <td translate><strong>DATE_OF_ISSUE</strong></td>
+          <td class="wrap">{{datetime.date | date : 'dd.M.y HH:mm'}}</td>
+        </tr>
+        <tr>
+          <td translate><strong>ISSUE_TIMESTMP</strong></td>
+          <td class="wrap">{{datetime.timestamp}}</td>
+        </tr>
+        <tr>
+          <td translate><strong>ISSUE</strong></td>
+          <td class="wrap">{{issue}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-xs-12">
+      <h5 translate>BROWSER_INFO</h5>
+    </div>
+    <div class="col-xs-12">
+      <table class="table table-striped table-responsive">
+        <tr>
+          <td translate><strong>BROWSER</strong></td>
+          <td class="wrap">{{browser.browser}}</td>
+        </tr>
+        <tr>
+          <td translate><strong>VERSION</strong></td>
+          <td class="wrap">{{browser.version}}</td>
+        </tr>
+        <tr>
+          <td translate><strong>IS_VALID</strong></td>
+          <td class="wrap">{{browser.isValid}}</td>
+        </tr>
+        <tr>
+          <td translate><strong>USER_AGENT</strong></td>
+          <td class="wrap">{{browser.userAgent}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-xs-12">
+      <h5 translate>APPLICATION_INFO</h5>
+    </div>
+    <div class="col-xs-12">
+      <table class="table table-striped table-responsive">
+        <tr>
+          <td translate><strong>URL</strong></td>
+          <td class="wrap">{{application.url}}</td>
+        </tr>
+        <tr>
+          <td translate><strong>ACCESS_TOKEN</strong></td>
+          <td class="wrap">{{localStorage.access_token}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-xs-12">
+      <h5 translate>USER_INFO</h5>
+    </div>
+    <div class="col-xs-12">
+      <ngx-json-viewer [json]="application.user" [expanded]="false"></ngx-json-viewer>
+    </div>
+    <div class="col-xs-12">
+      <h5 translate>GRAPHQL_CALLS</h5>
+    </div>
+    <div class="col-xs-12">
+      <ngx-json-viewer [json]="application.latestCalls" [expanded]="false"></ngx-json-viewer>
+    </div>
+    <div class="col-xs-12">
+      <h5 translate>CONSOLE</h5>
+    </div>
+    <div class="col-xs-12">
+      <ngx-json-viewer [json]="application.console" [expanded]="false"></ngx-json-viewer>
+    </div>
+    <div class="col-xs-12">
+      <h5 translate>LOCAL_STORAGE</h5>
+    </div>
+    <div class="col-xs-12">
+      <ngx-json-viewer [json]="viewState" [expanded]="false"></ngx-json-viewer>
+    </div>
+    <div class="col-xs-12">
+      <h5 translate>PERMISSIONS</h5>
+    </div>
+    <div class="col-xs-12">
+      <ngx-json-viewer [json]="permissions" [expanded]="false"></ngx-json-viewer>
+    </div>
+  </div>
+</div>

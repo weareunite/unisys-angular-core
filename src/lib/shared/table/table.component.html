@@ -122,6 +122,12 @@
                   <i class="fa fa-file-pdf-o" *ngIf="getValue(item,column) && column.file_type === 'pdf'"></i>
                 </a>
               </span>
+              <span *ngIf="column.type == 'detail'" (click)="context.openModalDetail(item)">
+                <a>
+                  <i class="fa fa-eye" style="margin-right:5px;"></i>
+                  <span translate>DETAIL</span>
+                </a>
+              </span>
               <span *ngIf="column.type == 'attachment'">
                 <i class="fa fa-check" *ngIf="getValue(item,column)"></i>
               </span>

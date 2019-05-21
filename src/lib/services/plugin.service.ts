@@ -13,7 +13,7 @@ export class PluginService {
    * List of available plugins
    */
   public availablePlugins: any[] = [
-    // 'error_reporting'
+    'error_reporting'
   ];
 
   constructor() {

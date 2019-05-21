@@ -6,25 +6,33 @@ import { NgxPermissionsModule } from 'ngx-permissions';
 import { ModalReportErrorComponent } from './modal-report-error/modal-report-error.component';
 import { ErrorReportingComponent } from './error-reporting.component';
 import { TooltipModule } from 'ngx-bootstrap';
+import { ReportListComponent } from './report-list/report-list.component';
+import { ModalReportDetailComponent } from './modal-report-detail/modal-report-detail.component';
+import { NgxJsonViewerModule } from 'ngx-json-viewer';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        UnisysAngularSharedModule,
-        AdminUsersRoutingModule,
-        NgxPermissionsModule.forChild(),
-        TooltipModule,
-    ],
-    declarations: [
-        ModalReportErrorComponent,
-        ErrorReportingComponent
-    ],
-    exports: [
-        ErrorReportingComponent
-    ],
-    entryComponents: [
-        ModalReportErrorComponent
-    ]
+  imports: [
+    CommonModule,
+    UnisysAngularSharedModule,
+    AdminUsersRoutingModule,
+    NgxPermissionsModule.forChild(),
+    TooltipModule,
+    NgxJsonViewerModule,
+  ],
+  declarations: [
+    ModalReportDetailComponent,
+    ModalReportErrorComponent,
+    ErrorReportingComponent,
+    ReportListComponent
+  ],
+  exports: [
+    ErrorReportingComponent,
+    ReportListComponent
+  ],
+  entryComponents: [
+    ModalReportErrorComponent,
+    ModalReportDetailComponent
+  ]
 })
 export class ErrorReportingModule {
 }
