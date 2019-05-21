@@ -37,7 +37,7 @@ export class AppSettingsComponent implements OnInit {
     {routerLink: ['admin', 'help'], permission: 'admin.help', translation: 'HELP', icon: 'fa fa-question-circle'},
     {routerLink: ['admin', 'logs'], permission: 'admin.log', translation: 'LOGS', icon: 'fa fa-exclamation-circle'},
     {routerLink: ['admin', 'backup'], permission: 'admin.backups', translation: 'BACKUPS', icon: 'fa fa-history'},
-    {routerLink: ['admin', 'error-report'], permission: 'admin.backups', translation: 'ERROR_REPORTS', icon: 'fa fa-user-times'},
+    {routerLink: ['admin', 'error-report'], permission: 'admin.error-reports', translation: 'ERROR_REPORTS', icon: 'fa fa-user-times'},
     {routerLink: ['admin', 'settings', 'app'], permission: 'admin.settings', translation: 'APP_SETTINGS', icon: 'fa fa-cog'},
   ];
 }

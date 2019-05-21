@@ -23,7 +23,7 @@ export class ReportListComponent implements OnInit {
     this.context = this;
 
     this.settings = {
-      permission: 'admin.users',
+      permission: 'admin.error-reports',
       sortBy: 'created_at',
       visibleColumns: ['id', 'created_at', 'detail'],
       rowsOnPageOptions: [50, 100, 200],
