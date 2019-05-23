@@ -6,12 +6,13 @@ const appRoutes: Routes = [
   {path: '', redirectTo: 'default', pathMatch: 'full'},
   {path: 'app', redirectTo: 'default', pathMatch: 'full'},
   {path: 'default', redirectTo: 'admin/products', pathMatch: 'full'},
-  {path: 'admin/roles', loadChildren: './admin/role/role.module#RoleModule'},
-  {path: 'admin/settings', loadChildren: './admin/settings/settings.module#SettingsModule'},
-  {path: 'admin/user', loadChildren: './admin/users/users.module#UsersModule'},
-  {path: 'admin/help', loadChildren: './admin/help/admin-help.module#AdminHelpModule'},
-  {path: 'admin/logs', loadChildren: './admin/log/admin-log.module#AdminLogModule'},
+  {path: 'admin/roles', loadChildren: () => import('./admin/role/role.module').then(m => m.RoleModule)},
+  {path: 'admin/settings', loadChildren: () => import('./admin/settings/settings.module').then(m => m.SettingsModule)},
+  {path: 'admin/user', loadChildren: () => import('./admin/users/users.module').then(m => m.UsersModule)},
+  {path: 'admin/help', loadChildren: () => import('./admin/help/admin-help.module').then(m => m.AdminHelpModule)},
+  {path: 'admin/logs', loadChildren: () => import('./admin/log/admin-log.module').then(m => m.AdminLogModule)},
 ];
+
 
 @NgModule({
   imports: [
