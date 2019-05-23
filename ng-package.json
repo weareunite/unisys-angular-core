@@ -40,6 +40,8 @@
     "pump",
     "run-sequence",
     "chalk",
-    "yargs"
+    "yargs",
+    "ngx-json-viewer",
+    "ngx-ui-switch"
   ]
 }

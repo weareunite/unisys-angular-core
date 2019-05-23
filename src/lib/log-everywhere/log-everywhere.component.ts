@@ -26,7 +26,7 @@ export class LogEverywhereComponent {
 
     constructor(
         private modalService: BsModalService,
-        private activityLogDetailService: ActivityLogDetailService,
+        public activityLogDetailService: ActivityLogDetailService,
     ) {
         this.itemSubscription = this.activityLogDetailService.itemChanged
             .subscribe(

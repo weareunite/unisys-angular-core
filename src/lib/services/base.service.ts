@@ -5,8 +5,10 @@ import { HttpService } from './http.service';
 import { Tag } from '../models';
 import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
 import { ApolloService } from './apollo.service';
-import * as moment from 'moment';
+import * as moment_ from 'moment';
 import { formatDate } from '@angular/common';
+
+const moment = moment_;
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +40,7 @@ export abstract class BaseService {
     protected appStateService: UnisysAngularAppStateServiceService,
     protected apollo: ApolloService,
   ) {
+    
   }
 
   // Getters and Setters
