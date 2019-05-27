@@ -45,6 +45,31 @@ import {environment} from '../environments/environment';
 export class AppModule { }
 
 ```
+* As UnisysAngularCoreComponent is bootstrap, it's necessary to **create InitService in your application**. Directory must be **src/app/init.service.ts** and **naming must be InitService**.
+* In new created init service, create function boot(). This function is called when app is loaded and all non-core functions should be called  here. Your init service should be then looked like this
+
+```typescript
+import {Injectable} from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class InitService {
+
+  constructor(
+    
+  ) {
+  }
+
+  /**
+   * Boot function. Loaded when application is loaded
+   */
+  public boot() {
+      console.log('Application loaded !');
+  }
+}
+
+```
 
 * It's necessary to import module **UnisysAngularSharedModule** into your Core or Shared module to make shared components from UniSys Angular Core working
 * Add snippet below as scripts into your **angular.json** file

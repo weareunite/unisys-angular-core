@@ -18,7 +18,7 @@ const appRoutes: Routes = [
     component: ReportListComponent,
     canActivate: [NgxPermissionsGuard, AuthGuard],
     data: {permissions: {only: ['admin.shifts'], redirectTo: ''}}
-  },
+  }
 ];
 
 
