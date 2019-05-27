@@ -15,7 +15,7 @@ export class AppSettingsComponent implements OnInit {
 
   constructor(
     private settingsService: SettingsService,
-    private coreService: CoreService
+    public coreService: CoreService
   ) {
   }
 
