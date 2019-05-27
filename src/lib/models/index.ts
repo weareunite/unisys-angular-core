@@ -3,7 +3,8 @@ export interface MenuItem {
     translation: string,
     icon: string,
     permission?: string,
-    submenuItems?: object
+    submenuItems?: object,
+    divider?: boolean
 }
 
 export interface Contact {
