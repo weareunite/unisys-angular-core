@@ -7,7 +7,6 @@ import { Subscription } from 'rxjs';
 import { SettingsService } from './services/settings.service';
 import { BrowserSupportService } from './services/browser-support.service';
 import { VersionCheckService } from './services/version-check.service';
-import { InitService } from '../../../../src/app/services/init.service';
 
 @Component({
   selector: 'app-root',
@@ -30,7 +29,6 @@ export class UnisysAngularCoreComponent {
     private versionCheckService: VersionCheckService,
     private appState: UnisysAngularAppStateServiceService,
     private router: Router,
-    private init: InitService,
     public  auth: AuthService
   ) {
     if (this.auth.isAuthenticated()) {
@@ -42,7 +40,6 @@ export class UnisysAngularCoreComponent {
   }
 
   ngOnInit() {
-    this.init.boot();
     this.browserSupportService.determineBrowser();
     console.debug('Valid browser ? ' + this.browserSupportService.isValid());
     console.debug('Browser : ' + this.browserSupportService.getBrowser());

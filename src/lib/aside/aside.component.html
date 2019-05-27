@@ -2,7 +2,7 @@
     <section class="sidebar">
         <ul class="sidebar-menu">
             <li class="header" translate>MAIN_MENU</li>
-            <li *ngFor="let mainMenu of itemList" class="menu-open" routerLinkActive="active">
+            <li *ngFor="let mainMenu of coreService.itemList" class="menu-open" routerLinkActive="active">
                 <a [routerLink]="mainMenu.routerLink" *ngxPermissionsOnly="mainMenu.permission"><i [ngClass]="mainMenu.icon">
                 </i>
                     <span translate>{{ mainMenu.translation}}</span>
