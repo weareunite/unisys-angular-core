@@ -1,6 +1,6 @@
-import { Inject, Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { MenuItem } from '../models';
+import {Inject, Injectable} from '@angular/core';
+import {Subject} from 'rxjs';
+import {MenuItem} from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,7 @@ import { MenuItem } from '../models';
 
 export class CoreService {
 
-  public itemList: MenuItem[];
+  public itemList: MenuItem[] = [];
   public appSettingsItemList: MenuItem[] = [];
   public itemListChanged = new Subject();
   public appItemListPushed = new Subject();
@@ -19,8 +19,18 @@ export class CoreService {
       {routerLink: ['admin', 'roles'], permission: 'admin.role', translation: 'ROLES', icon: 'fa fa-lock'},
       {routerLink: ['admin', 'help'], permission: 'admin.help', translation: 'HELP', icon: 'fa fa-question-circle'},
       {routerLink: ['admin', 'logs'], permission: 'admin.log', translation: 'LOGS', icon: 'fa fa-exclamation-circle'},
-      {routerLink: ['admin', 'error-report'], permission: 'admin.error-reports', translation: 'ERROR_REPORTS', icon: 'fa fa-user-times'},
-      {routerLink: ['admin', 'settings', 'app'], permission: 'admin.settings', translation: 'APP_SETTINGS', icon: 'fa fa-cog'},
+      {
+        routerLink: ['admin', 'error-report'],
+        permission: 'admin.error-reports',
+        translation: 'ERROR_REPORTS',
+        icon: 'fa fa-user-times'
+      },
+      {
+        routerLink: ['admin', 'settings', 'app'],
+        permission: 'admin.settings',
+        translation: 'APP_SETTINGS',
+        icon: 'fa fa-cog'
+      },
       {routerLink: [], translation: '', icon: '', divider: true}
     ];
   }
