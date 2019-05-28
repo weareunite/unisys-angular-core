@@ -13,6 +13,16 @@
 Install library by running command
 > npm i @weareunite/unisys-angular-core
 
+<details>
+  <summary>Click to expand!</summary>
+  
+  ## Heading
+  1. A numbered
+  2. list
+     * With some
+     * Sub bullets
+</details>
+
 #### Integration
 * Before installing this Core Module, install Angular project first (command **ng new**)
 * Point to file **app.module.ts** in src/app folder
