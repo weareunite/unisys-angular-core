@@ -8,11 +8,8 @@ import {CompanyComponent} from './company/company.component';
 import {AppComponent} from './app/app.component';
 
 const adminSettingsRoutes: Routes = [
-    {path: '', component: SettingsComponent,
+    {path: 'app', component: SettingsComponent,
         children: [
-            {
-                path: '', redirectTo: 'app', pathMatch: 'full'
-            },
             {
                 path: 'app', component : AppComponent, canActivate: [NgxPermissionsGuard, AuthGuard],
                 data: { permissions: { only: ['admin.settings'], redirectTo: ''}}

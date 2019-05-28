@@ -6,9 +6,9 @@ import { AuthGuard } from '../services/auth-guard.service';
 
 const defaultRoutes: Routes = [
   {
-    path: '', component: DefaultComponent, children: [
+    path: 'default', component: DefaultComponent, children: [
       {
-        path: '', component: DefaultComponent, canActivate: [NgxPermissionsGuard, AuthGuard],
+        path: 'default', component: DefaultComponent, canActivate: [NgxPermissionsGuard, AuthGuard],
         data: {
           permissions: {
             only: ['default'],
