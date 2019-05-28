@@ -1,5 +1,12 @@
 <section class="content" style="position: relative">
   <lib-unisys-angular-tab-router [menuList]="mainMenu"></lib-unisys-angular-tab-router>
-  <lib-unisys-angular-view-button [actionList]="actionList" [context]="context"></lib-unisys-angular-view-button>
+  <!--  <lib-unisys-angular-view-button [actionList]="actionList" [context]="context"></lib-unisys-angular-view-button>-->
+  <div class="pull-right" style=" position: absolute;right: 15px;top: 12px;">
+    <div class="btn-group">
+      <div *ngFor="let action of actionList">
+        <button type="button" class="btn btn-sm btn-primary" (click)="action.action.call(context)" translate>{{action.translation}}</button>
+      </div>
+    </div>
+  </div>
   <app-table [columns]="selectedColumns" [settings]="settings" [context]="context" [service]="userService"></app-table>
 </section>
