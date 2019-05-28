@@ -10,11 +10,8 @@ const appRoutes: Routes = [
   {path: 'admin/user', loadChildren: './admin/users/users.module#UsersModule'},
   {path: 'admin/help', loadChildren: './admin/help/admin-help.module#AdminHelpModule'},
   {path: 'admin/logs', loadChildren: './admin/log/admin-log.module#AdminLogModule'},
-  {
-    path: 'admin/error-report',
-    component: ReportListComponent,
-    canActivate: [NgxPermissionsGuard, AuthGuard],
-    data: {permissions: {only: ['admin.shifts'], redirectTo: ''}}
+  {path: 'admin/error-report', component: ReportListComponent, canActivate: [NgxPermissionsGuard, AuthGuard],
+    data: {permissions: {only: ['admin.error-reports'], redirectTo: ''}}
   }
 ];
 
