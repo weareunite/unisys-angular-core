@@ -52,8 +52,33 @@ export class AppModule { }
 
 ```
 
+* **Clean (not delete !)** content of your application **app.component.html** file
 * Rename selector in your app.component.ts from **'app-root'** to **'app-fake-root'**
 * Add **<app-fake-root></app-fake-root> into your index.html** file above <app-root></app-root>
+* Then, your **index.html** file should look like this
+
+```html
+<!DOCTYPE html>
+<html lang="sk-SK">
+
+<head>
+  <base href="/">
+  <title>UniSys</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+
+<body class="hold-transition fixed skin-purple sidebar-mini sidebar-collapse">
+<app-root></app-root>
+<app-fake-root></app-fake-root>
+</body>
+
+</html>
+
+```
+
 * If you want to run some code immediately when application is loaded, **implement OnInit into AppComponent** and use function in onInit function in AppComponent
 * It's necessary to import module **UnisysAngularSharedModule** into your Core or Shared module to make shared components from UniSys Angular Core working
 * Add snippet below as scripts into your **angular.json** file
@@ -65,11 +90,6 @@ export class AppModule { }
   "output": "./assets/"
 }
 ```              
-* In **angular.json** file change variable "index" under architect.options.index
-
-```json
-"index": "./node_modules/@weareunite/unisys-angular-core/index.html",
-```
 
 * In your **enviroment** file, set this variables
 
