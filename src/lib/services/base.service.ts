@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Subject} from 'rxjs';
 
-import { HttpService } from './http.service';
-import { Tag } from '../models';
-import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
-import { ApolloService } from './apollo.service';
+import {HttpService} from './http.service';
+import {Tag} from '../models';
+import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
+import {ApolloService} from './apollo.service';
 import * as moment_ from 'moment';
-import { formatDate } from '@angular/common';
+import {formatDate} from '@angular/common';
 
 const moment = moment_;
 
@@ -40,7 +40,7 @@ export abstract class BaseService {
     protected appStateService: UnisysAngularAppStateServiceService,
     protected apollo: ApolloService,
   ) {
-    
+
   }
 
   // Getters and Setters
@@ -395,8 +395,9 @@ export abstract class BaseService {
 
 // CRU(D) - UPLOADS
 
-  deleteUploadFromList(item: any) {
-    const requestUlr = 'media/' + item.id;
+  deleteUploadFromList(item: any, parentItem: any, service) {
+    console.log([item, parentItem, service]);
+    const requestUlr = service.url + '/' + parentItem.id + '/removeFile/' + item.id;
     this.http.delete(requestUlr).subscribe(data => {
       this.uploadList.forEach(function (entry, index, object) {
         if (entry.id === item.id) {
