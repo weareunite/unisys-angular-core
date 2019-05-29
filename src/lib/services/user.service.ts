@@ -5,7 +5,7 @@ import {AuthService} from './auth.service';
 import {User} from '../models';
 import {Router} from '@angular/router';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Subject, Subscription} from 'rxjs';
+import {Subject} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
 import {ApolloService} from './apollo.service';
@@ -70,6 +70,7 @@ export class UserService extends BaseApolloService {
       this.setPermissionsByProfile(data['frontend_permissions']);
       if (this.router.url === '/signin') {
         this.router.navigate(['']);
+        window.location.reload();
       }
     });
   }
