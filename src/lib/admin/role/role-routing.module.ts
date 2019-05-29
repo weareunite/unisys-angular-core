@@ -7,10 +7,10 @@ import {RoleComponent} from './role.component';
 
 const adminRoleRoutes: Routes = [
   {
-    path: '', component: RoleComponent,
+    path: 'admin', component: RoleComponent,
     children: [
       {
-        path: 'role', component: RoleComponent, canActivate: [NgxPermissionsGuard, AuthGuard],
+        path: 'roles', component: RoleComponent, canActivate: [NgxPermissionsGuard, AuthGuard],
         data: {permissions: {only: ['admin.role'], redirectTo: ''}}
       },
     ]

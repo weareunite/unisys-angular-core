@@ -7,7 +7,7 @@ import { AdminHelpComponent } from './admin-help.component';
 
 const adminHelpRoutes: Routes = [
   {
-    path: '', component: AdminHelpComponent,
+    path: 'admin', component: AdminHelpComponent,
     children: [
       {
         path: 'help', component: AdminHelpComponent, canActivate: [NgxPermissionsGuard, AuthGuard],

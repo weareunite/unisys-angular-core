@@ -6,7 +6,7 @@ import {AuthGuard} from '../../services/auth-guard.service';
 import {UsersComponent} from './users.component';
 
 const adminUsersRoutes: Routes = [
-    {path: '', component: UsersComponent,
+    {path: 'admin', component: UsersComponent,
         children: [
             {
                 path: 'user', component : UsersComponent, canActivate: [NgxPermissionsGuard, AuthGuard],

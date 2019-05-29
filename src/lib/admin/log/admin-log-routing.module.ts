@@ -7,10 +7,10 @@ import { AdminLogComponent } from './admin-log.component';
 
 const adminLogRoutes: Routes = [
   {
-    path: '', component: AdminLogComponent,
+    path: 'admin', component: AdminLogComponent,
     children: [
       {
-        path: 'log', component: AdminLogComponent, canActivate: [NgxPermissionsGuard, AuthGuard],
+        path: 'logs', component: AdminLogComponent, canActivate: [NgxPermissionsGuard, AuthGuard],
         data: {permissions: {only: ['admin.log'], redirectTo: ''}}
       },
     ]
