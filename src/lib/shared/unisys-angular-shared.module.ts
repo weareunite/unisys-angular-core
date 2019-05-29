@@ -95,7 +95,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     UnisysAngularProgressBarModule,
     UnisysAngularTabRouterModule,
     UnisysAngularViewButtonModule,
-    LogViewComponent,
+    LogViewComponent
   ],
   entryComponents: [
     ModalDeleteComponent,

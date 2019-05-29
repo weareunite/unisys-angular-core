@@ -21,7 +21,7 @@ import {TabsModule} from 'ngx-bootstrap';
   ],
   entryComponents: [
     ModalUpdateComponent,
-  ],
+  ]
 })
 export class RoleModule {
 }
