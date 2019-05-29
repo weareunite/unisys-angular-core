@@ -40,7 +40,7 @@ export class ErrorReportingComponent implements OnInit {
       context: this.context,
       service: this.defaultService
     };
-    this.bsModalRef = this.modalService.show(ModalReportErrorComponent, {initialState});
+    this.bsModalRef = this.modalService.show(ModalReportErrorComponent, {initialState, ignoreBackdropClick: true});
   }
 
 }

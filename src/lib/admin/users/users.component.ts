@@ -81,7 +81,7 @@ export class UsersComponent implements OnInit {
             context: this.context,
             service: this.userService,
         };
-        this.bsModalRef = this.modalService.show(ModalUpdateComponent, {initialState});
+        this.bsModalRef = this.modalService.show(ModalUpdateComponent, {initialState, ignoreBackdropClick: true});
     }
 
     public openModalEdit(item) {
@@ -90,6 +90,6 @@ export class UsersComponent implements OnInit {
             item: item,
             service: this.userService,
         };
-        this.bsModalRef = this.modalService.show(ModalUpdateComponent, {initialState});
+        this.bsModalRef = this.modalService.show(ModalUpdateComponent, {initialState, ignoreBackdropClick: true});
     }
 }

@@ -76,7 +76,7 @@ export class RoleComponent implements OnInit {
       context: this.context,
       service: this.roleService,
     };
-    this.bsModalRef = this.modalService.show(ModalUpdateComponent, {initialState});
+    this.bsModalRef = this.modalService.show(ModalUpdateComponent, {initialState, ignoreBackdropClick: true});
   }
 
   public openModalEdit(item) {
@@ -85,7 +85,7 @@ export class RoleComponent implements OnInit {
       item: item,
       service: this.roleService,
     };
-    this.bsModalRef = this.modalService.show(ModalUpdateComponent, {initialState});
+    this.bsModalRef = this.modalService.show(ModalUpdateComponent, {initialState, ignoreBackdropClick: true});
   }
 
 }

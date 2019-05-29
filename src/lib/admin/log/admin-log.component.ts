@@ -71,7 +71,7 @@ export class AdminLogComponent implements OnInit{
         const initialState = {
             item: item,
         };
-        this.bsModalRef = this.modalService.show(ModalViewComponent, {initialState});
+        this.bsModalRef = this.modalService.show(ModalViewComponent, {initialState, ignoreBackdropClick: true});
     }
 
 
