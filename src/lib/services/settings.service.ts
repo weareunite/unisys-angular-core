@@ -1,9 +1,9 @@
-import { Injectable, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import {Injectable, OnInit} from '@angular/core';
+import {Subject} from 'rxjs';
 
-import { HttpService } from './http.service';
-import { Contact } from '../models';
-import { ApolloService } from './apollo.service';
+import {HttpService} from './http.service';
+import {Contact} from '../models';
+import {ApolloService} from './apollo.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class SettingsService {
   public settings: any;
 
   // Apollo
-  protected selectionCompany = 'id,name';
+  protected selectionCompany = 'id,name,surname,company,street,zip,city,country{id,name,full_name},reg_no,tax_no,vat_no,web,email,telephone,description,custom_properties';
   protected selectionSettings = 'key,value';
 
   constructor(
@@ -44,7 +44,7 @@ export class SettingsService {
 
     const operationType = 'settings';
 
-    let apolloInstnc =  this.apollo.setOperationName('query')
+    let apolloInstnc = this.apollo.setOperationName('query')
       .setOperationType(operationType)
       .setSelection(this.selectionSettings, 'data')
       .setQuery()
@@ -61,7 +61,7 @@ export class SettingsService {
 
     const operationType = 'companyProfile';
 
-    let apolloInstnc =  this.apollo.setOperationName('query')
+    let apolloInstnc = this.apollo.setOperationName('query')
       .setOperationType(operationType)
       .setSelection(this.selectionCompany)
       .setPostData()
@@ -79,6 +79,30 @@ export class SettingsService {
 //CR(U)D
 
   updateCompany(item: Contact) {
+
+    let itemToSave = Object.assign({}, item);
+
+    if (item.country !== null) {
+      // @ts-ignore
+      itemToSave['country_id'] = item.country.id.toString();
+    } else {
+      itemToSave['country_id'] = null;
+    }
+    delete itemToSave['country'];
+
+    console.log(itemToSave);
+
+    let apolloInstnc = this.apollo.setOperationName('mutation')
+      .setOperationType('updateCompany')
+      .setSelection('')
+      .setPostData(itemToSave)
+      .setQuery()
+      .mutate();
+
+    let subscription = apolloInstnc.subscribe(result => {
+      this.setCompany(item);
+      subscription.unsubscribe();
+    });
     // const requestUlr = this.url + '/company';
     // this.http.put(requestUlr, item).subscribe(data => {
     //     this.setCompany(item);
