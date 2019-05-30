@@ -1,11 +1,15 @@
 <div class="login-box">
-  <div class="login-logo"><a href="/"><b>Uni</b>Sys</a></div>
+  <div class="login-logo"><a href="/">
+    <span [innerHTML]="coreService.appTitle"></span>
+  </a></div>
   <div class="login-box-body">
     <form (ngSubmit)="onSignIn(f)" #f="ngForm">
       <div class="form-group has-feedback">
-        <input class="form-control" type="text" name="username" placeholder="Uživateľské meno" ngModel><span class="glyphicon glyphicon-user form-control-feedback"></span></div>
+        <input class="form-control" type="text" name="username" placeholder="Uživateľské meno" ngModel><span class="glyphicon glyphicon-user form-control-feedback"></span>
+      </div>
       <div class="form-group has-feedback">
-        <input class="form-control" type="password" name="password" placeholder="Heslo" ngModel><span class="glyphicon glyphicon-lock form-control-feedback"></span></div>
+        <input class="form-control" type="password" name="password" placeholder="Heslo" ngModel><span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
       <div class="row">
         <div class="col-xs-7">
           <!--<a routerLink="/quick-login">Rýchle prihlásenie</a>-->
@@ -17,5 +21,6 @@
       </div>
     </form>
   </div>
-  <div class="lockscreen-footer text-center"><b><a class="text-black" href="http://www.unite.sk">Unite s.r.o</a></b></div>
+  <div class="lockscreen-footer text-center"><b><a class="text-black" href="http://www.unite.sk">Unite s.r.o</a></b>
+  </div>
 </div>

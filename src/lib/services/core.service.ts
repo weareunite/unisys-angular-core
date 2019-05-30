@@ -12,6 +12,8 @@ export class CoreService {
   public appSettingsItemList: MenuItem[] = [];
   public itemListChanged = new Subject();
   public appItemListPushed = new Subject();
+  public appTitle: string;
+  public appShorttag: string;
 
   constructor() {
     this.appSettingsItemList = [
@@ -33,6 +35,14 @@ export class CoreService {
       },
       {routerLink: [], translation: '', icon: '', divider: true}
     ];
+  }
+
+  setAppShorttag(title: string) {
+    this.appShorttag = title;
+  }
+
+  setAppTitle(title: string) {
+    this.appTitle = title;
   }
 
   setAsideMenuList(itemList: MenuItem[]) {
