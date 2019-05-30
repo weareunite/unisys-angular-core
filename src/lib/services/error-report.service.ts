@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
-import { BsModalService } from 'ngx-bootstrap';
-import { BrowserSupportService } from './browser-support.service';
-import { Subject } from 'rxjs';
-import { UserService } from './user.service';
-import { Router } from '@angular/router';
-import { ApolloService } from './apollo.service';
-import { BaseService } from './base.service';
-import { AuthService } from './auth.service';
-import { HttpService } from './http.service';
-import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
+import {Injectable} from '@angular/core';
+import {BsModalService} from 'ngx-bootstrap';
+import {BrowserSupportService} from './browser-support.service';
+import {Subject} from 'rxjs';
+import {UserService} from './user.service';
+import {Router} from '@angular/router';
+import {ApolloService} from './apollo.service';
+import {BaseService} from './base.service';
+import {AuthService} from './auth.service';
+import {HttpService} from './http.service';
+import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +35,7 @@ export class ErrorReportService extends BaseService {
     private router: Router,
     private browserService: BrowserSupportService,
     private apolloService: ApolloService,
+    private httpService: HttpService
   ) {
     super(http, appStateService, apollo);
     this.context = this;
@@ -77,7 +78,8 @@ export class ErrorReportService extends BaseService {
       user: this.userService.getUser(),
       url: this.router.url,
       latestCalls: this.fetchLastApolloCalls(),
-      console: this.fetchLastConsoleLog()
+      console: this.fetchLastConsoleLog(),
+      restCalls: this.fetchLastRestCalls()
     };
 
     this.fetchedData.next();
@@ -90,6 +92,10 @@ export class ErrorReportService extends BaseService {
    */
   fetchLastApolloCalls() {
     return this.apolloService.lastApolloCalls;
+  }
+
+  fetchLastRestCalls() {
+    return this.httpService.lastRestCalls;
   }
 
   /**

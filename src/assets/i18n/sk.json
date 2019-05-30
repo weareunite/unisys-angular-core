@@ -56,5 +56,6 @@
   "CONSOLE": "Konzola",
   "LOCAL_STORAGE": "Lokálne úložisko",
   "PERMISSIONS": "Práva",
-  "ADD_NEW_HELP": "Pridať nápovedu"
+  "ADD_NEW_HELP": "Pridať nápovedu",
+  "REST_CALLS": "REST dopyty"
 }
