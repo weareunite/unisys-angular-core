@@ -38,11 +38,15 @@ export class CoreService {
   }
 
   setAppShorttag(title: string) {
-    this.appShorttag = title;
+    setTimeout(() => {
+      this.appShorttag = title;
+    }, 1000);
   }
 
   setAppTitle(title: string) {
-    this.appTitle = title;
+    setTimeout(() => {
+      this.appTitle = title;
+    }, 1000);
   }
 
   setAsideMenuList(itemList: MenuItem[]) {
