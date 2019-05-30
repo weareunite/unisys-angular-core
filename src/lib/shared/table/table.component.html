@@ -79,6 +79,23 @@
             <span *ngIf="column.type != 'action'; else actionType">
               <span *ngIf="column.type == 'number' || column.type == 'date'">{{ getValue(item,column)}}</span>
               <span *ngIf="column.type == 'string' || column.type == 'list_prop'" [tooltip]="getValue(item,column)" placement="top">{{ getValue(item,column)  | truncate : stringLimit : "â€¦"}}</span>
+              <span *ngIf="column.type == 'file'">
+                <a class="table-download-icon" (click)="downloadFile(getValue(item,column), column.file_type, item.name)">
+                  <i class="fa fa-file-excel-o" *ngIf="getValue(item,column) && column.file_type === 'excel'"></i>
+                  <i class="fa fa-file-archive-o" *ngIf="getValue(item,column) && column.file_type === 'archive'"></i>
+                  <i class="fa fa-file-word-o" *ngIf="getValue(item,column) && column.file_type === 'word'"></i>
+                  <i class="fa fa-file-image-o" *ngIf="getValue(item,column) && column.file_type === 'image'"></i>
+                  <i class="fa fa-file-video-o" *ngIf="getValue(item,column) && column.file_type === 'video'"></i>
+                  <i class="fa fa-file-pdf-o" *ngIf="getValue(item,column) && column.file_type === 'pdf'"></i>
+                </a>
+              </span>
+              <span *ngIf="column.type == 'detail'" (click)="context.openModalDetail(item)">
+                <a>
+                  <i class="fa fa-eye" style="margin-right:5px;"></i>
+                  <span translate>DETAIL</span>
+                </a>
+              </span>
+              <span *ngIf="column.type == 'datetime'">{{getValue(item, column) | date : 'dd.M.y HH:mm'}}</span>
               <span *ngIf="column.type == 'boolean'">
                 <i class="fa" [ngClass]="getValue(item,column) ? 'fa-check-square-o' : 'fa-square-o'"></i>
               </span>
