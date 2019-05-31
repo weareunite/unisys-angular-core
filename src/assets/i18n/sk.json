@@ -64,5 +64,8 @@
   "ISP": "ISP",
   "COORDINATES": "Poloha",
   "TIMEZONE": "Časová zóna",
-  "CALCULATED_FROM_ISP": "Tieto dáta sú vypočítané na základe ISP"
+  "CALCULATED_FROM_ISP": "Tieto dáta sú vypočítané na základe ISP",
+  "PROVINCE": "Kraj",
+  "DISTRICT": "Časť",
+  "ORGANIZATION": "Organizácia"
 }

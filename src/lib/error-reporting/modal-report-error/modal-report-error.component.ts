@@ -91,8 +91,8 @@ export class ModalReportErrorComponent implements OnInit {
 
     this.httpService.post(url, stringifiedErrorData).subscribe((data) => {
 
-      let id = data['id'];
-      this.errorReportingService.uploadScreenshot(id, screenshotData);
+      // let id = data['id'];
+      // this.errorReportingService.uploadScreenshot(id, screenshotData);
 
       let errorMessage = '';
 

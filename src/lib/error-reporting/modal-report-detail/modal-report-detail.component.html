@@ -74,23 +74,35 @@
         </tr>
         <tr>
           <td translate style="font-weight: bold;">ISP</td>
-          <td class="wrap">{{application.network?.org}}</td>
+          <td class="wrap">{{application.network?.geolocation?.isp}}</td>
+        </tr>
+        <tr>
+          <td translate style="font-weight: bold;">ORGANIZATION</td>
+          <td class="wrap">{{application.network?.geolocation?.organization}}</td>
         </tr>
         <tr>
           <td translate style="font-weight: bold;">COORDINATES</td>
-          <td class="wrap">{{application.network?.latitude}}, {{application.network?.longitude}} <i class="fa fa-info-circle" aria-hidden="true" [tooltip]="'CALCULATED_FROM_ISP' | translate"></i></td>
+          <td class="wrap">{{application.network?.geolocation?.latitude}}, {{application.network?.geolocation?.longitude}} <i class="fa fa-info-circle" aria-hidden="true" [tooltip]="'CALCULATED_FROM_ISP' | translate"></i></td>
+        </tr>
+        <tr>
+          <td translate style="font-weight: bold;">PROVINCE</td>
+          <td class="wrap">{{application.network?.geolocation?.state_prov}} <i class="fa fa-info-circle" aria-hidden="true" [tooltip]="'CALCULATED_FROM_ISP' | translate"></i></td>
         </tr>
         <tr>
           <td translate style="font-weight: bold;">CITY</td>
-          <td class="wrap">{{application.network?.city}} <i class="fa fa-info-circle" aria-hidden="true" [tooltip]="'CALCULATED_FROM_ISP' | translate"></i></td>
+          <td class="wrap">{{application.network?.geolocation?.city}} <i class="fa fa-info-circle" aria-hidden="true" [tooltip]="'CALCULATED_FROM_ISP' | translate"></i></td>
+        </tr>
+        <tr>
+          <td translate style="font-weight: bold;">DISTRICT</td>
+          <td class="wrap">{{application.network?.geolocation?.district}} <i class="fa fa-info-circle" aria-hidden="true" [tooltip]="'CALCULATED_FROM_ISP' | translate"></i></td>
         </tr>
         <tr>
           <td translate style="font-weight: bold;">COUNTRY</td>
-          <td class="wrap">{{application.network?.country_name}} ({{application.network?.country}})</td>
+          <td class="wrap">{{application.network?.geolocation?.country_name}} <img src="{{application.network?.geolocation?.country_flag}}" style="width: 20px;vertical-align: baseline;"></td>
         </tr>
         <tr>
           <td translate style="font-weight: bold;">TIMEZONE</td>
-          <td class="wrap">{{application.network?.timezone}}</td>
+          <td class="wrap">{{application.network?.geolocation?.time_zone.name}}</td>
         </tr>
       </table>
       <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" *ngIf="application.network" [src]="mapEmbedUrl" style="border: 1px solid black"></iframe>

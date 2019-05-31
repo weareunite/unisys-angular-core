@@ -37,9 +37,9 @@ export class ModalReportDetailComponent implements OnInit {
     this.viewState = JSON.parse(this.localStorage.viewState);
 
     if (typeof this.application.network !== 'undefined') {
-      let bounding = this.calculateBoundingBox(this.application.network.latitude, this.application.network.longitude, 0.1);
+      let bounding = this.calculateBoundingBox(this.application.network.geolocation.latitude, this.application.network.geolocation.longitude, 0.5);
 
-      this.mapEmbedUrl = this.sanitize.bypassSecurityTrustResourceUrl('https://www.openstreetmap.org/export/embed.html?bbox=' + bounding[1] + '%2C' + bounding[0] + '%2C' + bounding[3] + '%2C' + bounding[2] + '&layer=mapnik&marker=' + this.application.network.latitude + '%2C' + this.application.network.longitude);
+      this.mapEmbedUrl = this.sanitize.bypassSecurityTrustResourceUrl('https://www.openstreetmap.org/export/embed.html?bbox=' + bounding[1] + '%2C' + bounding[0] + '%2C' + bounding[3] + '%2C' + bounding[2] + '&layer=mapnik&marker=' + this.application.network.geolocation.latitude + '%2C' + this.application.network.geolocation.longitude);
     }
   }
 

@@ -101,12 +101,13 @@ export class ErrorReportService extends BaseService {
   fetchNetworkData() {
     this.httpService.externalGet('https://ipapi.co/json/').subscribe(data => {
 
-      this.networkData = data;
+      this.httpService.externalGet('https://api.ipgeolocation.io/ipgeo?apiKey=1b93b21ea8a14f86bcfff19270a6ffc2&ip=' + data['ip']).subscribe(geoData => {
 
-      this.httpService.externalGet('http://api.db-ip.com/v2/free/' + this.networkData.ip).subscribe(data => {
+        data['geolocation'] = geoData;
 
-        console.log(data);
-        // this.fetchedNetworkData.next(data);
+        this.networkData = data;
+
+        this.fetchedNetworkData.next(data);
       });
     });
   }
