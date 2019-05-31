@@ -77,6 +77,7 @@
             <td style="text-align: center;"><input type="checkbox" [checked]="item.selected" (click)="onCheckboxSelect(item)"/></td>
             <td *ngFor="let column of columns | filterColumns: settings.visibleColumns" (click)="clickEvent(item,column)" (mouseover)="overEvent(item,column)" [ngClass]="{'hand detail': column.click || column.mouseover, 'text-right': column.type == 'number', 'text-center': column.type == 'attachment', 'text' : column.type == 'string' || column.type == 'list_prop'}">
             <span *ngIf="column.type != 'action'; else actionType">
+              <span *ngIf="column.type == 'json'">{{parseJSON(getValue(item,column), column.jsonPointer, column.count)}}</span>
               <span *ngIf="column.type == 'number' || column.type == 'date'">{{ getValue(item,column)}}</span>
               <span *ngIf="column.type == 'string' || column.type == 'list_prop'" [tooltip]="getValue(item,column)" placement="top">{{ getValue(item,column)  | truncate : stringLimit : "â€¦"}}</span>
               <span *ngIf="column.type == 'file'">

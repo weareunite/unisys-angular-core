@@ -18,6 +18,16 @@ export class HttpService {
   public lastRestCalls = [];
   private lastRestCallsLimit = 10;
 
+  externalGet(serviceUrl: string) {
+    this.pushIntoLatestCall('GET', serviceUrl, {});
+    return this.http.get(serviceUrl, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      })
+    });
+  }
+
   get(serviceUrl: string) {
     this.pushIntoLatestCall('GET', serviceUrl, {});
     return this.http.get(this.url + serviceUrl, {

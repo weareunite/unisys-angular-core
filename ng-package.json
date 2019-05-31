@@ -42,6 +42,7 @@
     "chalk",
     "yargs",
     "ngx-json-viewer",
-    "ngx-ui-switch"
+    "ngx-ui-switch",
+    "html2canvas"
   ]
 }

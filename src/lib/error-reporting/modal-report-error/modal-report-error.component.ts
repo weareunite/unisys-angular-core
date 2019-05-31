@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { BsModalRef } from 'ngx-bootstrap';
-import { ErrorReportService } from '../../services/error-report.service';
-import { Subscription } from 'rxjs';
-import { ToastrService } from 'ngx-toastr';
-import { TranslateService } from '@ngx-translate/core';
-import { HttpService } from '../../services/http.service';
+import {Component, OnInit} from '@angular/core';
+import {BsModalRef} from 'ngx-bootstrap';
+import {ErrorReportService} from '../../services/error-report.service';
+import {Subscription} from 'rxjs';
+import {ToastrService} from 'ngx-toastr';
+import {TranslateService} from '@ngx-translate/core';
+import {HttpService} from '../../services/http.service';
 
 @Component({
   selector: 'lib-modal-report-error',
@@ -22,6 +22,7 @@ export class ModalReportErrorComponent implements OnInit {
   public fetchedStorageSubscription: Subscription;
   public fetchedBrowserSubscription: Subscription;
   public fetchedDataSubscription: Subscription;
+  public fetchedNetworkDataSubscription: Subscription;
 
   // Triggers
   public fetchedStorage = false;
@@ -53,9 +54,14 @@ export class ModalReportErrorComponent implements OnInit {
       this.fetchedDataSubscription.unsubscribe();
     });
 
+    this.fetchedNetworkDataSubscription = this.errorReportingService.fetchedNetworkData.subscribe((data) => {
+      this.appData = this.errorReportingService.fetchSystemData();
+    });
+
+    this.errorReportingService.fetchNetworkData();
     this.localStorageData = this.errorReportingService.fetchLocalStorageData();
     this.browserData = this.errorReportingService.fetchBrowserData();
-    this.appData = this.errorReportingService.fetchSystemData();
+
   }
 
   /**
@@ -67,6 +73,7 @@ export class ModalReportErrorComponent implements OnInit {
     let browserData = this.browserData;
     let appData = this.appData;
     let localStorageData = this.localStorageData;
+    let screenshotData = this.errorReportingService.screenshotData;
 
     let errorData = {
       issue: issue,
@@ -83,6 +90,10 @@ export class ModalReportErrorComponent implements OnInit {
     let url = 'errorReports';
 
     this.httpService.post(url, stringifiedErrorData).subscribe((data) => {
+
+      let id = data['id'];
+      this.errorReportingService.uploadScreenshot(id, screenshotData);
+
       let errorMessage = '';
 
       this.translate.get('ERROR_WAS_REPORTED').subscribe((translatedString: string) => {

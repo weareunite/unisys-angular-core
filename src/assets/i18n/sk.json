@@ -57,5 +57,12 @@
   "LOCAL_STORAGE": "Lokálne úložisko",
   "PERMISSIONS": "Práva",
   "ADD_NEW_HELP": "Pridať nápovedu",
-  "REST_CALLS": "REST dopyty"
+  "REST_CALLS": "REST dopyty",
+  "FETCHED_SCREENSHOT": "Získavam screenshot",
+  "NETWORK_INFO": "Informácie o sieti",
+  "IP_ADDRESS": "IP Adresa",
+  "ISP": "ISP",
+  "COORDINATES": "Poloha",
+  "TIMEZONE": "Časová zóna",
+  "CALCULATED_FROM_ISP": "Tieto dáta sú vypočítané na základe ISP"
 }

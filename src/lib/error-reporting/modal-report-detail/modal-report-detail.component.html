@@ -64,6 +64,38 @@
       </table>
     </div>
     <div class="col-xs-12">
+      <h5 translate>NETWORK_INFO</h5>
+    </div>
+    <div class="col-xs-12">
+      <table class="table table-striped table-responsive">
+        <tr>
+          <td translate style="font-weight: bold;">IP_ADDRESS</td>
+          <td class="wrap">{{application.network?.ip}}</td>
+        </tr>
+        <tr>
+          <td translate style="font-weight: bold;">ISP</td>
+          <td class="wrap">{{application.network?.org}}</td>
+        </tr>
+        <tr>
+          <td translate style="font-weight: bold;">COORDINATES</td>
+          <td class="wrap">{{application.network?.latitude}}, {{application.network?.longitude}} <i class="fa fa-info-circle" aria-hidden="true" [tooltip]="'CALCULATED_FROM_ISP' | translate"></i></td>
+        </tr>
+        <tr>
+          <td translate style="font-weight: bold;">CITY</td>
+          <td class="wrap">{{application.network?.city}} <i class="fa fa-info-circle" aria-hidden="true" [tooltip]="'CALCULATED_FROM_ISP' | translate"></i></td>
+        </tr>
+        <tr>
+          <td translate style="font-weight: bold;">COUNTRY</td>
+          <td class="wrap">{{application.network?.country_name}} ({{application.network?.country}})</td>
+        </tr>
+        <tr>
+          <td translate style="font-weight: bold;">TIMEZONE</td>
+          <td class="wrap">{{application.network?.timezone}}</td>
+        </tr>
+      </table>
+      <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" *ngIf="application.network" [src]="mapEmbedUrl" style="border: 1px solid black"></iframe>
+    </div>
+    <div class="col-xs-12">
       <h5 translate>USER_INFO</h5>
     </div>
     <div class="col-xs-12">

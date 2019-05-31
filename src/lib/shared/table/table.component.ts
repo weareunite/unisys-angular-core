@@ -1,16 +1,16 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
-import { formatDate } from '@angular/common';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap';
-import { ModalDeleteComponent } from './modal-delete/modal-delete.component';
-import { ModalTagComponent } from './modal-tag/modal-tag.component';
-import { Tag } from '../../models';
-import { ModalTagDeleteComponent } from './modal-tag-delete/modal-tag-delete.component';
-import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
-import { Subscription } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { HttpService } from '../../services/http.service';
-import { UserService } from '../../services/user.service';
+import {Component, ElementRef, Input, OnInit} from '@angular/core';
+import {formatDate} from '@angular/common';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap';
+import {ModalDeleteComponent} from './modal-delete/modal-delete.component';
+import {ModalTagComponent} from './modal-tag/modal-tag.component';
+import {Tag} from '../../models';
+import {ModalTagDeleteComponent} from './modal-tag-delete/modal-tag-delete.component';
+import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
+import {Subscription} from 'rxjs';
+import {TranslateService} from '@ngx-translate/core';
+import {FormControl, FormGroup} from '@angular/forms';
+import {HttpService} from '../../services/http.service';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-table',
@@ -78,6 +78,29 @@ export class TableComponent implements OnInit {
     } else {
       this.service.getItemList();
     }
+  }
+
+  public parseJSON(json: string, pointer: any[], count: boolean = false) {
+
+    let current;
+    let parsedJson = JSON.parse(json);
+
+    for (var key in pointer) {
+
+      let jsonKey = pointer[key];
+
+      if (typeof current === 'undefined') {
+        current = parsedJson;
+      }
+
+      current = current[jsonKey];
+    }
+
+    if (count && typeof current !== 'undefined') {
+      current = current.length;
+    }
+
+    return current;
   }
 
   public setSorting(column) {
