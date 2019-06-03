@@ -4,6 +4,7 @@ import {browser} from 'protractor';
 import {DomSanitizer} from '@angular/platform-browser';
 import {ErrorReportService} from '../../services/error-report.service';
 import {Subscription} from 'rxjs';
+import {HttpService} from '../../services/http.service';
 
 @Component({
   selector: 'lib-modal-report-error',
@@ -23,13 +24,15 @@ export class ModalReportDetailComponent implements OnInit {
   public mapEmbedUrl;
   public positionEmbedUrl;
   public screenshots;
+  public screenshotImage;
 
   public screenshotsLoaded: Subscription;
 
   constructor(
     public bsModalRef: BsModalRef,
     private sanitize: DomSanitizer,
-    private errorReportService: ErrorReportService
+    private errorReportService: ErrorReportService,
+    private httpService: HttpService
   ) {
   }
 
@@ -45,7 +48,7 @@ export class ModalReportDetailComponent implements OnInit {
 
     this.errorReportService.getFiles(this.item.id);
 
-    if (typeof this.application.location !== 'undefined') {
+    if (typeof this.application.location !== 'undefined' && Object.keys(this.application.location).length > 0) {
       let currentBounding = this.calculateBoundingBox(this.application.location.latitude, this.application.location.longitude, 0.5);
 
       this.positionEmbedUrl = this.sanitize.bypassSecurityTrustResourceUrl('https://www.openstreetmap.org/export/embed.html?bbox=' + currentBounding[1] + '%2C' + currentBounding[0] + '%2C' + currentBounding[3] + '%2C' + currentBounding[2] + '&layer=mapnik&marker=' + this.application.location.latitude + '%2C' + this.application.location.longitude);
@@ -60,7 +63,17 @@ export class ModalReportDetailComponent implements OnInit {
     }
 
     this.screenshotsLoaded = this.errorReportService.screenshotLoaded.subscribe((result) => {
-      this.setScreenshots(result);
+
+      if (Object.keys(result).length > 0) {
+
+        let streamLink = 'media/' + result[0]['id'] + '/stream';
+        this.setScreenshots(result);
+
+        this.httpService.streamImage(streamLink).subscribe((data) => {
+          let baseFile = this.httpService.imageEncode(data);
+          this.setScreenshotImage(baseFile);
+        });
+      }
     });
 
   }
@@ -103,6 +116,10 @@ export class ModalReportDetailComponent implements OnInit {
 
   downloadScreenshot(item) {
     this.errorReportService.download(item.downloadLink, item.mime_type, item.name);
+  }
+
+  setScreenshotImage(image) {
+    this.screenshotImage = image;
   }
 
   setScreenshots(screenshots) {

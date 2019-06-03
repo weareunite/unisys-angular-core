@@ -28,6 +28,17 @@ export class HttpService {
     });
   }
 
+  streamImage(serviceUrl: string) {
+    this.pushIntoLatestCall('GET', serviceUrl, {});
+    return this.http.get(this.url + serviceUrl, {
+      headers: new HttpHeaders({
+        'responseType': 'ResponseContentType.BLob',
+        'Authorization': 'Bearer ' + this.auth.getAccessToken(),
+      }),
+      responseType: 'arraybuffer'
+    });
+  }
+
   get(serviceUrl: string) {
     this.pushIntoLatestCall('GET', serviceUrl, {});
     return this.http.get(this.url + serviceUrl, {
@@ -83,6 +94,13 @@ export class HttpService {
         });
         break;
     }
+  }
+
+  public imageEncode (arrayBuffer) {
+    let u8 = new Uint8Array(arrayBuffer);
+    let b64encoded = btoa([].reduce.call(new Uint8Array(arrayBuffer),function(p,c){return p+String.fromCharCode(c)},''));
+    let mimetype="image/jpeg";
+    return "data:"+mimetype+";base64,"+b64encoded
   }
 
   public createAndDownloadBlobFile(body, options, filename) {

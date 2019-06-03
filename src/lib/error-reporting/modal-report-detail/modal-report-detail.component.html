@@ -116,14 +116,12 @@
     <div class="col-xs-12">
       <h5 translate>SCREENSHOT</h5>
     </div>
-    <div class="col-xs-12" *ngIf="screenshots">
-      <div *ngFor="let screenshot of screenshots">
-        <img [src]="screenshot.link">
-        <a class="btn btn-primary" style="display: table-caption;margin-top:5px;" (click)="downloadScreenshot(screenshot)">
-          <i class="fa fa-download" aria-hidden="true"></i>
-          <span style="margin-left:6px;" translate>DOWNLOAD_FILE</span>
-        </a>
-      </div>
+    <div class="col-xs-12" *ngIf="screenshotImage">
+      <img [src]="screenshotImage" class="screenshot-preview">
+      <a class="btn btn-primary" style="display: table-caption;margin-top:5px;" (click)="downloadScreenshot(screenshots[0])">
+        <i class="fa fa-download" aria-hidden="true"></i>
+        <span style="margin-left:6px;" translate>DOWNLOAD_FILE</span>
+      </a>
     </div>
     <div class="col-xs-12">
       <h5 translate>POSITION_INFO</h5>
@@ -131,12 +129,12 @@
     <div class="col-xs-6">
       <h6 translate>VIA_ISP</h6>
       <span *ngIf="!application.network" translate>NOT_AVAILABLE</span>
-      <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" *ngIf="application.network" [src]="mapEmbedUrl" style="border: 1px solid black"></iframe>
+      <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" *ngIf="application.network && mapEmbedUrl !== null" [src]="mapEmbedUrl" style="border: 1px solid black"></iframe>
     </div>
     <div class="col-xs-6">
       <h6 translate>VIA_LOCATION</h6>
       <span *ngIf="!application.location" translate>NOT_AVAILABLE</span>
-      <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" *ngIf="application.location" [src]="positionEmbedUrl" style="border: 1px solid black"></iframe>
+      <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" *ngIf="application.location && positionEmbedUrl !== null" [src]="positionEmbedUrl" style="border: 1px solid black"></iframe>
     </div>
     <div class="col-xs-12">
       <h5 translate>USER_INFO</h5>
