@@ -67,5 +67,7 @@
   "CALCULATED_FROM_ISP": "Tieto dáta sú vypočítané na základe ISP",
   "PROVINCE": "Kraj",
   "DISTRICT": "Časť",
-  "ORGANIZATION": "Organizácia"
+  "ORGANIZATION": "Organizácia",
+  "INSTANCE_CHANGED": "Inštancia zmenená",
+  "WAIT_FOR_RELOAD": "Čakajte na načítanie aplikácie"
 }

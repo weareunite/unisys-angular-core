@@ -1,0 +1,12 @@
+<div class="well row uc-im-wrap" (click)="toggleOpen()" [ngClass]="{'opened' : isOpened}">
+  <app-loader size="small" color="white" *ngIf="loading"></app-loader>
+  <div class="col-xs-12 uc-im-title" *ngIf="!loading">
+    {{currentInstance.name}}
+  </div>
+  <div class="submenu uc-im-submenu" [hidden]="!isOpened">
+    <ul>
+      <li *ngFor="let instance of availableInstances" (click)="changeInstance(instance)" [ngClass]="{'current' : instance.id === currentInstance.id}">{{instance.name}}</li>
+    </ul>
+  </div>
+</div>
+

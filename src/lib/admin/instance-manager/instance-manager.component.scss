@@ -1,0 +1,56 @@
+.uc-im-wrap {
+  display: inline-block;
+  margin: 7px 10px 1px 10px;
+  background: #ffffff3b;
+  border: 1px solid #ffffff7a;
+  padding: 9px 10px;
+  cursor: pointer;
+  position: relative;
+
+  &.opened {
+    background: transparent;
+    border: 1px solid white;
+  }
+
+  &:hover {
+    background: transparent;
+  }
+}
+
+.uc-im-title {
+  color: white;
+  font-weight: 200;
+  font-size: 15px;
+}
+
+.uc-im-submenu {
+  position: absolute;
+  width: 150%;
+  background: white;
+  right: -1px;
+  top: 37px;
+  padding: 14px 14px;
+  font-size: 13px;
+  border-bottom-left-radius: 11px;
+  border-bottom-right-radius: 11px;
+  border-top-left-radius: 11px;
+
+  ul {
+    padding-left: 0;
+    list-style-type: none;
+
+    li {
+      padding: 10px;
+
+      &.current {
+        font-weight: bold;
+        border: 1px solid #605ca854;
+      }
+
+      &:hover {
+        background: #605ca854;
+        font-weight: bold;
+      }
+    }
+  }
+}

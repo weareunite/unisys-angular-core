@@ -29,6 +29,7 @@ import {UnisysAngularInputWrapperModule} from '@weareunite/unisys-angular-input-
 import {UnisysAngularViewButtonModule} from '@weareunite/unisys-angular-view-button';
 import {UnisysAngularProgressBarModule} from '@weareunite/unisys-angular-progress-bar';
 import {LogViewComponent} from './log-view/log-view.component';
+import { LoaderComponent } from './loader/loader.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -73,6 +74,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SortByPipe,
     TableComponent,
     LogViewComponent,
+    LoaderComponent,
   ],
   exports: [
     AngularEditorModule,
@@ -95,7 +97,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     UnisysAngularProgressBarModule,
     UnisysAngularTabRouterModule,
     UnisysAngularViewButtonModule,
-    LogViewComponent
+    LogViewComponent,
+    LoaderComponent
   ],
   entryComponents: [
     ModalDeleteComponent,

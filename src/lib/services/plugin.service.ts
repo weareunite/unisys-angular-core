@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,8 @@ export class PluginService {
    * List of available plugins
    */
   public availablePlugins: any[] = [
-    'error_reporting'
+    'error_reporting',
+    'instance_manager'
   ];
 
   constructor() {
