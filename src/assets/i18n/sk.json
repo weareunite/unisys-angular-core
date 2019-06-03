@@ -69,5 +69,12 @@
   "DISTRICT": "Časť",
   "ORGANIZATION": "Organizácia",
   "INSTANCE_CHANGED": "Inštancia zmenená",
-  "WAIT_FOR_RELOAD": "Čakajte na načítanie aplikácie"
+  "WAIT_FOR_RELOAD": "Čakajte na načítanie aplikácie",
+  "FETCHING_LOCATION": "Získavam polohu",
+  "VIA_ISP": "Cez ISP",
+  "VIA_LOCATION": "Lokácia používateľa",
+  "POSITION_INFO": "Informácie o pozícií",
+  "NOT_AVAILABLE": "Nie je dostupné",
+  "SCREENSHOT": "Snímok obrazovky",
+  "DOWNLOAD_FILE": "Stiahnúť súbor"
 }

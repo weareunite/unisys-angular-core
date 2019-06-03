@@ -82,30 +82,61 @@
         </tr>
         <tr>
           <td translate style="font-weight: bold;">COORDINATES</td>
-          <td class="wrap">{{application.network?.geolocation?.latitude}}, {{application.network?.geolocation?.longitude}} <i class="fa fa-info-circle" aria-hidden="true" [tooltip]="'CALCULATED_FROM_ISP' | translate"></i></td>
+          <td class="wrap">{{application.network?.geolocation?.latitude}}
+            , {{application.network?.geolocation?.longitude}}
+            <i class="fa fa-info-circle" aria-hidden="true" [tooltip]="'CALCULATED_FROM_ISP' | translate"></i></td>
         </tr>
         <tr>
           <td translate style="font-weight: bold;">PROVINCE</td>
-          <td class="wrap">{{application.network?.geolocation?.state_prov}} <i class="fa fa-info-circle" aria-hidden="true" [tooltip]="'CALCULATED_FROM_ISP' | translate"></i></td>
+          <td class="wrap">{{application.network?.geolocation?.state_prov}}
+            <i class="fa fa-info-circle" aria-hidden="true" [tooltip]="'CALCULATED_FROM_ISP' | translate"></i></td>
         </tr>
         <tr>
           <td translate style="font-weight: bold;">CITY</td>
-          <td class="wrap">{{application.network?.geolocation?.city}} <i class="fa fa-info-circle" aria-hidden="true" [tooltip]="'CALCULATED_FROM_ISP' | translate"></i></td>
+          <td class="wrap">{{application.network?.geolocation?.city}}
+            <i class="fa fa-info-circle" aria-hidden="true" [tooltip]="'CALCULATED_FROM_ISP' | translate"></i></td>
         </tr>
         <tr>
           <td translate style="font-weight: bold;">DISTRICT</td>
-          <td class="wrap">{{application.network?.geolocation?.district}} <i class="fa fa-info-circle" aria-hidden="true" [tooltip]="'CALCULATED_FROM_ISP' | translate"></i></td>
+          <td class="wrap">{{application.network?.geolocation?.district}}
+            <i class="fa fa-info-circle" aria-hidden="true" [tooltip]="'CALCULATED_FROM_ISP' | translate"></i></td>
         </tr>
         <tr>
           <td translate style="font-weight: bold;">COUNTRY</td>
-          <td class="wrap">{{application.network?.geolocation?.country_name}} <img src="{{application.network?.geolocation?.country_flag}}" style="width: 20px;vertical-align: baseline;"></td>
+          <td class="wrap">{{application.network?.geolocation?.country_name}}
+            <img src="{{application.network?.geolocation?.country_flag}}" style="width: 20px;vertical-align: baseline;">
+          </td>
         </tr>
         <tr>
           <td translate style="font-weight: bold;">TIMEZONE</td>
           <td class="wrap">{{application.network?.geolocation?.time_zone.name}}</td>
         </tr>
       </table>
+    </div>
+    <div class="col-xs-12">
+      <h5 translate>SCREENSHOT</h5>
+    </div>
+    <div class="col-xs-12" *ngIf="screenshots">
+      <div *ngFor="let screenshot of screenshots">
+        <img [src]="screenshot.link">
+        <a class="btn btn-primary" style="display: table-caption;margin-top:5px;" (click)="downloadScreenshot(screenshot)">
+          <i class="fa fa-download" aria-hidden="true"></i>
+          <span style="margin-left:6px;" translate>DOWNLOAD_FILE</span>
+        </a>
+      </div>
+    </div>
+    <div class="col-xs-12">
+      <h5 translate>POSITION_INFO</h5>
+    </div>
+    <div class="col-xs-6">
+      <h6 translate>VIA_ISP</h6>
+      <span *ngIf="!application.network" translate>NOT_AVAILABLE</span>
       <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" *ngIf="application.network" [src]="mapEmbedUrl" style="border: 1px solid black"></iframe>
+    </div>
+    <div class="col-xs-6">
+      <h6 translate>VIA_LOCATION</h6>
+      <span *ngIf="!application.location" translate>NOT_AVAILABLE</span>
+      <iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" *ngIf="application.location" [src]="positionEmbedUrl" style="border: 1px solid black"></iframe>
     </div>
     <div class="col-xs-12">
       <h5 translate>USER_INFO</h5>

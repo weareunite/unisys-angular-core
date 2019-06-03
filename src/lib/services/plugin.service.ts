@@ -14,7 +14,7 @@ export class PluginService {
    */
   public availablePlugins: any[] = [
     'error_reporting',
-    'instance_manager'
+    // 'instance_manager'
   ];
 
   constructor() {

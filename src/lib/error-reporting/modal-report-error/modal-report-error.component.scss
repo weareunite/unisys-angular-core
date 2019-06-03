@@ -4,6 +4,10 @@
   &.state-success {
     color: #8bc34a;
   }
+
+  &.state-error {
+    color: #f44336;
+  }
 }
 
 .btn[disabled] {

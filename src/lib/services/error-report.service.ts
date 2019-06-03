@@ -23,13 +23,17 @@ export class ErrorReportService extends BaseService {
   public fetchedBrowser = new Subject();
   public fetchedData = new Subject();
   public fetchedNetworkData = new Subject();
+  public fetchedLocation = new Subject();
   public screenshotTaken = new Subject();
+  public deniedLocation = new Subject();
+  public screenshotLoaded = new Subject();
 
   public consoleLog = [];
   public consoleLogLimit = 20;
 
   public screenshotData = '';
   public networkData;
+  public location;
 
   constructor(
     protected auth: AuthService,
@@ -86,7 +90,8 @@ export class ErrorReportService extends BaseService {
       latestCalls: this.fetchLastApolloCalls(),
       console: this.fetchLastConsoleLog(),
       restCalls: this.fetchLastRestCalls(),
-      network: this.networkData
+      network: this.networkData,
+      location: this.fetchLocation()
     };
 
     this.fetchedData.next();
@@ -131,6 +136,43 @@ export class ErrorReportService extends BaseService {
   }
 
   /**
+   * Fetch location data
+   */
+  fetchLocation() {
+    navigator.geolocation.getCurrentPosition(this.locationCallback.bind(this), this.locationErrorCallback.bind(this));
+  }
+
+  /**
+   * Location error on navigator.geolocation.getCurrentPosition
+   *
+   * @param error Error
+   */
+  locationErrorCallback(error) {
+    this.deniedLocation.next();
+  }
+
+  /**
+   * Location success on navigator.geolocation.getCurrentPosition
+   *
+   * @param position Position
+   */
+  locationCallback(position) {
+    this.setLocation(position);
+    this.fetchedLocation.next(position);
+  }
+
+  /**
+   * Get files for error reports
+   *
+   * @param id ID of error report
+   */
+  getFiles(id: number) {
+    this.httpService.get(this.url + '/' + id + '/files').subscribe((result) => {
+      this.screenshotLoaded.next(result['data']);
+    });
+  }
+
+  /**
    * Push log into global console log
    *
    * @param log Log to be added
@@ -159,6 +201,15 @@ export class ErrorReportService extends BaseService {
   }
 
   /**
+   * Set location
+   *
+   * @param location Location
+   */
+  setLocation(location) {
+    this.location = location;
+  }
+
+  /**
    * Upload screenshot associated with ErrorReport
    *
    * @param id ID of error report
@@ -166,11 +217,11 @@ export class ErrorReportService extends BaseService {
    */
   uploadScreenshot(id: number, data: string) {
 
-    const requestUlr = this.url + '/' + id + '/addFile';
+    const requestUlr = this.url + '/' + id + '/uploadRawFile';
     const formData = new FormData();
     formData.append('file', data);
     this.http.upload(requestUlr, formData).subscribe(data => {
-      console.log(data);
+
     });
 
     return false;

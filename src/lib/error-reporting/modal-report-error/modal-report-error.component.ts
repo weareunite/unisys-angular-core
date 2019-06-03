@@ -23,11 +23,15 @@ export class ModalReportErrorComponent implements OnInit {
   public fetchedBrowserSubscription: Subscription;
   public fetchedDataSubscription: Subscription;
   public fetchedNetworkDataSubscription: Subscription;
+  public fetchedLocationSubscription: Subscription;
+  public deniedLocationSubscription: Subscription;
 
   // Triggers
   public fetchedStorage = false;
   public fetchedBrowser = false;
   public fetchedData = false;
+  public fetchedLocation = false;
+  public locationDisabled = false;
 
   constructor(
     public bsModalRef: BsModalRef,
@@ -56,6 +60,17 @@ export class ModalReportErrorComponent implements OnInit {
 
     this.fetchedNetworkDataSubscription = this.errorReportingService.fetchedNetworkData.subscribe((data) => {
       this.appData = this.errorReportingService.fetchSystemData();
+    });
+
+    this.fetchedLocationSubscription = this.errorReportingService.fetchedLocation.subscribe((location) => {
+      this.appData.location = {};
+      this.appData.location['latitude'] = location['coords']['latitude'];
+      this.appData.location['longitude'] = location['coords']['longitude'];
+      this.setFetchedLocation(true);
+    });
+
+    this.deniedLocationSubscription = this.errorReportingService.deniedLocation.subscribe(() => {
+      this.setDisabledLocation(true);
     });
 
     this.errorReportingService.fetchNetworkData();
@@ -87,12 +102,13 @@ export class ModalReportErrorComponent implements OnInit {
     };
 
     let stringifiedErrorData = {content: JSON.stringify(errorData)};
+
     let url = 'errorReports';
 
     this.httpService.post(url, stringifiedErrorData).subscribe((data) => {
 
-      // let id = data['id'];
-      // this.errorReportingService.uploadScreenshot(id, screenshotData);
+      let id = data['id'];
+      this.errorReportingService.uploadScreenshot(id, screenshotData);
 
       let errorMessage = '';
 
@@ -131,6 +147,14 @@ export class ModalReportErrorComponent implements OnInit {
    */
   setFetchedData(state: boolean) {
     this.fetchedData = state;
+  }
+
+  setFetchedLocation(state: boolean) {
+    this.fetchedLocation = state;
+  }
+
+  setDisabledLocation(state: boolean) {
+    this.locationDisabled = state;
   }
 
 }

@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {BsModalRef} from 'ngx-bootstrap';
 import {browser} from 'protractor';
 import {DomSanitizer} from '@angular/platform-browser';
+import {ErrorReportService} from '../../services/error-report.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'lib-modal-report-error',
@@ -19,10 +21,15 @@ export class ModalReportDetailComponent implements OnInit {
   public permissions;
   public viewState;
   public mapEmbedUrl;
+  public positionEmbedUrl;
+  public screenshots;
+
+  public screenshotsLoaded: Subscription;
 
   constructor(
     public bsModalRef: BsModalRef,
-    private sanitize: DomSanitizer
+    private sanitize: DomSanitizer,
+    private errorReportService: ErrorReportService
   ) {
   }
 
@@ -36,11 +43,26 @@ export class ModalReportDetailComponent implements OnInit {
     this.permissions = JSON.parse(this.localStorage.permissions);
     this.viewState = JSON.parse(this.localStorage.viewState);
 
-    if (typeof this.application.network !== 'undefined') {
-      let bounding = this.calculateBoundingBox(this.application.network.geolocation.latitude, this.application.network.geolocation.longitude, 0.5);
+    this.errorReportService.getFiles(this.item.id);
 
-      this.mapEmbedUrl = this.sanitize.bypassSecurityTrustResourceUrl('https://www.openstreetmap.org/export/embed.html?bbox=' + bounding[1] + '%2C' + bounding[0] + '%2C' + bounding[3] + '%2C' + bounding[2] + '&layer=mapnik&marker=' + this.application.network.geolocation.latitude + '%2C' + this.application.network.geolocation.longitude);
+    if (typeof this.application.location !== 'undefined') {
+      let currentBounding = this.calculateBoundingBox(this.application.location.latitude, this.application.location.longitude, 0.5);
+
+      this.positionEmbedUrl = this.sanitize.bypassSecurityTrustResourceUrl('https://www.openstreetmap.org/export/embed.html?bbox=' + currentBounding[1] + '%2C' + currentBounding[0] + '%2C' + currentBounding[3] + '%2C' + currentBounding[2] + '&layer=mapnik&marker=' + this.application.location.latitude + '%2C' + this.application.location.longitude);
     }
+
+    if (typeof this.application.network !== 'undefined') {
+      if (typeof this.application.network.geolocation !== 'undefined') {
+        let bounding = this.calculateBoundingBox(this.application.network.geolocation.latitude, this.application.network.geolocation.longitude, 0.5);
+
+        this.mapEmbedUrl = this.sanitize.bypassSecurityTrustResourceUrl('https://www.openstreetmap.org/export/embed.html?bbox=' + bounding[1] + '%2C' + bounding[0] + '%2C' + bounding[3] + '%2C' + bounding[2] + '&layer=mapnik&marker=' + this.application.network.geolocation.latitude + '%2C' + this.application.network.geolocation.longitude);
+      }
+    }
+
+    this.screenshotsLoaded = this.errorReportService.screenshotLoaded.subscribe((result) => {
+      this.setScreenshots(result);
+    });
+
   }
 
   deg2rad(degrees) {
@@ -77,6 +99,14 @@ export class ModalReportDetailComponent implements OnInit {
     let lonMax = lon + halfSide / pradius;
 
     return [this.rad2deg(latMin), this.rad2deg(lonMin), this.rad2deg(latMax), this.rad2deg(lonMax)];
+  }
+
+  downloadScreenshot(item) {
+    this.errorReportService.download(item.downloadLink, item.mime_type, item.name);
+  }
+
+  setScreenshots(screenshots) {
+    this.screenshots = screenshots;
   }
 
 
