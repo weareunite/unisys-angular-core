@@ -11,7 +11,8 @@
           <!--</div>-->
           <div class="btn-group btn-group-sm pull-right">
             <!--<button type="submit" class="btn btn-sm btn-default"><i class="fa fa-print"></i></button>-->
-            <button *ngIf="settings.allowExport" type="submit" class="btn btn-sm btn-default" (click)="onExport()"><i class="fa fa-share-square-o"></i></button>
+            <button *ngIf="settings.allowExport" type="submit" class="btn btn-sm btn-default" (click)="onExport()">
+              <i class="fa fa-share-square-o"></i></button>
             <div appDropdown [autoclose]=false style="position: relative;float: left; margin-left: 3px;">
               <a class="btn btn-sm btn-default" data-toggle="dropdown">
                 <i class="fa fa-cog"></i>
@@ -46,11 +47,16 @@
                     <i class="fa fa-bars"></i>
                   </button>
                   <ul class="dropdown-menu">
-                    <li><a (click)="onUnselectAll()"><i class="fa fa-minus"></i><span translate>CANCEL_SELECTION</span> ({{ checkSelectedCount()}})</a></li>
+                    <li><a (click)="onUnselectAll()"><i class="fa fa-minus"></i><span translate>CANCEL_SELECTION</span>
+                      ({{ checkSelectedCount()}})</a></li>
                     <li *ngIf="tags" role="presentation" class="divider"></li>
-                    <li *ngIf="tags"><a *ngxPermissionsOnly="settings.permission+'.update'" (click)="onOpenTagModal()"><i class="fa fa-tags"></i><span translate>ADD_TAGS</span></a></li>
+                    <li *ngIf="tags">
+                      <a *ngxPermissionsOnly="settings.permission+'.update'" (click)="onOpenTagModal()"><i class="fa fa-tags"></i><span translate>ADD_TAGS</span></a>
+                    </li>
                     <li role="presentation" class="divider"></li>
-                    <li><a *ngxPermissionsOnly="settings.permission+'.delete'" (click)="onOpenDeleteSelectedModal()"><i class="fa fa-trash-o"></i><span translate>DELETE</span></a></li>
+                    <li>
+                      <a *ngxPermissionsOnly="settings.permission+'.delete'" (click)="onOpenDeleteSelectedModal()"><i class="fa fa-trash-o"></i><span translate>DELETE</span></a>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -74,12 +80,13 @@
           <tbody *ngIf="data?.length > 0 ; else noRows">
           <tr *ngFor="let item of data ; let even = even; let odd = odd" [ngClass]="{ odd: odd, even: even, hightligt: item.selected, new: item.new, clicked: item.clicked}">
             <!--<tr *ngFor="let item of data | orderBy : 'id'">-->
-            <td style="text-align: center;"><input type="checkbox" [checked]="item.selected" (click)="onCheckboxSelect(item)"/></td>
+            <td style="text-align: center;">
+              <input type="checkbox" [checked]="item.selected" (click)="onCheckboxSelect(item)"/></td>
             <td *ngFor="let column of columns | filterColumns: settings.visibleColumns" (click)="clickEvent(item,column)" (mouseover)="overEvent(item,column)" [ngClass]="{'hand detail': column.click || column.mouseover, 'text-right': column.type == 'number', 'text-center': column.type == 'attachment', 'text' : column.type == 'string' || column.type == 'list_prop'}">
             <span *ngIf="column.type != 'action'; else actionType">
-              <span *ngIf="column.type == 'json'">{{parseJSON(getValue(item,column), column.jsonPointer, column.count)}}</span>
-              <span *ngIf="column.type == 'number' || column.type == 'date'">{{ getValue(item,column)}}</span>
-              <span *ngIf="column.type == 'string' || column.type == 'list_prop'" [tooltip]="getValue(item,column)" placement="top">{{ getValue(item,column)  | truncate : stringLimit : "â€¦"}}</span>
+              <span *ngIf="column.type == 'json'">{{parseJSON(getValue(item, column), column.jsonPointer, column.count)}}</span>
+              <span *ngIf="column.type == 'number' || column.type == 'date'">{{ getValue(item, column)}}</span>
+              <span *ngIf="column.type == 'string' || column.type == 'list_prop'" [tooltip]="getValue(item,column)" placement="top">{{ getValue(item, column)  | truncate : stringLimit : "â€¦"}}</span>
               <span *ngIf="column.type == 'file'">
                 <a class="table-download-icon" (click)="downloadFile(getValue(item,column), column.file_type, item.name)">
                   <i class="fa fa-file-excel-o" *ngIf="getValue(item,column) && column.file_type === 'excel'"></i>
@@ -107,16 +114,17 @@
                 <lib-unisys-angular-progress-bar [percentage]="getValue(item,column)*100"></lib-unisys-angular-progress-bar>
               </span>
               <span *ngIf="column.type == 'tag'">
-                <small *ngFor="let tag of getValue(item,column)" class="label label-default" [ngStyle]="{'background-color': tag.custom_properties ? tag.custom_properties.color : 'gray'}"> {{ tag.name}} <i class="fa fa-times hand" *ngxPermissionsOnly="settings.permission+'.update'" (click)="onOpenDeleteTagModal(item,tag)"></i></small>
+                <small *ngFor="let tag of getValue(item,column)" class="label label-default" [ngStyle]="{'background-color': tag.custom_properties ? tag.custom_properties.color : 'gray'}"> {{ tag.name}}
+                  <i class="fa fa-times hand" *ngxPermissionsOnly="settings.permission+'.update'" (click)="onOpenDeleteTagModal(item,tag)"></i></small>
               </span>
               <span *ngIf="column.type == 'tag_view'">
                 <small *ngFor="let tag of getValue(item,column)" class="label label-default" [ngStyle]="{'background-color': tag.custom_properties ? tag.custom_properties.color : 'gray'}"> {{ tag.name}}</small>
               </span>
               <span *ngIf="column.type == 'color'">
-                <small class="label label-default" [ngStyle]="{'background-color': getValue(item,column)}"> {{ getValue(item,column)}}</small>
+                <small class="label label-default" [ngStyle]="{'background-color': getValue(item,column)}"> {{ getValue(item, column)}}</small>
               </span>
               <span *ngIf="column.type == 'translation'">
-                <span translate>{{ getValue(item,column).toUpperCase()}}</span>
+                <span translate>{{ getValue(item, column).toUpperCase()}}</span>
               </span>
             </span>
               <ng-template #actionType>
@@ -132,7 +140,9 @@
                       <li *ngFor="let option of column.options | filterVisibility: false">
                         <a *ngxPermissionsOnly="option.permission" translate (click)="clickAction(item,option.action)" class="subaction">{{ option.translation}}</a>
                       </li>
-                      <li><a *ngxPermissionsOnly="settings.permission+'.delete'" translate (click)="onOpenDeleteItemModal(item)" class="subaction">DELETE</a></li>
+                      <li>
+                        <a *ngxPermissionsOnly="settings.permission+'.delete'" translate (click)="onOpenDeleteItemModal(item)" class="subaction">DELETE</a>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -145,17 +155,22 @@
       <!-- /.box-body -->
       <div class="box-footer clearfix" *ngIf="service.pageList.length">
         <div class="col-sm-5">
-          <div class="dataTables_info" translate [translateParams]="{from: service.meta?.from, to: service.meta?.to, total: service.meta?.total}">SHOWING_FROM_TO_OF</div>
+          <div class="dataTables_info" translate [translateParams]="{from: service.meta?.from, to: service.meta?.to, total: service.meta?.total}">
+            SHOWING_FROM_TO_OF
+          </div>
         </div>
         <div class="col-sm-7">
           <ul class="pagination pagination-sm no-margin pull-right" *ngIf="service.pageList.length > 1">
-            <li><a (click)="setPrevPage()">Â«</a></li>
+            <li><a (click)="setPrevPage()">«</a></li>
             <li *ngIf="showDotsAtBegin()"><a (click)="setPage(1)">1</a></li>
             <li *ngIf="showDotsAtBegin()"><a>...</a></li>
-            <li *ngFor="let page of service.pageList" [ngClass]="{'active': page == service.page , 'disalowed': !showPageAsOption(page)}"><a (click)="setPage(page)">{{ page}}</a></li>
+            <li *ngFor="let page of service.pageList" [ngClass]="{'active': page == service.page , 'disalowed': !showPageAsOption(page)}">
+              <a (click)="setPage(page)">{{ page}}</a></li>
             <li *ngIf="showDotsAtEnd()"><a>...</a></li>
-            <li *ngIf="showDotsAtEnd()"><a (click)="setPage(service.pageList[service.pageList.length-1])">{{ service.pageList[service.pageList.length-1]}}</a></li>
-            <li><a (click)="setNextPage()">Â»</a></li>
+            <li *ngIf="showDotsAtEnd()">
+              <a (click)="setPage(service.pageList[service.pageList.length-1])">{{ service.pageList[service.pageList.length - 1]}}</a>
+            </li>
+            <li><a (click)="setNextPage()">»</a></li>
           </ul>
         </div>
       </div>
@@ -167,7 +182,9 @@
 <ng-template #noRows>
   <tbody>
   <tr>
-    <td colspan="100" style="text-align: center" *ngIf="appStateService.state == ''; else loading" translate>NO_RECORDS</td>
+    <td colspan="100" style="text-align: center" *ngIf="appStateService.state == ''; else loading" translate>
+      NO_RECORDS
+    </td>
   </tr>
   </tbody>
 </ng-template>
