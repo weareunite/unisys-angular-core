@@ -1,41 +1,48 @@
-:host{
-    padding-top: 10px;
-    position: relative;
+:host {
+  padding-top: 10px;
+  position: relative;
 }
 
-.main-buttons{
-    position: absolute;
-    z-index: 1;
-    top: 7px;
-    left: 7px;
-    min-width: 200px;
-    .fa {
-        margin-left: 10px;
-        font-size: 8px;
-        vertical-align: unset;
-        color: #F44336;
-    }
-}
+.main-buttons {
+  position: absolute;
+  z-index: 1;
+  top: 7px;
+  left: 7px;
+  min-width: 200px;
 
-.main-buttons .btn{
-    display: inline-block;
-}
-
-.btn .label{
+  .fa {
     margin-left: 10px;
-    top: 2px;
+    font-size: 8px;
+    vertical-align: unset;
+    color: #F44336;
+  }
 }
 
-.box-body{
-    background-color: white;
-    margin: 12px;
+.main-buttons .btn {
+  display: inline-block;
 }
 
-form.row{
-    margin-top: 25px;
+.btn .label {
+  margin-left: 10px;
+  top: 2px;
 }
 
-:host /deep/ .form-group{
-    padding-left: 3px !important;
-    padding-right: 3px !important;
+.box-body {
+  background-color: white;
+  margin: 12px;
+}
+
+form.row {
+  margin-top: 25px;
+}
+
+@-moz-document url-prefix() {
+  .main-buttons {
+    top: 31px !important;
+  }
+}
+
+:host /deep/ .form-group {
+  padding-left: 3px !important;
+  padding-right: 3px !important;
 }

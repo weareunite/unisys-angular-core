@@ -11,6 +11,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {HttpService} from '../../services/http.service';
 import {UserService} from '../../services/user.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-table',
@@ -319,6 +320,8 @@ export class TableComponent implements OnInit {
 
   transformDate(date, format: string) {
     if (date != '') {
+      // Fix for Safari browser
+      date = moment(date).toISOString();
       return formatDate(date, format, 'en-US', 'UTC+2');
     } else {
       return '';
