@@ -36,6 +36,7 @@ form.row {
   margin-top: 25px;
 }
 
+// Fix for Firefox
 @-moz-document url-prefix() {
   .main-buttons {
     top: 31px !important;
