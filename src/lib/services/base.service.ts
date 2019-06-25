@@ -261,7 +261,26 @@ export abstract class BaseService {
     this.setFilter();
     this.setSearch();
 
-    if (formObject) {
+    let hasSetFilterVariable = false;
+
+    Object.keys(formObject).forEach(function (index) {
+
+      if (formObject[index] !== null) {
+        if (formObject[index].hasOwnProperty('data')) {
+          if (formObject[index]['data'] !== null) {
+            hasSetFilterVariable = true;
+          }
+          ;
+        } else {
+          if (formObject[index] !== null) {
+            hasSetFilterVariable = true;
+          }
+        }
+      }
+
+    });
+
+    if (formObject && hasSetFilterVariable) {
       this.isFilterSetted = true;
     } else {
       this.isFilterSetted = false;
