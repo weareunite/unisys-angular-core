@@ -124,7 +124,7 @@
                 <small class="label label-default" [ngStyle]="{'background-color': getValue(item,column)}"> {{ getValue(item, column)}}</small>
               </span>
               <span *ngIf="column.type == 'translation'">
-                <span translate>{{ getValue(item, column).toUpperCase()}}</span>
+                <span translate *ngIf="getValue(item,column) !== null">{{ getValue(item, column).toUpperCase()}}</span>
               </span>
             </span>
               <ng-template #actionType>
