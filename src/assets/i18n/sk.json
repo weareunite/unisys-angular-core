@@ -11,6 +11,7 @@
   "ADD_ERROR_DESCRIPTION": "Zadajte popis chyby",
   "SEND_ERROR": "Odoslať chybu",
   "LOGS": "Logy",
+  "ERROR": "Chyba",
   "ERROR_REPORTS": "Hlásenia chýb",
   "BROWSER_WARNING": "<i class=\"fa fa-globe\" aria-hidden=\"true\"></i>Používate <strong>nepodporovaný prehliadač {{browser}} {{version}}</strong>. Aplikácia nemusí fungovať správne.",
   "SUBJECT_ID": "ID subjektu",
