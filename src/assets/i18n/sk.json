@@ -77,5 +77,10 @@
   "POSITION_INFO": "Informácie o pozícií",
   "NOT_AVAILABLE": "Nie je dostupné",
   "SCREENSHOT": "Snímok obrazovky",
-  "DOWNLOAD_FILE": "Stiahnúť súbor"
+  "DOWNLOAD_FILE": "Stiahnúť súbor",
+  "APLICATION": "Aplikácia",
+  "APP_SETTINGS": "Nastavenie aplikácie",
+  "USERS": "Uživatelia",
+  "ROLES": "Používateľské role",
+  "LOG_OUT": "Odhlásiť sa"
 }
