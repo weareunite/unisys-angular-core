@@ -1,52 +1,56 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { BrowserSupportService } from '../services/browser-support.service';
-import { VersionCheckService } from '../services/version-check.service';
-import { ErrorReportService } from '../services/error-report.service';
-import { PluginService } from '../services/plugin.service';
+import {Component, Inject, OnInit} from '@angular/core';
+import {BrowserSupportService} from '../services/browser-support.service';
+import {VersionCheckService} from '../services/version-check.service';
+import {ErrorReportService} from '../services/error-report.service';
+import {PluginService} from '../services/plugin.service';
 import {CoreService} from '../services/core.service';
 
 @Component({
-    selector: 'app-header',
-    templateUrl: './header.component.html',
-    styleUrls: ['./header.component.css']
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
 
-    valid = null;
-    browser = null;
-    version = null;
+  valid = null;
+  browser = null;
+  version = null;
 
-    constructor(
-        private browserSupportService: BrowserSupportService,
-        public pluginService: PluginService,
-        public versionCheckControl: VersionCheckService,
-        public coreService: CoreService,
-        @Inject('env') public environment
-    ) {
+  constructor(
+    private browserSupportService: BrowserSupportService,
+    public pluginService: PluginService,
+    public versionCheckControl: VersionCheckService,
+    public coreService: CoreService,
+    @Inject('env') public environment
+  ) {
+  }
+
+  ngOnInit() {
+    // Check if browser is valid and supported by application
+    this.browserSupportService.determineBrowser();
+
+    const versionControlAvailable = this.pluginService.isAvailable('version_control');
+
+    // Check if application have new version
+    if (versionControlAvailable) {
+      this.versionCheckControl.checkVersion();
     }
 
-    ngOnInit() {
-        // Check if browser is valid and supported by application
-        this.browserSupportService.determineBrowser();
+    this.setValid(this.browserSupportService.isValid());
+    this.setBrowser(this.browserSupportService.getBrowser());
+    this.setVersion(this.browserSupportService.getVersion());
+  }
 
-        // Check if application have new version
-        // this.versionCheckControl.checkVersion();
+  setBrowser(title) {
+    this.browser = title;
+  }
 
-        this.setValid(this.browserSupportService.isValid());
-        this.setBrowser(this.browserSupportService.getBrowser());
-        this.setVersion(this.browserSupportService.getVersion());
-    }
+  setVersion(version) {
+    this.version = version;
+  }
 
-    setBrowser(title) {
-        this.browser = title;
-    }
-
-    setVersion(version) {
-        this.version = version;
-    }
-
-    setValid(valid: boolean) {
-        this.valid = valid;
-    }
+  setValid(valid: boolean) {
+    this.valid = valid;
+  }
 
 }
