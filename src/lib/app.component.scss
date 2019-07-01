@@ -133,6 +133,12 @@ body.fullscreen .content-wrapper, body.fullscreen .main-footer {
   margin-left: 0 !important;
 }
 
+.sidebar-menu {
+  .fas {
+    width: 20px;
+  }
+}
+
 @media (min-width: 768px) {
   .sidebar-mini.sidebar-collapse .main-footer {
     margin-left: 0 !important;

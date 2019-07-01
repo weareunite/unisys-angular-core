@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
-import { BaseService } from './base.service';
-import { HttpService } from './http.service';
-import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
-import { ApolloService } from './apollo.service';
-import { Subject } from 'rxjs';
+import {BaseService} from './base.service';
+import {HttpService} from './http.service';
+import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
+import {ApolloService} from './apollo.service';
+import {Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,7 @@ export abstract class BaseApolloService extends BaseService {
   protected operationType: string;
   protected operationTypePlural: string;
   protected operationName: string;
+  protected autoLoadData = true;
   public distinctList;
   public distinctListChanged = new Subject<any[]>();
 
@@ -117,7 +118,16 @@ export abstract class BaseApolloService extends BaseService {
     });
   }
 
+  setFakeItemList(items: any[]) {
+    setTimeout(() => this.setItemList(items), 2000);
+  }
+
   getItemList() {
+
+    if (!this.autoLoadData) {
+      return false;
+    }
+
     const apolloInstnc = this.apollo.setOperationName('query')
       .setOperationType(this.operationTypePlural)
       .setParams(this.generateGraphQlParams())

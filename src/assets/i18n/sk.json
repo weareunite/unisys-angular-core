@@ -83,5 +83,6 @@
   "USERS": "Uživatelia",
   "ROLES": "Používateľské role",
   "LOG_OUT": "Odhlásiť sa",
-  "APP_VERSION_WARNING": "<i class=\"fa fa-wrench\" aria-hidden=\"true\"></i>Aplikácia bola aktualizovaná. Kliknite na túto hlášku pre aktualizáciu ({{old}} -> {{new}})"
+  "APP_VERSION_WARNING": "<i class=\"fa fa-wrench\" aria-hidden=\"true\"></i>Aplikácia bola aktualizovaná. Kliknite na túto hlášku pre aktualizáciu ({{old}} -> {{new}})",
+  "MAIN_MENU": "Hlavné menu"
 }
