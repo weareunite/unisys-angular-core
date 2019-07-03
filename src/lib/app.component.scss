@@ -7,6 +7,22 @@
 @import '~ngx-toastr/toastr.css';
 @import '~@ng-select/ng-select/themes/default.theme.css';
 
+.menu-divider {
+  background: #1a2125 !important;
+  color: #4b646f !important;
+  font-size: 12px;
+  cursor: auto;
+}
+
+.sidebar-collapse .menu-divider {
+  height: 0 !important;
+  overflow: hidden;
+  border-bottom: 1px solid #3a474e;
+  border-left: 0;
+  border-right: 0;
+  padding: 0;
+}
+
 .loader {
   position: fixed;
   left: 0;

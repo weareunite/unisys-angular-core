@@ -3,22 +3,27 @@
     <ul class="sidebar-menu" *ngIf="haveItems">
       <li class="header" translate>MAIN_MENU</li>
       <li *ngFor="let mainMenu of itemList" class="menu-open" routerLinkActive="active">
-        <a [routerLink]="mainMenu.routerLink" *ngxPermissionsOnly="mainMenu.permission"><i [ngClass]="mainMenu.icon">
-        </i>
-          <span translate>{{ mainMenu.translation}}</span>
-        </a>
-        <ul class="treeview-menu" *ngIf="mainMenu.submenuItems">
-          <li *ngFor="let subMenu of mainMenu.submenuItems">
-            <a [routerLink]="subMenu.routerLink" routerLinkActive="active" *ngIf="router.url === '/'+subMenu.routerLinkString">
-              <i class="fa fa-circle"></i>
-              {{ subMenu.name}}
-            </a>
-            <a [routerLink]="subMenu.routerLink" routerLinkActive="active" *ngIf="router.url !== '/'+subMenu.routerLinkString">
-              <i class="fa fa-circle-o"></i>
-              {{ subMenu.name}}
-            </a>
-          </li>
-        </ul>
+        <ng-container *ngIf="mainMenu.type === 'divider'">
+          <a class="menu-divider header" translate>{{ mainMenu.translation}}</a>
+        </ng-container>
+        <ng-container *ngIf="mainMenu.type !== 'divider'">
+          <a [routerLink]="mainMenu.routerLink" *ngxPermissionsOnly="mainMenu.permission"><i [ngClass]="mainMenu.icon">
+          </i>
+            <span translate>{{ mainMenu.translation}}</span>
+          </a>
+          <ul class="treeview-menu" *ngIf="mainMenu.submenuItems">
+            <li *ngFor="let subMenu of mainMenu.submenuItems">
+              <a [routerLink]="subMenu.routerLink" routerLinkActive="active" *ngIf="router.url === '/'+subMenu.routerLinkString">
+                <i class="fa fa-circle"></i>
+                {{ subMenu.name}}
+              </a>
+              <a [routerLink]="subMenu.routerLink" routerLinkActive="active" *ngIf="router.url !== '/'+subMenu.routerLinkString">
+                <i class="fa fa-circle-o"></i>
+                {{ subMenu.name}}
+              </a>
+            </li>
+          </ul>
+        </ng-container>
       </li>
     </ul>
   </section>
