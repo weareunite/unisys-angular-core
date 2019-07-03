@@ -50,6 +50,16 @@ export abstract class BaseApolloService extends BaseService {
 
   pushItemToList(item: any, isNewItem?: boolean) { // TODO TOTO isNewItem treba dat prec
 
+    // If autoLoadData is turned on (dump data provided), dont send
+    // data to server and await response, just set item with form
+    // data and unshift it to the item list
+    if (!this.autoLoadData) {
+      item.id = this.itemList.length + 1;
+      this.itemList.unshift(item);
+      this.setItemList(this.itemList);
+      return false;
+    }
+
     item = this.removeIdFromItem(item);   // TODO TOTO tu je asi zbytočné
 
     const itemAction = 'create' + this.capitalizeFirstLetter(this.operationType);
