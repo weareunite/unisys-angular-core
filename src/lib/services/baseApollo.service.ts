@@ -17,6 +17,7 @@ export abstract class BaseApolloService extends BaseService {
   protected operationTypePlural: string;
   protected operationName: string;
   protected autoLoadData = true;
+  public fakeItemList;
   public distinctList;
   public distinctListChanged = new Subject<any[]>();
 
@@ -128,18 +129,10 @@ export abstract class BaseApolloService extends BaseService {
     });
   }
 
-  /**
-   * Set fake item as item list for dumping
-   *
-   * @param items Items to be dumped as item list
-   */
-  setFakeItemList(items: any[]) {
-    setTimeout(() => this.setItemList(items), 500);
-  }
-
   getItemList() {
 
     if (!this.autoLoadData) {
+      this.setItemList(this.fakeItemList);
       return false;
     }
 
