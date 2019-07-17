@@ -29,7 +29,10 @@ import {UnisysAngularInputWrapperModule} from '@weareunite/unisys-angular-input-
 import {UnisysAngularViewButtonModule} from '@weareunite/unisys-angular-view-button';
 import {UnisysAngularProgressBarModule} from '@weareunite/unisys-angular-progress-bar';
 import {LogViewComponent} from './log-view/log-view.component';
-import { LoaderComponent } from './loader/loader.component';
+import {LoaderComponent} from './loader/loader.component';
+
+// Local UniSys GIT modules in project (for development purposes only !)
+// import {UnisysAngularFormGroupModule} from '../../../../unisys-angular-form-group/src/lib/unisys-angular-form-group.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
