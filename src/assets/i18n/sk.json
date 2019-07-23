@@ -141,5 +141,7 @@
   "WRONG_LOGIN_CREDENTIALS": "Neplatné prihlasovacie údaje",
   "YES": "Áno",
   "ZIP": "PSČ",
-  "SAVING": "Pracujem"
+  "SAVING": "Pracujem",
+  "NO_CHANGES_ENDPOINT_DEFINED_TITLE": "Nebol definovaný endpoint",
+  "NO_CHANGES_ENDPOINT_DEFINED": "Endpoint pre aplikovanie zmien nebol v komponente definovaný"
 }

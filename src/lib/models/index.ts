@@ -1,3 +1,5 @@
+import {ChangeType} from '../types/change-type.enum';
+
 export interface MenuItem {
   routerLink?: object,
   translation: string,
@@ -109,7 +111,7 @@ export interface Help {
   selected?: boolean | undefined;
 }
 
-export interface activityLog {
+export interface ActivityLog {
   id: number;
   log_name: string;
   description: string;
@@ -120,4 +122,13 @@ export interface activityLog {
   causer_type: string;
   created_at: Date;
   selected?: boolean | undefined;
+}
+
+export interface WatchedChange {
+  object: {};
+  additionalData?: {};
+  type: ChangeType;
+  date: string;
+  time: string;
+  timestamp: number;
 }

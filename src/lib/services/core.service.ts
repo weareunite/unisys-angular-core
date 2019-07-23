@@ -1,6 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
 import {MenuItem} from '../models';
+import {ToastrService} from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
