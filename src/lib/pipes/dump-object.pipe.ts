@@ -8,7 +8,7 @@ import * as $ from 'jquery';
 /**
  * This pipe show debug for object in tree list
  *
- * Usage : <div innerHTML="{{objectToDump | dumpObject}}"></div>
+ * Usage : <unisys-core-dumperson [object]:{}></unisys-core-dumperson>
  */
 export class DumpObjectPipe implements PipeTransform {
 
