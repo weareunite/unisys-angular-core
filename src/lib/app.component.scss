@@ -1,7 +1,7 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~admin-lte/dist/css/AdminLTE.min.css';
-@import '~admin-lte/dist/css/skins/_all-skins.css';
-@import '~font-awesome/css/font-awesome.css';
+@import '~admin-lte/dist/css/skins/_all-skins.min.css';
+@import '~font-awesome/css/font-awesome.min.css';
 @import '~ionicons/dist/css/ionicons.min.css';
 @import '~ngx-bootstrap/datepicker/bs-datepicker.css';
 @import '~ngx-toastr/toastr.css';
@@ -360,5 +360,48 @@ body.fullscreen.skin-purple .wrapper {
 
   .dumperson-value {
     font-weight: normal;
+  }
+}
+
+.bubble {
+  display: table;
+  background: #FAFAFA;
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
+  border: 2px solid #BDBDBD;
+  box-shadow: 0px 0px 8px 0px #00000040;
+  text-align: center;
+  z-index: 999;
+  cursor: pointer;
+
+  &:hover {
+    border: 2px solid #9c9c9c;
+    box-shadow: 0px 0px 8px 0px #00000070;
+  }
+
+  .bubble--text {
+    display: table-cell;
+    vertical-align: middle;
+    line-height: 14px;
+    font-size: 15px;
+    font-weight: 400;
+  }
+
+  .bubble--actions {
+    position: absolute;
+    right: 0;
+  }
+
+  .bubble--actions--item {
+    color: white;
+    background: #4e4e4e;
+    border-radius: 10px;
+    width: 20px;
+    display: block;
+
+    &:hover {
+      background: #000000;
+    }
   }
 }
