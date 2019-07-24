@@ -297,3 +297,68 @@ body.fullscreen.skin-purple .wrapper {
 .col-no-padding {
   padding: 0;
 }
+
+.dumperson {
+  background: #F5F5F5;
+  border: 1px solid #616161;
+  color: #4e4e4e;
+  padding: 7px;
+  font-size: 13px;
+  font-family: monospace;
+  width: auto !important;
+  display: inline-block;
+
+  ul {
+    padding-left: 16px;
+    list-style-type: none;
+    list-style-position: inside;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-left: 1px solid #d6d6d6;
+  }
+
+  .dumperson-child-title {
+    color: #222d30;
+    padding: 1px 4px;
+    font-size: 11px;
+    font-weight: bold;
+  }
+
+  .dumperson-mini {
+    font-size: 10px;
+    display: block;
+    letter-spacing: 2px;
+    text-align: center;
+  }
+
+  .dumperson-title {
+    font-weight: bold;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .dumperson-start {
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+    border-bottom: 1px dashed #cacaca;
+  }
+
+  .dumperson-end {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed #cacaca;
+  }
+
+  .dumperson-child {
+    font-weight: bold;
+  }
+
+  .dumperson-type {
+    font-style: italic;
+    font-size: 10px;
+  }
+
+  .dumperson-value {
+    font-weight: normal;
+  }
+}

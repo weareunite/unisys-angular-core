@@ -13,6 +13,12 @@
 Install library by running command
 > npm i @weareunite/unisys-angular-core
 
+#### Helpers libraries
+
+Library | Description
+--- | --- 
+`<unisys-core-dumperson [object]:{}></unisys-core-dumperson>` | JSON object parsed into list-tree
+
 #### Integration
 * Before installing this Core Module, install Angular project first (command **ng new**)
 * Point to file **app.module.ts** in src/app folder

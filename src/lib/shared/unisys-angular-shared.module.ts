@@ -30,6 +30,8 @@ import {UnisysAngularViewButtonModule} from '@weareunite/unisys-angular-view-but
 import {UnisysAngularProgressBarModule} from '@weareunite/unisys-angular-progress-bar';
 import {LogViewComponent} from './log-view/log-view.component';
 import {LoaderComponent} from './loader/loader.component';
+import {DumpObjectPipe} from '../pipes/dump-object.pipe';
+import {DumpersonComponent} from './dumperson/dumperson.component';
 
 // Local UniSys GIT modules in project (for development purposes only !)
 // import {UnisysAngularFormGroupModule} from '../../../../unisys-angular-form-group/src/lib/unisys-angular-form-group.module';
@@ -78,6 +80,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     TableComponent,
     LogViewComponent,
     LoaderComponent,
+    DumpObjectPipe,
+    DumpersonComponent
   ],
   exports: [
     AngularEditorModule,
@@ -101,7 +105,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     UnisysAngularTabRouterModule,
     UnisysAngularViewButtonModule,
     LogViewComponent,
-    LoaderComponent
+    LoaderComponent,
+    DumpObjectPipe,
+    DumpersonComponent
   ],
   entryComponents: [
     ModalDeleteComponent,
