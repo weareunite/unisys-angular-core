@@ -15,6 +15,7 @@ export abstract class BaseApolloService extends BaseService {
   protected selection: string;
   protected operationType: string;
   protected operationTypePlural: string;
+  protected properties: any[];
   protected operationName: string;
   protected autoLoadData = true;
   public fakeItemList;
@@ -63,7 +64,24 @@ export abstract class BaseApolloService extends BaseService {
 
     item = this.removeIdFromItem(item);   // TODO TOTO tu je asi zbytočné
 
+    let propertiesArray = [];
     const itemAction = 'create' + this.capitalizeFirstLetter(this.operationType);
+
+    console.log(this.properties);
+
+    Object.keys(item).forEach(function (index) {
+      console.log([item, index]);
+      if (typeof this.properties !== 'undefined') {
+        if (this.properties.includes(index)) {
+          // propertiesArray.push({key: index, value: item[index]});
+          delete item[index];
+        }
+      }
+    }, this);
+
+    // if (propertiesArray.length > 0) {
+    //   item['properties'] = propertiesArray;
+    // }
 
     let unvariabledSelection = this.selection.replace('%VARIABLE%', '');
 
