@@ -24,7 +24,7 @@ import {AngularEditorModule} from '@kolkov/angular-editor';
 
 // UniSys Modules
 import {UnisysAngularTabRouterModule} from '@weareunite/unisys-angular-tab-router';
-// import {UnisysAngularFormGroupModule} from '@weareunite/unisys-angular-form-group';
+import {UnisysAngularFormGroupModule} from '@weareunite/unisys-angular-form-group';
 import {UnisysAngularInputWrapperModule} from '@weareunite/unisys-angular-input-wrapper';
 import {UnisysAngularViewButtonModule} from '@weareunite/unisys-angular-view-button';
 import {UnisysAngularProgressBarModule} from '@weareunite/unisys-angular-progress-bar';
@@ -35,7 +35,7 @@ import {DumpersonComponent} from './dumperson/dumperson.component';
 import {SpinnerComponent} from './spinner/spinner.component';
 
 // Local UniSys GIT modules in project (for development purposes only !)
-import {UnisysAngularFormGroupModule} from '../../../../unisys-angular-form-group/src/lib/unisys-angular-form-group.module';
+// import {UnisysAngularFormGroupModule} from '../../../../unisys-angular-form-group/src/lib/unisys-angular-form-group.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
