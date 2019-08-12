@@ -64,26 +64,24 @@ export abstract class BaseApolloService extends BaseService {
 
     item = this.removeIdFromItem(item);   // TODO TOTO tu je asi zbytočné
 
-    let propertiesArray = [];
+    const propertiesArray = [];
     const itemAction = 'create' + this.capitalizeFirstLetter(this.operationType);
-
-    console.log(this.properties);
 
     Object.keys(item).forEach(function (index) {
       console.log([item, index]);
       if (typeof this.properties !== 'undefined') {
         if (this.properties.includes(index)) {
-          // propertiesArray.push({key: index, value: item[index]});
+          propertiesArray.push({key: index, value: item[index]});
           delete item[index];
         }
       }
     }, this);
 
-    // if (propertiesArray.length > 0) {
-    //   item['properties'] = propertiesArray;
-    // }
+    if (propertiesArray.length > 0) {
+      item['properties'] = propertiesArray;
+    }
 
-    let unvariabledSelection = this.selection.replace('%VARIABLE%', '');
+    const unvariabledSelection = this.selection.replace('%VARIABLE%', '');
 
     const apolloInstnc = this.apollo.setOperationName('mutation')
       .setOperationType(itemAction)
@@ -196,7 +194,24 @@ export abstract class BaseApolloService extends BaseService {
       mutationName = 'update' + this.firstLetterUp(this.operationType);
     }
 
-    let apolloInstnc = this.apollo.setOperationName('mutation')
+
+    const propertiesArray = [];
+
+    Object.keys(item).forEach(function (index) {
+      console.log([item, index]);
+      if (typeof this.properties !== 'undefined') {
+        if (this.properties.includes(index)) {
+          propertiesArray.push({key: index, value: item[index]});
+          delete item[index];
+        }
+      }
+    }, this);
+
+    if (propertiesArray.length > 0) {
+      postData['properties'] = propertiesArray;
+    }
+
+    const apolloInstnc = this.apollo.setOperationName('mutation')
       .setOperationType(mutationName)
       .setPostData(postData)
       .setSelection('')

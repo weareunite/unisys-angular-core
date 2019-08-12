@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +21,22 @@ export class HelperService {
    */
   findItemInArrayByKey(array: any[], key: string, value: number | string) {
     return array.filter(item => item[key] == value);
+  }
+
+  getPropertyValue(item, key) {
+
+    let property = '';
+
+    if (item.hasOwnProperty('properties')) {
+      const properties = item.properties;
+
+      Object.keys(properties).forEach(function (i) {
+        if (properties[i]['key'] === key) {
+          property = properties[i]['value'];
+        }
+      });
+    }
+
+    return property;
   }
 }

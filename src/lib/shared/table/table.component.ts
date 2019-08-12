@@ -168,19 +168,36 @@ export class TableComponent implements OnInit {
     return false;
   }
 
+  public getProperty(item, key) {
+
+    let property = null;
+
+    Object.keys(item).forEach(function (i) {
+      if (item[i]['key'] === key) {
+        property = item[i]['value'];
+      }
+    });
+
+    return property;
+  }
+
   public drillColumnFromItem(item, key) {
     let valueToReturn;
 
     if (key.indexOf('.') > -1) {
-      let array = key.split('.');
-      if (item[array[0]] && array[1] && array[2] && array[3]) {
-        valueToReturn = item[array[0]][array[1]][array[2]][array[3]];
-      } else if (item[array[0]] && array[1] && array[2]) {
-        valueToReturn = item[array[0]][array[1]][array[2]];
-      } else if (item[array[0]] && array[1]) {
-        valueToReturn = item[array[0]][array[1]];
+      const array = key.split('.');
+      if (array[0] === 'properties' && item.properties.length > 0) {
+        valueToReturn = this.getProperty(item.properties, array[1]);
       } else {
-        valueToReturn = '';
+        if (item[array[0]] && array[1] && array[2] && array[3]) {
+          valueToReturn = item[array[0]][array[1]][array[2]][array[3]];
+        } else if (item[array[0]] && array[1] && array[2]) {
+          valueToReturn = item[array[0]][array[1]][array[2]];
+        } else if (item[array[0]] && array[1]) {
+          valueToReturn = item[array[0]][array[1]];
+        } else {
+          valueToReturn = '';
+        }
       }
     } else {
       valueToReturn = item[key];
