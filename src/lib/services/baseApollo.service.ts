@@ -68,7 +68,6 @@ export abstract class BaseApolloService extends BaseService {
     const itemAction = 'create' + this.capitalizeFirstLetter(this.operationType);
 
     Object.keys(item).forEach(function (index) {
-      console.log([item, index]);
       if (typeof this.properties !== 'undefined') {
         if (this.properties.includes(index)) {
           propertiesArray.push({key: index, value: item[index]});
@@ -198,7 +197,6 @@ export abstract class BaseApolloService extends BaseService {
     const propertiesArray = [];
 
     Object.keys(item).forEach(function (index) {
-      console.log([item, index]);
       if (typeof this.properties !== 'undefined') {
         if (this.properties.includes(index)) {
           propertiesArray.push({key: index, value: item[index]});
