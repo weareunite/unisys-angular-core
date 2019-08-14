@@ -151,6 +151,8 @@ export abstract class BaseApolloService extends BaseService {
       return false;
     }
 
+    console.log(this.generateGraphQlParams());
+
     const apolloInstnc = this.apollo.setOperationName('query')
       .setOperationType(this.operationTypePlural)
       .setParams(this.generateGraphQlParams())
@@ -327,6 +329,7 @@ export abstract class BaseApolloService extends BaseService {
       }
 
     }
+
     if (this.order) {
 
       if (!group) {

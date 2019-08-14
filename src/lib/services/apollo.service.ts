@@ -1,407 +1,406 @@
-import { Inject, Injectable } from '@angular/core';
-import { Apollo } from 'apollo-angular';
-import { HttpLink } from 'apollo-angular-link-http';
-import { AuthService } from './auth.service';
-import { ApolloLink } from 'apollo-link';
-import { HttpHeaders } from '@angular/common/http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import {Inject, Injectable} from '@angular/core';
+import {Apollo} from 'apollo-angular';
+import {HttpLink} from 'apollo-angular-link-http';
+import {AuthService} from './auth.service';
+import {ApolloLink} from 'apollo-link';
+import {HttpHeaders} from '@angular/common/http';
+import {InMemoryCache} from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
-import { DefaultOptions } from 'apollo-client/ApolloClient';
-import { onError } from 'apollo-link-error';
-import { ToastrService } from 'ngx-toastr';
-import { InterceptorService } from './interceptor.service';
-import { Subject } from 'rxjs';
+import {DefaultOptions} from 'apollo-client/ApolloClient';
+import {onError} from 'apollo-link-error';
+import {ToastrService} from 'ngx-toastr';
+import {InterceptorService} from './interceptor.service';
+import {Subject} from 'rxjs';
 
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class ApolloService {
-    protected operationName: string;
-    protected operationType: string;
-    protected params: object = null;
-    protected postData: object;
-    protected selection: string;
-    protected metaData: string[];
-    protected query;
-    public enumOperators = {
-        operators: [
-            'and',
-            'or',
-            'between'
-        ],
-        custom: {}
+  protected operationName: string;
+  protected operationType: string;
+  protected params: object = null;
+  protected postData: object;
+  protected selection: string;
+  protected metaData: string[];
+  protected query;
+  public enumOperators = {
+    operators: [
+      'and',
+      'or',
+      'between'
+    ],
+    custom: {}
 
+  };
+
+  public lastApolloCalls = [];
+  private lastApolloCallsLimit = 10;
+
+  constructor(
+    private apollo: Apollo,
+    public httpLink: HttpLink,
+    public auth: AuthService,
+    public toastr: ToastrService,
+    public interceptorService: InterceptorService,
+    @Inject('env') private environment,
+  ) {
+
+    const link = httpLink.create({
+      uri: this.environment.GRAPHQL_API_URL
+    });
+
+    const defaultOptions: DefaultOptions = {
+      watchQuery: {
+        fetchPolicy: 'no-cache',
+        errorPolicy: 'ignore',
+      },
+      query: {
+        fetchPolicy: 'no-cache',
+        errorPolicy: 'all',
+      },
     };
 
-    public lastApolloCalls = [];
-    private lastApolloCallsLimit = 10;
+    const errorMiddleware = onError(({graphQLErrors, networkError}) => {
+      if (graphQLErrors) {
 
-    constructor(
-        private apollo: Apollo,
-        public httpLink: HttpLink,
-        public auth: AuthService,
-        public toastr: ToastrService,
-        public interceptorService: InterceptorService,
-        @Inject('env') private environment,
-    ) {
+        Object.keys(graphQLErrors).forEach(function (index) {
 
-        const link = httpLink.create({
-            uri: this.environment.GRAPHQL_API_URL
-        });
+          let message = graphQLErrors[index]['message'];
+          let debugMessage = graphQLErrors[index]['debugMessage'];
 
-        const defaultOptions: DefaultOptions = {
-            watchQuery: {
-                fetchPolicy: 'no-cache',
-                errorPolicy: 'ignore',
-            },
-            query: {
-                fetchPolicy: 'no-cache',
-                errorPolicy: 'all',
-            },
-        };
+          let translatedMessage = this.interceptorService.translateError(message);
+          let translatedDebug = this.interceptorService.translateError(debugMessage);
 
-        const errorMiddleware = onError(({graphQLErrors, networkError}) => {
-            if (graphQLErrors) {
+          toastr.error(translatedDebug, translatedMessage);
+        }, this);
+      }
 
-                Object.keys(graphQLErrors).forEach(function (index) {
+      if (networkError) {
+        let message = networkError['error']['message'];
+        let debugMessage = networkError.message;
+        let translatedMessage = this.interceptorService.translateError(message);
+        let translatedDebug = this.interceptorService.translateError(debugMessage);
 
-                    let message = graphQLErrors[index]['message'];
-                    let debugMessage = graphQLErrors[index]['debugMessage'];
+        toastr.error(translatedDebug, translatedMessage);
+      }
+    });
 
-                    let translatedMessage = this.interceptorService.translateError(message);
-                    let translatedDebug = this.interceptorService.translateError(debugMessage);
+    const authMiddleware = new ApolloLink((operation, forward) => {
+      operation.setContext({
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + this.auth.getAccessToken(),
+        })
+      });
+      return forward(operation);
+    });
 
-                    toastr.error(translatedDebug, translatedMessage);
-                }, this);
-            }
+    const linkWithErrors = ApolloLink.from([
+      authMiddleware,
+      errorMiddleware,
+      link
+    ]);
 
-            if (networkError) {
-                let message = networkError['error']['message'];
-                let debugMessage = networkError.message;
-                let translatedMessage = this.interceptorService.translateError(message);
-                let translatedDebug = this.interceptorService.translateError(debugMessage);
+    apollo.create({
+      link: linkWithErrors,
+      cache: new InMemoryCache(),
+      defaultOptions: defaultOptions
+    });
+  }
 
-                toastr.error(translatedDebug, translatedMessage);
-            }
-        });
+  replaceSelectionParams(selection: string, params: any[]) {
 
-        const authMiddleware = new ApolloLink((operation, forward) => {
-            operation.setContext({
-                headers: new HttpHeaders({
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'Authorization': 'Bearer ' + this.auth.getAccessToken(),
-                })
-            });
-            return forward(operation);
-        });
+    Object.keys(params).forEach(function (index) {
+      selection = selection.replace('%VARIABLE%', params[index]);
+    });
 
-        const linkWithErrors = ApolloLink.from([
-            authMiddleware,
-            errorMiddleware,
-            link
-        ]);
+    this.selection = selection;
+    return this.selection;
+  }
 
-        apollo.create({
-            link: linkWithErrors,
-            cache: new InMemoryCache(),
-            defaultOptions: defaultOptions
-        });
+  getMetaData(result) {
+
+    let metaArray = [];
+    let meta = this.metaData;
+
+    if (meta.length === 0) {
+      this.setDefaultMetaData();
+      meta = this.metaData;
     }
 
-    replaceSelectionParams(selection: string, params: any[]) {
+    Object.keys(meta).forEach(function (index) {
+      metaArray[meta[index]] = result[meta[index]];
+    });
 
-        Object.keys(params).forEach(function (index) {
-            selection = selection.replace('%VARIABLE%', params[index]);
-        });
+    return metaArray;
 
-        this.selection = selection;
-        return this.selection;
+
+  }
+
+  setOperationName(operationName?: string) {
+    this.operationName = operationName;
+    return this;
+  }
+
+  setOperationType(operationType: string) {
+    this.operationType = operationType;
+    return this;
+  }
+
+  setParams(params?: object) {
+    this.params = params;
+    return this;
+  }
+
+  setPostData(postData?: object) {
+    if (postData) {
+      this.postData = postData;
+    } else {
+      delete this.postData;
     }
 
-    getMetaData(result) {
+    return this;
+  }
 
-        let metaArray = [];
-        let meta = this.metaData;
+  setSelection(selection: string, wrapper?: string, replaceParams?: any[]) {
 
-        if (meta.length === 0) {
-            this.setDefaultMetaData();
-            meta = this.metaData;
-        }
-
-        Object.keys(meta).forEach(function (index) {
-            metaArray[meta[index]] = result[meta[index]];
-        });
-
-        return metaArray;
-
-
+    if (replaceParams) {
+      selection = this.replaceSelectionParams(selection, replaceParams);
     }
 
-    setOperationName(operationName?: string) {
-        this.operationName = operationName;
-        return this;
+    if (wrapper) {
+      selection = wrapper + '{' + selection + '}';
     }
 
-    setOperationType(operationType: string) {
-        this.operationType = operationType;
-        return this;
+    this.selection = selection;
+    return this;
+  }
+
+  setDefaultMetaData() {
+    this.metaData = ['total', 'per_page', 'current_page', 'to', 'from'];
+  }
+
+  setMetaData(metaData?: string[]) {
+    if (!metaData) {
+      this.setDefaultMetaData();
+    } else {
+      this.metaData = metaData;
+    }
+    return this;
+  }
+
+  clearMetaData() {
+    this.metaData = [];
+    return this;
+  }
+
+  setQuery() {
+
+    if (!this.operationName) {
+      this.setOperationName('query');
     }
 
-    setParams(params?: object) {
-        this.params = params;
-        return this;
-    }
+    let params = '';
+    let metaData = '';
 
-    setPostData(postData?: object) {
-        if (postData) {
-            this.postData = postData;
+    if (this.params && this.operationName.includes('query')) {
+
+      let baseParams = {};
+      let filterParams = {};
+      let paginateParams = {};
+      Object.keys(this.params).forEach(function (index) {
+        if (index === 'limit' || index === 'page') {
+          paginateParams[index] = this.params[index];
+        } else if (index === 'order') {
+          filterParams[index] = this.params[index];
+        } else if (index === 'distinct') {
+          filterParams[index] = this.params[index];
         } else {
-            delete this.postData;
-        }
+          if (!filterParams['conditions']) {
+            filterParams['conditions'] = [];
+          }
+          Object.keys(this.params[index]).forEach(function (subIndex) {
+            let data = [];
+            let conditionItem = {};
+            let params = this.params[index][subIndex];
 
-        return this;
-    }
+            if (this.params[index][subIndex].hasOwnProperty('base') && this.params[index][subIndex].hasOwnProperty('base') === true) {
+              baseParams[subIndex] = params['values'];
+            } else {
 
-    setSelection(selection: string, wrapper?: string, replaceParams?: any[]) {
+              if (Array.isArray(this.params[index][subIndex]) && !this.params[index][subIndex].values) {
+                data = this.params[index][subIndex];
+              } else if (this.params[index][subIndex].values) {
+                data = this.params[index][subIndex].values;
+              } else {
+                data.push(this.params[index][subIndex]);
+              }
 
-        if (replaceParams) {
-            selection = this.replaceSelectionParams(selection, replaceParams);
-        }
+              if (this.params[index][subIndex].operator) {
 
-        if (wrapper) {
-            selection = wrapper + '{' + selection + '}';
-        }
+                conditionItem = {
+                  field: subIndex,
+                  values: data.map(String),
+                  operator: this.params[index][subIndex].operator
+                };
+              } else {
 
-        this.selection = selection;
-        return this;
-    }
-
-    setDefaultMetaData() {
-        this.metaData = ['total', 'per_page', 'current_page', 'to', 'from'];
-    }
-
-    setMetaData(metaData?: string[]) {
-        if (!metaData) {
-            this.setDefaultMetaData();
-        } else {
-            this.metaData = metaData;
-        }
-        return this;
-    }
-
-    clearMetaData() {
-        this.metaData = [];
-        return this;
-    }
-
-    setQuery() {
-
-        if (!this.operationName) {
-            this.setOperationName('query');
-        }
-
-        let params = '';
-        let metaData = '';
-
-        if (this.params && this.operationName.includes('query')) {
-
-            let baseParams = {};
-            let filterParams = {};
-            let paginateParams = {};
-
-            Object.keys(this.params).forEach(function (index) {
-                if (index === 'limit' || index === 'page') {
-                    paginateParams[index] = this.params[index];
-                } else if (index === 'order') {
-                    filterParams[index] = this.params[index];
-                } else if (index === 'distinct') {
-                    filterParams[index] = this.params[index];
+                if (Array.isArray(data)) {
+                  conditionItem = {field: subIndex, values: data.map(String)};
                 } else {
-                    if (!filterParams['conditions']) {
-                        filterParams['conditions'] = [];
-                    }
-                    Object.keys(this.params[index]).forEach(function (subIndex) {
-                        let data = [];
-                        let conditionItem = {};
-                        let params = this.params[index][subIndex];
-
-                        if (this.params[index][subIndex].hasOwnProperty('base') && this.params[index][subIndex].hasOwnProperty('base') === true) {
-                            baseParams[subIndex] = params['values'];
-                        } else {
-
-                            if (Array.isArray(this.params[index][subIndex]) && !this.params[index][subIndex].values) {
-                                data = this.params[index][subIndex];
-                            } else if (this.params[index][subIndex].values) {
-                                data = this.params[index][subIndex].values;
-                            } else {
-                                data.push(this.params[index][subIndex]);
-                            }
-
-                            if (this.params[index][subIndex].operator) {
-
-                                conditionItem = {
-                                    field: subIndex,
-                                    values: data.map(String),
-                                    operator: this.params[index][subIndex].operator
-                                };
-                            } else {
-
-                                if (Array.isArray(data)) {
-                                    conditionItem = {field: subIndex, values: data.map(String)};
-                                } else {
-                                    conditionItem = {field: subIndex, values: [String(data)]};
-                                }
-                            }
-                            filterParams['conditions'].push(conditionItem);
-                        }
-                    }, this);
+                  conditionItem = {field: subIndex, values: [String(data)]};
                 }
-            }, this);
-
-            if (Object.keys(baseParams).length > 0) {
-
-                let baseStringified = JSON.stringify(baseParams);
-                let haveFilter = false;
-                let havePaging = false;
-
-                if (Object.keys(filterParams).length > 0) {
-
-                    if (Object.keys(filterParams).length === 1 && filterParams.hasOwnProperty('conditions') && filterParams['conditions'].length === 0) {
-                        haveFilter = false;
-                    } else {
-                        haveFilter = true;
-                    }
-                }
-
-                if (haveFilter || havePaging) {
-                    baseStringified = baseStringified.substring(0, baseStringified.length - 1);
-                }
-
-                params = baseStringified;
-
-                if (Object.keys(paginateParams).length > 0) {
-                    havePaging = true;
-                }
-
-                if (haveFilter) {
-                    params += ',filter:' + JSON.stringify(filterParams);
-                }
-
-                if (havePaging) {
-                    params += ',paging:' + JSON.stringify(paginateParams);
-                }
-
-                if (haveFilter || havePaging) {
-                    params += '}';
-                }
-            } else {
-                params = 'filter:' + JSON.stringify(filterParams);
-
-                if (Object.keys(paginateParams).length > 0) {
-                    params += ',paging:' + JSON.stringify(paginateParams);
-                }
+              }
+              filterParams['conditions'].push(conditionItem);
             }
-        } else {
-            params = JSON.stringify(this.postData);
+          }, this);
+        }
+      }, this);
+
+      if (Object.keys(baseParams).length > 0) {
+
+        let baseStringified = JSON.stringify(baseParams);
+        let haveFilter = false;
+        let havePaging = false;
+
+        if (Object.keys(filterParams).length > 0) {
+
+          if (Object.keys(filterParams).length === 1 && filterParams.hasOwnProperty('conditions') && filterParams['conditions'].length === 0) {
+            haveFilter = false;
+          } else {
+            haveFilter = true;
+          }
         }
 
-        if (params) {
-            params = params.replace(/\"([^(\")"]+)\":/g, '$1:');
-        } else {
-            params = '';
+        if (haveFilter || havePaging) {
+          baseStringified = baseStringified.substring(0, baseStringified.length - 1);
         }
 
-        if (params.charAt(0) === '{') {
-            let paramLength = params.length - 1;
-            params = params.substring(1, paramLength);
+        params = baseStringified;
+
+        if (Object.keys(paginateParams).length > 0) {
+          havePaging = true;
         }
 
-        let requestString = '';
-
-        if (params) {
-            requestString = this.operationName + '{' + this.operationType + '(' + params + ')';
-        } else {
-            requestString = this.operationName + '{' + this.operationType;
+        if (haveFilter) {
+          params += ',filter:' + JSON.stringify(filterParams);
         }
 
-        if (this.selection) {
-            requestString = requestString + '{' + this.selection;
-            if (this.metaData && this.metaData.length > 0) {
-                metaData = this.metaData.join(',');
-                requestString = requestString + ',' + metaData + '}';
-            } else {
-                requestString = requestString + '}';
-            }
+        if (havePaging) {
+          params += ',paging:' + JSON.stringify(paginateParams);
         }
+
+        if (haveFilter || havePaging) {
+          params += '}';
+        }
+      } else {
+        params = 'filter:' + JSON.stringify(filterParams);
+
+        if (Object.keys(paginateParams).length > 0) {
+          params += ',paging:' + JSON.stringify(paginateParams);
+        }
+      }
+    } else {
+      params = JSON.stringify(this.postData);
+    }
+
+    if (params) {
+      params = params.replace(/\"([^(\")"]+)\":/g, '$1:');
+    } else {
+      params = '';
+    }
+
+    if (params.charAt(0) === '{') {
+      let paramLength = params.length - 1;
+      params = params.substring(1, paramLength);
+    }
+
+    let requestString = '';
+
+    if (params) {
+      requestString = this.operationName + '{' + this.operationType + '(' + params + ')';
+    } else {
+      requestString = this.operationName + '{' + this.operationType;
+    }
+
+    if (this.selection) {
+      requestString = requestString + '{' + this.selection;
+      if (this.metaData && this.metaData.length > 0) {
+        metaData = this.metaData.join(',');
+        requestString = requestString + ',' + metaData + '}';
+      } else {
         requestString = requestString + '}';
-        requestString = this.fixEnumOperators(requestString);
+      }
+    }
+    requestString = requestString + '}';
+    requestString = this.fixEnumOperators(requestString);
 
-        // requestString = requestString.replace(/"between"/g, 'between');
-        // requestString = requestString.replace(/"and"/g, 'and');
-        // requestString = requestString.replace(/"or"/g, 'or');
+    // requestString = requestString.replace(/"between"/g, 'between');
+    // requestString = requestString.replace(/"and"/g, 'and');
+    // requestString = requestString.replace(/"or"/g, 'or');
 
-        // Console debug of Apollo request in order - Operation name / Operation type / Query parameters / Full string
-        // console.debug('%c---------------------------------------------START----------------------------------------------', 'color:black;');
-        // console.debug('%cQuery Type: %c' + this.operationName, 'color:red;font-weight:bold;', 'color:blue;');
-        // console.debug('%cQuery Name: %c' + this.operationType, 'color:red;font-weight:bold;', 'color:blue;');
-        // console.debug('%cParams: %c' + params, 'color:red;font-weight:bold;', 'color:blue;');
-        // console.debug('%cFull Request: %c' + requestString, 'color:red;font-weight:bold;', 'color:blue;');
-        // console.debug('%c----------------------------------------------END-----------------------------------------------', 'color:black;');
+    // Console debug of Apollo request in order - Operation name / Operation type / Query parameters / Full string
+    // console.debug('%c---------------------------------------------START----------------------------------------------', 'color:black;');
+    // console.debug('%cQuery Type: %c' + this.operationName, 'color:red;font-weight:bold;', 'color:blue;');
+    // console.debug('%cQuery Name: %c' + this.operationType, 'color:red;font-weight:bold;', 'color:blue;');
+    // console.debug('%cParams: %c' + params, 'color:red;font-weight:bold;', 'color:blue;');
+    // console.debug('%cFull Request: %c' + requestString, 'color:red;font-weight:bold;', 'color:blue;');
+    // console.debug('%c----------------------------------------------END-----------------------------------------------', 'color:black;');
 
-        console.debug([this.operationName + ' ' + this.operationType, requestString]);
+    console.debug([this.operationName + ' ' + this.operationType, requestString]);
 
-        this.pushIntoLatestCall({
-            name: this.operationName,
-            type: this.operationType,
-            string: requestString,
-            params: params,
-            selection: this.selection
-        });
+    this.pushIntoLatestCall({
+      name: this.operationName,
+      type: this.operationType,
+      string: requestString,
+      params: params,
+      selection: this.selection
+    });
 
-        const query = gql`${requestString}`;
+    const query = gql`${requestString}`;
 
-        this.query = query;
+    this.query = query;
 
-        return this;
+    return this;
+  }
+
+  fixEnumOperators(string: string) {
+
+    let enumOperators = this.enumOperators;
+
+    Object.keys(enumOperators['operators']).forEach(function (index) {
+      let regex = new RegExp('operator:"' + enumOperators['operators'][index] + '"', 'g');
+      string = string.replace(regex, 'operator:' + enumOperators['operators'][index]);
+    });
+
+    Object.keys(enumOperators['custom']).forEach(function (index) {
+
+      Object.keys(enumOperators['custom'][index]).forEach(function (subIndex) {
+
+        let customRegex = new RegExp(index + ':"' + enumOperators['custom'][index][subIndex] + '"', 'g');
+        string = string.replace(customRegex, index + ':' + enumOperators['custom'][index][subIndex]);
+      });
+    });
+
+    return string;
+  }
+
+  pushIntoLatestCall(query) {
+    if (Object.keys(this.lastApolloCalls).length === this.lastApolloCallsLimit) {
+      this.lastApolloCalls.shift();
     }
 
-    fixEnumOperators(string: string) {
+    this.lastApolloCalls.push(query);
+  }
 
-        let enumOperators = this.enumOperators;
+  watchQuery() {
+    return this.apollo.query({query: this.query});
+  }
 
-        Object.keys(enumOperators['operators']).forEach(function (index) {
-            let regex = new RegExp('operator:"' + enumOperators['operators'][index] + '"', 'g');
-            string = string.replace(regex, 'operator:' + enumOperators['operators'][index]);
-        });
-
-        Object.keys(enumOperators['custom']).forEach(function (index) {
-
-            Object.keys(enumOperators['custom'][index]).forEach(function (subIndex) {
-
-                let customRegex = new RegExp(index + ':"' + enumOperators['custom'][index][subIndex] + '"', 'g');
-                string = string.replace(customRegex, index + ':' + enumOperators['custom'][index][subIndex]);
-            });
-        });
-
-        return string;
-    }
-
-    pushIntoLatestCall(query) {
-        if (Object.keys(this.lastApolloCalls).length === this.lastApolloCallsLimit) {
-            this.lastApolloCalls.shift();
-        }
-
-        this.lastApolloCalls.push(query);
-    }
-
-    watchQuery() {
-        return this.apollo.query({query: this.query});
-    }
-
-    mutate() {
-        return this.apollo.mutate({mutation: this.query});
-    }
+  mutate() {
+    return this.apollo.mutate({mutation: this.query});
+  }
 
 }
