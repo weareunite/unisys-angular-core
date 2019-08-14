@@ -18,6 +18,7 @@ export abstract class BaseApolloService extends BaseService {
   protected properties: any[];
   protected operationName: string;
   protected autoLoadData = true;
+  protected conditions: any[] = null;
   public fakeItemList;
   public distinctList;
   public distinctListChanged = new Subject<any[]>();
@@ -168,6 +169,7 @@ export abstract class BaseApolloService extends BaseService {
     const apolloInstnc = this.apollo.setOperationName('query')
       .setOperationType(this.operationTypePlural)
       .setParams(this.generateGraphQlParams())
+      .setConditions(this.conditions)
       .setSelection(this.selectionPlural ? this.selectionPlural : this.selection, 'data')
       .setMetaData()
       .setQuery()

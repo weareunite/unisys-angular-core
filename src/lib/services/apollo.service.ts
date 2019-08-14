@@ -19,6 +19,7 @@ import {Subject} from 'rxjs';
 export class ApolloService {
   protected operationName: string;
   protected operationType: string;
+  protected conditions: object = null;
   protected params: object = null;
   protected postData: object;
   protected selection: string;
@@ -149,6 +150,11 @@ export class ApolloService {
     return this;
   }
 
+  setConditions(conditions: any[]) {
+    this.conditions = conditions;
+    return this;
+  }
+
   setParams(params?: object) {
     this.params = params;
     return this;
@@ -221,6 +227,9 @@ export class ApolloService {
           if (!filterParams['conditions']) {
             filterParams['conditions'] = [];
           }
+          if (this.conditions !== null) {
+            filterParams['conditions'] = this.conditions;
+          }
           Object.keys(this.params[index]).forEach(function (subIndex) {
             let data = [];
             let conditionItem = {};
@@ -258,6 +267,10 @@ export class ApolloService {
           }, this);
         }
       }, this);
+
+      if (this.conditions !== null) {
+        filterParams['conditions'] = this.conditions;
+      }
 
       if (Object.keys(baseParams).length > 0) {
 
