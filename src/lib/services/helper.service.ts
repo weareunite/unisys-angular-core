@@ -25,7 +25,7 @@ export class HelperService {
 
   getPropertyValue(item, key) {
 
-    let property = '';
+    let property: string | boolean = null;
 
     if (item.hasOwnProperty('properties')) {
       const properties = item.properties;
@@ -35,6 +35,14 @@ export class HelperService {
           property = properties[i]['value'];
         }
       });
+    }
+
+    if (property === 'true') {
+      property = true;
+    }
+
+    if (property === 'false') {
+      property = false;
     }
 
     return property;

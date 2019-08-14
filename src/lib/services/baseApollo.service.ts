@@ -70,7 +70,21 @@ export abstract class BaseApolloService extends BaseService {
     Object.keys(item).forEach(function (index) {
       if (typeof this.properties !== 'undefined') {
         if (this.properties.includes(index)) {
-          propertiesArray.push({key: index, value: item[index]});
+
+          let value = item[index];
+
+          if (typeof value === 'boolean') {
+            switch (value) {
+              case true:
+                value = 'true';
+                break;
+              case false:
+                value = 'false';
+                break;
+            }
+          }
+
+          propertiesArray.push({key: index, value: value});
           delete item[index];
         }
       }
@@ -150,8 +164,6 @@ export abstract class BaseApolloService extends BaseService {
       this.setItemList(this.fakeItemList);
       return false;
     }
-
-    console.log(this.generateGraphQlParams());
 
     const apolloInstnc = this.apollo.setOperationName('query')
       .setOperationType(this.operationTypePlural)

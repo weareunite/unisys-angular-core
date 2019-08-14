@@ -178,6 +178,14 @@ export class TableComponent implements OnInit {
       }
     });
 
+    if (property === 'true') {
+      property = true;
+    }
+
+    if (property === 'false') {
+      property = false;
+    }
+
     return property;
   }
 
