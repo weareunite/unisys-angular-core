@@ -47,4 +47,38 @@ export class HelperService {
 
     return property;
   }
+
+  public fixVariableTypes(array: any[], keys: string[], type) {
+
+    Object.keys(keys).forEach(function (i) {
+      const key = keys[i];
+
+      if (array.hasOwnProperty(key)) {
+
+        const value = array[key];
+
+        switch (type) {
+          case 'float':
+            if (value !== '') {
+              array[key] = parseFloat(value);
+            } else {
+              delete array[key];
+            }
+            break;
+          case 'number':
+            if (value !== '') {
+              array[key] = parseInt(value);
+            } else {
+              delete array[key];
+            }
+            break;
+          case 'string':
+            array[key] = value.toString();
+        }
+      }
+    });
+
+    return array;
+
+  }
 }
