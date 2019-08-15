@@ -51,23 +51,7 @@ export abstract class BaseApolloService extends BaseService {
     });
   }
 
-  pushItemToList(item: any, isNewItem?: boolean) { // TODO TOTO isNewItem treba dat prec
-
-    // If autoLoadData is turned on (dump data provided), dont send
-    // data to server and await response, just set item with form
-    // data and unshift it to the item list
-    if (!this.autoLoadData) {
-      item.id = this.itemList.length + 1;
-      this.itemList.unshift(item);
-      this.setItemList(this.itemList);
-      return false;
-    }
-
-    item = this.removeIdFromItem(item);   // TODO TOTO tu je asi zbytočné
-
-    const propertiesArray = [];
-    const itemAction = 'create' + this.capitalizeFirstLetter(this.operationType);
-
+  fixBooleanAsString(item, propertiesArray) {
     Object.keys(item).forEach(function (index) {
       if (typeof this.properties !== 'undefined') {
         if (this.properties.includes(index)) {
@@ -90,6 +74,29 @@ export abstract class BaseApolloService extends BaseService {
         }
       }
     }, this);
+
+    return {item: item, properties: propertiesArray};
+  }
+
+  pushItemToList(item: any, isNewItem?: boolean) { // TODO TOTO isNewItem treba dat prec
+
+    // If autoLoadData is turned on (dump data provided), dont send
+    // data to server and await response, just set item with form
+    // data and unshift it to the item list
+    if (!this.autoLoadData) {
+      item.id = this.itemList.length + 1;
+      this.itemList.unshift(item);
+      this.setItemList(this.itemList);
+      return false;
+    }
+
+    item = this.removeIdFromItem(item);   // TODO TOTO tu je asi zbytočné
+
+    let propertiesArray = [];
+    const itemAction = 'create' + this.capitalizeFirstLetter(this.operationType);
+
+    item = this.fixBooleanAsString(item, propertiesArray).item;
+    propertiesArray = this.fixBooleanAsString(item, propertiesArray).properties;
 
     if (propertiesArray.length > 0) {
       item['properties'] = propertiesArray;
@@ -210,16 +217,10 @@ export abstract class BaseApolloService extends BaseService {
     }
 
 
-    const propertiesArray = [];
+    let propertiesArray = [];
 
-    Object.keys(item).forEach(function (index) {
-      if (typeof this.properties !== 'undefined') {
-        if (this.properties.includes(index)) {
-          propertiesArray.push({key: index, value: item[index]});
-          delete item[index];
-        }
-      }
-    }, this);
+    item = this.fixBooleanAsString(item, propertiesArray).item;
+    propertiesArray = this.fixBooleanAsString(item, propertiesArray).properties;
 
     if (propertiesArray.length > 0) {
       postData['properties'] = propertiesArray;
