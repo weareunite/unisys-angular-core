@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {Apollo} from 'apollo-angular';
 import {HttpLink} from 'apollo-angular-link-http';
 import {AuthService} from './auth.service';
-import {ApolloLink} from 'apollo-link';
+import {ApolloLink, Observable} from 'apollo-link';
 import {HttpHeaders} from '@angular/common/http';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
@@ -10,13 +10,13 @@ import {DefaultOptions} from 'apollo-client/ApolloClient';
 import {onError} from 'apollo-link-error';
 import {ToastrService} from 'ngx-toastr';
 import {InterceptorService} from './interceptor.service';
-import {Subject} from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApolloService {
+
   protected operationName: string;
   protected operationType: string;
   protected conditions: object = null;
@@ -63,6 +63,7 @@ export class ApolloService {
     };
 
     const errorMiddleware = onError(({graphQLErrors, networkError}) => {
+
       if (graphQLErrors) {
 
         Object.keys(graphQLErrors).forEach(function (index) {
@@ -85,6 +86,8 @@ export class ApolloService {
 
         toastr.error(translatedDebug, translatedMessage);
       }
+
+      return Observable.of();
     });
 
     const authMiddleware = new ApolloLink((operation, forward) => {
