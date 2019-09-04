@@ -49,6 +49,8 @@ export abstract class BaseApolloService extends BaseService {
       this.setItem(result.data);
       // this.setPaging();
     });
+
+    return apolloInstnc;
   }
 
   fixBooleanAsString(item, propertiesArray) {
@@ -246,6 +248,29 @@ export abstract class BaseApolloService extends BaseService {
   }
 
 // CRU(D)
+
+  removeItemFromList(list, item) {
+    list.forEach(function (entry, index, object) {
+      if (entry.id === item.id) {
+        object.splice(index, 1);
+      }
+    });
+
+    return list;
+  }
+
+  deleteItem(id: number) {
+    let apolloInstnc = this.apollo.setOperationName('mutation')
+      .setOperationType('delete' + this.firstLetterUp(this.operationType))
+      .setPostData({id: id})
+      .setSelection('')
+      .setQuery()
+      .mutate();
+
+    apolloInstnc.subscribe(data => {
+
+    });
+  }
 
   deleteItemFromList(item: any) {
     let apolloInstnc = this.apollo.setOperationName('mutation')
