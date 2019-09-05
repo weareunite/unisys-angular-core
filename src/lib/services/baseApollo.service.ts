@@ -184,8 +184,6 @@ export abstract class BaseApolloService extends BaseService {
 
         item[key] = value;
       }, this);
-
-      delete item.properties;
     }
     return item;
   }
@@ -208,6 +206,11 @@ export abstract class BaseApolloService extends BaseService {
 
 
     apolloInstnc.subscribe(result => {
+      Object.keys(result.data[this.operationTypePlural].data).forEach(function (i) {
+        let item = result.data[this.operationTypePlural].data[i];
+        item = this.validateAndTransformProperties(item);
+        result.data[this.operationTypePlural].data[i] = item;
+      }, this);
       this.setItemList(result.data[this.operationTypePlural].data);
       this.setPaging(this.apollo.getMetaData(result.data[this.operationTypePlural]));
     });
