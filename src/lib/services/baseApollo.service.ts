@@ -168,6 +168,28 @@ export abstract class BaseApolloService extends BaseService {
     });
   }
 
+  validateAndTransformProperties(item) {
+    if (item.hasOwnProperty('properties')) {
+      const newItem = Object.assign({}, item);
+      Object.keys(item.properties).forEach(function (i) {
+        const property = item.properties[i];
+        const key = property['key'];
+        let value = property['value'];
+
+        if (value === 'true') {
+          value = true;
+        } else if (value === 'false') {
+          value = false;
+        }
+
+        item[key] = value;
+      }, this);
+
+      delete item.properties;
+    }
+    return item;
+  }
+
   getItemList() {
 
     if (!this.autoLoadData) {
@@ -234,6 +256,8 @@ export abstract class BaseApolloService extends BaseService {
       .setSelection('')
       .setQuery()
       .mutate();
+
+    const thisInstance = Object.assign({}, this);
 
     apolloInstnc.subscribe(data => {
       this.itemList.forEach(function (entry, index, object) {
