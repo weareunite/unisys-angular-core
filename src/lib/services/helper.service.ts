@@ -20,29 +20,33 @@ export class HelperService {
    * @param value Value to be searched
    */
   findItemInArrayByKey(array: any[], key: string, value: number | string) {
-    return array.filter(item => item[key] == value);
+    return array.filter(item => item[key] === value);
   }
 
   getPropertyValue(item, key) {
 
     let property: string | boolean = null;
 
-    if (item.hasOwnProperty('properties')) {
-      const properties = item.properties;
+    if (typeof item !== 'undefined') {
+      if (item.hasOwnProperty('properties')) {
+        const properties = item.properties;
 
-      Object.keys(properties).forEach(function (i) {
-        if (properties[i]['key'] === key) {
-          property = properties[i]['value'];
-        }
-      });
-    }
+        Object.keys(properties).forEach(function (i) {
+          if (properties[i]['key'] === key) {
+            property = properties[i]['value'];
+          }
+        });
+      }
 
-    if (property === 'true') {
-      property = true;
-    }
+      if (property === 'true') {
+        property = true;
+      }
 
-    if (property === 'false') {
-      property = false;
+      if (property === 'false') {
+        property = false;
+      }
+    } else {
+      property = null;
     }
 
     return property;
