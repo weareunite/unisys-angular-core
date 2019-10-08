@@ -34,6 +34,7 @@ import {DumpObjectPipe} from '../pipes/dump-object.pipe';
 import {DumpersonComponent} from './dumperson/dumperson.component';
 import {SpinnerComponent} from './spinner/spinner.component';
 import {MomentPipe} from '../pipes/moment.pipe';
+import {CharAtPipe} from '../pipes/char-at.pipe';
 
 // Local UniSys GIT modules in project (for development purposes only !)
 // import {UnisysAngularFormGroupModule} from '../../../../unisys-angular-form-group/src/lib/unisys-angular-form-group.module';
@@ -85,7 +86,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     SpinnerComponent,
     DumpObjectPipe,
     MomentPipe,
-    DumpersonComponent
+    DumpersonComponent,
+    CharAtPipe
   ],
   exports: [
     AngularEditorModule,
@@ -113,7 +115,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     SpinnerComponent,
     DumpObjectPipe,
     MomentPipe,
-    DumpersonComponent
+    DumpersonComponent,
+    CharAtPipe
   ],
   entryComponents: [
     ModalDeleteComponent,
