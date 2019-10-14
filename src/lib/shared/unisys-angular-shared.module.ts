@@ -36,6 +36,7 @@ import {SpinnerComponent} from './spinner/spinner.component';
 import {MomentPipe} from '../pipes/moment.pipe';
 import {CharAtPipe} from '../pipes/char-at.pipe';
 import {SubstringPipe} from '../pipes/substring.pipe';
+import {IsNaNPipe} from '../pipes/isNaN.pipe';
 
 // Local UniSys GIT modules in project (for development purposes only !)
 // import {UnisysAngularFormGroupModule} from '../../../../unisys-angular-form-group/src/lib/unisys-angular-form-group.module';
@@ -89,7 +90,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MomentPipe,
     DumpersonComponent,
     CharAtPipe,
-    SubstringPipe
+    SubstringPipe,
+    IsNaNPipe
   ],
   exports: [
     AngularEditorModule,
@@ -119,7 +121,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MomentPipe,
     DumpersonComponent,
     CharAtPipe,
-    SubstringPipe
+    SubstringPipe,
+    IsNaNPipe
   ],
   entryComponents: [
     ModalDeleteComponent,
