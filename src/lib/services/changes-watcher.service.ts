@@ -6,6 +6,8 @@ import {ToastrService} from 'ngx-toastr';
 import {TranslateService} from '@ngx-translate/core';
 import {ChangeType} from '../types/change-type.enum';
 import {Subject} from 'rxjs';
+import {ApolloService} from './apollo.service';
+import {HttpService} from './http.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,7 @@ export class ChangesWatcherService {
   private sendEndpoint;
   protected selector: string;
   protected order = 'asc';
-  public watchedChanges: WatchedChange[] = [];
+  public watchedChanges: any[];
 
   // Subjects
   public watchingStarted = new Subject();
@@ -26,9 +28,10 @@ export class ChangesWatcherService {
   public listCleared = new Subject();
 
   constructor(
-    protected http: HttpClient,
+    protected http: HttpService,
     protected toastr: ToastrService,
-    protected translate: TranslateService
+    protected translate: TranslateService,
+    protected apollo: ApolloService,
   ) {
   }
 
@@ -138,6 +141,37 @@ export class ChangesWatcherService {
     return watchedChange;
   }
 
+  public applyChanges(vFrom: string, vTo: string) {
+    const args = {
+      date_from: vFrom,
+      date_to: vTo
+    };
+    this.http.post('events/applyChanges', args).subscribe((result) => {
+      this.listSent.next();
+    });
+  }
+
+  public getChanges(vFrom: string, vTo: string) {
+
+    const args = {
+      date_from: vFrom,
+      date_to: vTo
+    };
+
+    const apolloInstnc = this.apollo.setOperationName('query')
+      .setOperationType('eventChanges')
+      .setParams()
+      .setPostData(args)
+      .setSelection('workplace{id,name,short_name,color},dates{date,shifts{shift{id,time_from,time_to},employees{employee{id,name,short_name},procedures{count,type,procedure{id,name,short_name,color,price_direct,price_insurance,properties{key,value}}}}}}')
+      .setMetaData([])
+      .setQuery()
+      .watchQuery();
+
+    const sub = apolloInstnc.subscribe(result => {
+      this.watchedChanges = result.data['eventChanges'];
+    });
+  }
+
   /**
    * Check if local storage exists
    */
@@ -165,7 +199,12 @@ export class ChangesWatcherService {
    * Count watched changes
    */
   public countChanges() {
-    return this.getWatchedChanges().length;
+    let count = 0;
+    if (typeof this.getWatchedChanges() !== 'undefined') {
+      count = this.getWatchedChanges().length;
+    }
+
+    return count;
   }
 
   /**
@@ -178,41 +217,35 @@ export class ChangesWatcherService {
     this.listCleared.next();
   }
 
-  public sendChanges() {
+  public sendChanges(from: string, to: string) {
 
-    let errors = false;
+    // let errors = false;
+    //
+    // const endpoint = this.getSendEndpoint();
+    // const changes = this.getWatchedChanges();
+    //
+    // if (typeof endpoint === 'undefined') {
+    //   errors = true;
+    //
+    //   let errorTitle = '';
+    //   let errorMessage = '';
+    //
+    //   this.translate.get('NO_CHANGES_ENDPOINT_DEFINED_TITLE').subscribe((string) => {
+    //     errorTitle = string;
+    //   });
+    //
+    //   this.translate.get('NO_CHANGES_ENDPOINT_DEFINED').subscribe((string) => {
+    //     errorMessage = string;
+    //   });
+    //
+    //   this.toastr.error(errorMessage, errorTitle);
+    // }
+    //
+    // if (errors) {
+    //   return false;
+    // }
 
-    const endpoint = this.getSendEndpoint();
-    const changes = this.getWatchedChanges();
-
-    if (typeof endpoint === 'undefined') {
-      errors = true;
-
-      let errorTitle = '';
-      let errorMessage = '';
-
-      this.translate.get('NO_CHANGES_ENDPOINT_DEFINED_TITLE').subscribe((string) => {
-        errorTitle = string;
-      });
-
-      this.translate.get('NO_CHANGES_ENDPOINT_DEFINED').subscribe((string) => {
-        errorMessage = string;
-      });
-
-      this.toastr.error(errorMessage, errorTitle);
-    }
-
-    if (errors) {
-      return false;
-    }
-
-    this.http.post(endpoint, changes).subscribe((response) => {
-      console.log(response);
-    });
-
-    this.listSent.next();
-
-    this.clearChanges();
+    this.applyChanges(from, to);
   }
 
   // SETTERS

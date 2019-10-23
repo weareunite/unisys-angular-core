@@ -23,6 +23,10 @@ export class HelperService {
     return array.filter(item => item[key] === value);
   }
 
+  findItemInArray(array: any[], searchedItem: any[] | string | number) {
+    return array.filter(item => item === searchedItem);
+  }
+
   getPropertyValue(item, key) {
 
     let property: string | boolean = null;
