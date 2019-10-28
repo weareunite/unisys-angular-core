@@ -162,13 +162,17 @@ export class ChangesWatcherService {
       .setOperationType('eventChanges')
       .setParams()
       .setPostData(args)
-      .setSelection('workplace{id,name,short_name,color},dates{date,shifts{shift{id,time_from,time_to},employees{employee{id,name,short_name},procedures{count,type,procedure{id,name,short_name,color,price_direct,price_insurance,properties{key,value}}}}}}')
+      .setSelection('workplace{id,name,short_name,color},dates{date,shifts{shift{id,time_from,time_to},employees{employee{id,name,short_name},procedures{count,type,ids,procedure{id,name,short_name,color,price_direct,price_insurance,properties{key,value}}}}}}')
       .setMetaData([])
       .setQuery()
       .watchQuery();
 
     const sub = apolloInstnc.subscribe(result => {
-      this.watchedChanges = result.data['eventChanges'];
+      console.log(result.data['eventChanges']);
+      const changes = result.data['eventChanges'].filter(function (el) {
+        return el !== null;
+      });
+      this.watchedChanges = changes;
     });
   }
 
@@ -211,10 +215,9 @@ export class ChangesWatcherService {
    * Clear changes
    */
   public clearChanges() {
-    this.setWatchedChanges([]);
-    this.removeLocalStorage();
-
-    this.listCleared.next();
+    this.http.post('events/manuallySubmitChanges', []).subscribe((result) => {
+      this.listCleared.next();
+    });
   }
 
   public sendChanges(from: string, to: string) {
