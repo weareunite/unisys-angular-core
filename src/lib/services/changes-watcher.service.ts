@@ -168,7 +168,6 @@ export class ChangesWatcherService {
       .watchQuery();
 
     const sub = apolloInstnc.subscribe(result => {
-      console.log(result.data['eventChanges']);
       const changes = result.data['eventChanges'].filter(function (el) {
         return el !== null;
       });
