@@ -214,7 +214,14 @@ export class ChangesWatcherService {
    * Clear changes
    */
   public clearChanges() {
-    this.http.post('events/manuallySubmitChanges', []).subscribe((result) => {
+    this.http.post('events/clearChanges', []).subscribe((result) => {
+      this.listCleared.next();
+    });
+  }
+
+  public clearChangesWithIds(ids: any[]) {
+    const data = {change_ids: ids};
+    this.http.post('events/clearChanges', data).subscribe((result) => {
       this.listCleared.next();
     });
   }
