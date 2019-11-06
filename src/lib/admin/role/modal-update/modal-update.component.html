@@ -20,7 +20,7 @@
             <hr>
             <div formGroupName="frontendPermissions">
               <div *ngFor="let fRights of getControls('frontendPermissions')">
-                <input type="checkbox" [formControlName]="fRights" id="{{fRights}}" ng-checked="1"><label for="{{fRights}}">{{defaultForm.get('frontendPermissions.' + fRights)['name']}}</label>
+                <input type="checkbox" [formControlName]="fRights" id="{{fRights}}" ng-checked="1"><label for="{{fRights}}">{{defaultForm.get('frontendPermissions.' + fRights)['name'] | uppercase | translate}}</label>
               </div>
             </div>
           </tab>

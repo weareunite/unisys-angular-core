@@ -42,6 +42,10 @@ export class UserService extends BaseApolloService {
     super(http, appStateService, apollo);
   }
 
+  havePermission(permission: string) {
+    const permissions: any[] = this.getLocalPermissions();
+    return permissions.includes(permission);
+  }
 
   getLocalPermissions() {
     if (localStorage.getItem('permissions')) {
