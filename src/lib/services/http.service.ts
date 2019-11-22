@@ -39,9 +39,13 @@ export class HttpService {
     });
   }
 
-  get(serviceUrl: string) {
+  get(serviceUrl: string, useBase: boolean = true) {
+    let url = this.url + serviceUrl;
+    if (!useBase) {
+      url = serviceUrl;
+    }
     this.pushIntoLatestCall('GET', serviceUrl, {});
-    return this.http.get(this.url + serviceUrl, {
+    return this.http.get(url, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -96,11 +100,13 @@ export class HttpService {
     }
   }
 
-  public imageEncode (arrayBuffer) {
+  public imageEncode(arrayBuffer) {
     let u8 = new Uint8Array(arrayBuffer);
-    let b64encoded = btoa([].reduce.call(new Uint8Array(arrayBuffer),function(p,c){return p+String.fromCharCode(c)},''));
-    let mimetype="image/jpeg";
-    return "data:"+mimetype+";base64,"+b64encoded
+    let b64encoded = btoa([].reduce.call(new Uint8Array(arrayBuffer), function (p, c) {
+      return p + String.fromCharCode(c);
+    }, ''));
+    let mimetype = 'image/jpeg';
+    return 'data:' + mimetype + ';base64,' + b64encoded;
   }
 
   public createAndDownloadBlobFile(body, options, filename) {

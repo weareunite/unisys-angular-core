@@ -10,10 +10,10 @@ import {NotificationService} from './services/notification.service';
 import {TagService} from './services/tag.service';
 import {CountryService} from './services/country.service';
 import {SettingsService} from './services/settings.service';
-import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
+// import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
 import {SettingsModule} from './admin/settings/settings.module';
 import {UsersModule} from './admin/users/users.module';
-import {HTTP_INTERCEPTORS, HttpClientModule, HttpHeaders} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule, HttpClientJsonpModule, HttpHeaders} from '@angular/common/http';
 import {InterceptorService} from './services/interceptor.service';
 import {RoleModule} from './admin/role/role.module';
 import {RoleService} from './services/role.service';
@@ -25,6 +25,7 @@ import {AdminHelpModule} from './admin/help/admin-help.module';
 import {AdminLogModule} from './admin/log/admin-log.module';
 import {ErrorReportingModule} from './error-reporting/error-reporting.module';
 import {ErrorReportService} from './services/error-report.service';
+import {UnisysAngularAppStateServiceService} from '../../../unisys-angular-app-state-service/src/lib/unisys-angular-app-state-service.service';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import {ErrorReportService} from './services/error-report.service';
     AuthModule,
     DefaultModule,
     HttpClientModule,
+    HttpClientJsonpModule,
     ErrorReportingModule
   ],
   declarations: [

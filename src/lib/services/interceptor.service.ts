@@ -58,7 +58,9 @@ export class InterceptorService implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    this.appState.addRequest(request);
+    if (request.method !== 'JSONP') {
+      this.appState.addRequest(request);
+    }
     return next.handle(request).pipe(
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
@@ -100,7 +102,9 @@ export class InterceptorService implements HttpInterceptor {
             this.bulkService.onLogout();
           }
           this.toastrService.error(htmlToReturn, title, {enableHtml: true});
-          this.appState.removeRequest(request);
+          if (request.method !== 'JSONP') {
+            this.appState.removeRequest(request);
+          }
         }
 
         return throwError(response);
