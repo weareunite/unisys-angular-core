@@ -103,6 +103,12 @@
                   <span translate>DETAIL</span>
                 </a>
               </span>
+              <span *ngIf="column.type == 'link'">
+                <a (click)="service.linkCallback(column.link, column.args, item, column.method)">
+                <i class="fas {{column.icon}}" aria-hidden="true"></i>
+                  </a>
+              </span>
+              <span *ngIf="column.type == 'timestamp'">{{getValue(item, column) | moment : 'X' : 'DD.MM.YYYY HH:mm:ss'}}</span>
               <span *ngIf="column.type == 'datetime'">{{getValue(item, column) | date : 'dd.M.y HH:mm'}}</span>
               <span *ngIf="column.type == 'boolean'">
                 <i class="fa" [ngClass]="getValue(item,column) ? 'fa-check-square-o' : 'fa-square-o'"></i>
