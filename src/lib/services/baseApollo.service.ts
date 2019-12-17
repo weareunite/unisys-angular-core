@@ -131,8 +131,7 @@ export abstract class BaseApolloService extends BaseService {
 
 // C(R)UD
 
-  getItem(id: number) {
-
+  getItemFromCondition(id: number) {
     this.conditions = [
       {
         field: 'id',
@@ -153,6 +152,21 @@ export abstract class BaseApolloService extends BaseService {
 
     apolloInstnc.subscribe(result => {
       this.setItem(result.data[this.operationTypePlural].data[0]);
+    });
+  }
+
+  getItem(id: number) {
+    const apolloInstnc = this.apollo.setOperationName('query')
+      .setOperationType(this.operationType)
+      .setParams()
+      .setPostData({id: id})
+      .setSelection(this.selection)
+      .setMetaData([])
+      .setQuery()
+      .watchQuery();
+
+    apolloInstnc.subscribe(result => {
+      this.setItem(result.data[this.operationType]);
     });
   }
 
