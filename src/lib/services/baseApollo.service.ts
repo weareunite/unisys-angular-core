@@ -132,17 +132,27 @@ export abstract class BaseApolloService extends BaseService {
 // C(R)UD
 
   getItem(id: number) {
+
+    this.conditions = [
+      {
+        field: 'id',
+        values: [id.toString()]
+      }
+    ];
+
     const apolloInstnc = this.apollo.setOperationName('query')
-      .setOperationType(this.operationType)
-      .setParams()
-      .setPostData({id: id})
-      .setSelection(this.selection)
-      .setMetaData([])
+      .setOperationType(this.operationTypePlural)
+      .setParams(this.generateGraphQlParams())
+      .setPostData()
+      .setConditions(this.conditions)
+      .setSelection(this.selectionPlural ? this.selectionPlural : this.selection, 'data')
+      .setMetaData()
       .setQuery()
       .watchQuery();
 
+
     apolloInstnc.subscribe(result => {
-      this.setItem(result.data[this.operationType]);
+      this.setItem(result.data[this.operationTypePlural].data[0]);
     });
   }
 
