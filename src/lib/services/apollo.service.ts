@@ -48,7 +48,7 @@ export class ApolloService {
   ) {
 
     const link = httpLink.create({
-      uri: this.environment.GRAPHQL_API_URL
+      uri: this.environment.GRAPHQL_API_URL,
     });
 
     const defaultOptions: DefaultOptions = {
@@ -91,6 +91,8 @@ export class ApolloService {
     });
 
     const authMiddleware = new ApolloLink((operation, forward) => {
+      const newUri = this.environment.GRAPHQL_API_URL + '?rid=' + Date.now() + this.generateRandomNumber(4);
+      link['options']['uri'] = newUri;
       operation.setContext({
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -112,6 +114,17 @@ export class ApolloService {
       cache: new InMemoryCache(),
       defaultOptions: defaultOptions
     });
+  }
+
+  generateRandomNumber(numbersCount: number) {
+
+    let number = '';
+
+    for (let i = 0; i < numbersCount; i++) {
+      number = number + Math.floor(Math.random() * 10);
+    }
+
+    return number;
   }
 
   replaceSelectionParams(selection: string, params: any[]) {

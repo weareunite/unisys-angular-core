@@ -1,6 +1,7 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Inject, Injectable} from '@angular/core';
 import {AuthService} from './auth.service';
+import {HelperService} from './helper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ export class HttpService {
   constructor(
     protected http: HttpClient,
     protected auth: AuthService,
+    public helper: HelperService,
     @Inject('env') private env,
   ) {
   }
@@ -41,7 +43,7 @@ export class HttpService {
 
   get(serviceUrl: string) {
     this.pushIntoLatestCall('GET', serviceUrl, {});
-    return this.http.get(this.url + serviceUrl, {
+    return this.http.get(this.url + serviceUrl + '?rid=' + Date.now() + this.helper.generateRandomNumber(4), {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -52,7 +54,7 @@ export class HttpService {
 
   post(serviceUrl: string, data) {
     this.pushIntoLatestCall('POST', serviceUrl, data);
-    return this.http.post(this.url + serviceUrl, data, {
+    return this.http.post(this.url + serviceUrl + '?rid=' + Date.now() + this.helper.generateRandomNumber(4), data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -96,11 +98,13 @@ export class HttpService {
     }
   }
 
-  public imageEncode (arrayBuffer) {
+  public imageEncode(arrayBuffer) {
     let u8 = new Uint8Array(arrayBuffer);
-    let b64encoded = btoa([].reduce.call(new Uint8Array(arrayBuffer),function(p,c){return p+String.fromCharCode(c)},''));
-    let mimetype="image/jpeg";
-    return "data:"+mimetype+";base64,"+b64encoded
+    let b64encoded = btoa([].reduce.call(new Uint8Array(arrayBuffer), function (p, c) {
+      return p + String.fromCharCode(c)
+    }, ''));
+    let mimetype = "image/jpeg";
+    return "data:" + mimetype + ";base64," + b64encoded
   }
 
   public createAndDownloadBlobFile(body, options, filename) {
@@ -136,7 +140,7 @@ export class HttpService {
 
   put(serviceUrl: string, data) {
     this.pushIntoLatestCall('PUT', serviceUrl, data);
-    return this.http.put(this.url + serviceUrl, data, {
+    return this.http.put(this.url + serviceUrl + '?rid=' + Date.now() + this.helper.generateRandomNumber(4), data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -147,7 +151,7 @@ export class HttpService {
 
   delete(serviceUrl: string) {
     this.pushIntoLatestCall('DELETE', serviceUrl, {});
-    return this.http.delete(this.url + serviceUrl, {
+    return this.http.delete(this.url + serviceUrl + '?rid=' + Date.now() + this.helper.generateRandomNumber(4), {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Accept': 'application/json',

@@ -89,4 +89,15 @@ export class HelperService {
     return array;
 
   }
+
+  generateRandomNumber(numbersCount: number) {
+
+    let number = '';
+
+    for (let i = 0; i < numbersCount; i++) {
+      number = number + Math.floor(Math.random() * 10);
+    }
+
+    return number;
+  }
 }
