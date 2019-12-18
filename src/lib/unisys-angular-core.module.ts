@@ -13,7 +13,7 @@ import {SettingsService} from './services/settings.service';
 import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
 import {SettingsModule} from './admin/settings/settings.module';
 import {UsersModule} from './admin/users/users.module';
-import {HTTP_INTERCEPTORS, HttpClientModule, HttpHeaders} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule, HttpClientJsonpModule, HttpHeaders} from '@angular/common/http';
 import {InterceptorService} from './services/interceptor.service';
 import {RoleModule} from './admin/role/role.module';
 import {RoleService} from './services/role.service';
@@ -38,6 +38,7 @@ import {ErrorReportService} from './services/error-report.service';
     AuthModule,
     DefaultModule,
     HttpClientModule,
+    HttpClientJsonpModule,
     ErrorReportingModule
   ],
   declarations: [
