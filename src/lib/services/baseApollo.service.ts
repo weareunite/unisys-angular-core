@@ -18,7 +18,7 @@ export abstract class BaseApolloService extends BaseService {
   protected properties: any[];
   protected operationName: string;
   protected autoLoadData = true;
-  public conditions: any[] = null;
+  private _conditions: any[] = null;
   public fakeItemList;
   public distinctList;
   public distinctListChanged = new Subject<any[]>();
@@ -132,7 +132,7 @@ export abstract class BaseApolloService extends BaseService {
 // C(R)UD
 
   getItemFromCondition(id: number) {
-    this.conditions = [
+    this._conditions = [
       {
         field: 'id',
         values: [id.toString()]
@@ -143,7 +143,7 @@ export abstract class BaseApolloService extends BaseService {
       .setOperationType(this.operationTypePlural)
       .setParams(this.generateGraphQlParams())
       .setPostData()
-      .setConditions(this.conditions)
+      .setConditions(this._conditions)
       .setSelection(this.selectionPlural ? this.selectionPlural : this.selection, 'data')
       .setMetaData()
       .setQuery()
@@ -222,7 +222,7 @@ export abstract class BaseApolloService extends BaseService {
     const apolloInstnc = this.apollo.setOperationName('query')
       .setOperationType(this.operationTypePlural)
       .setParams(this.generateGraphQlParams())
-      .setConditions(this.conditions)
+      .setConditions(this._conditions)
       .setSelection(this.selectionPlural ? this.selectionPlural : this.selection, 'data')
       .setMetaData()
       .setQuery()
@@ -507,6 +507,14 @@ export abstract class BaseApolloService extends BaseService {
   removeIdFromItem(item) {
     delete item['id'];
     return item;
+  }
+
+  get conditions(): any[] {
+    return this._conditions;
+  }
+
+  set conditions(value: any[]) {
+    this._conditions = value;
   }
 }
 
