@@ -18,7 +18,7 @@ export abstract class BaseApolloService extends BaseService {
   protected properties: any[];
   protected operationName: string;
   protected autoLoadData = true;
-  protected conditions: any[] = null;
+  public conditions: any[] = null;
   public fakeItemList;
   public distinctList;
   public distinctListChanged = new Subject<any[]>();
