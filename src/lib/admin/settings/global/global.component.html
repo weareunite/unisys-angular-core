@@ -1,0 +1,52 @@
+<div class="row" *ngIf="!addingNewSettings">
+  <div class="col-sm-12">
+    <button class="btn btn-success btn-sm" translate (click)="addingNewSettings = true">ADD_NEW
+    </button>
+  </div>
+</div>
+<div class="row" style="margin-bottom:10px;" *ngIf="addingNewSettings">
+  <form [formGroup]="newSettingForm" (ngSubmit)="onNewSettingsFormSubmitted()">
+    <div class="col-sm-3">
+      <input formControlName="key" class="form-control" placeholder="{{'KEY'|translate}}">
+    </div>
+    <div class="col-sm-3">
+      <input formControlName="value" class="form-control" placeholder="{{'VALUE'|translate}}">
+    </div>
+    <div class="col-sm-1">
+      <button type="submit" class="btn btn-success btn-sm" translate>ADD</button>
+    </div>
+  </form>
+</div>
+<ng-container *ngIf="settings.settings?.data">
+  <table class="table table-striped table-bordered table-condensed">
+    <thead>
+    <tr>
+      <th translate>KEY</th>
+      <th translate>VALUE</th>
+      <th translate>ACTION</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let setting of settings.settings.data">
+      <td>{{setting.key}}</td>
+      <td>
+      <span *ngIf="setting.editing">
+        <input class="form-control" [value]="setting.value" style="max-width:200px;display:inline-block;" (change)="onSettingValueChange(setting,$event)">
+      </span>
+        <span *ngIf="(setting.value === null || setting.value === '') && !setting.editing">
+        N/A
+      </span>
+        <span *ngIf="setting.value !== null && setting.value !== '' && !setting.editing">{{setting.value}}</span>
+      </td>
+      <td>
+        <button class="btn btn-primary btn-sm" style="margin-left:10px;" translate (click)="setting.editing = true" *ngIf="!setting.editing">
+          EDIT
+        </button>
+        <button class="btn btn-success btn-sm" style="margin-left:10px;" translate *ngIf="setting.editing" (click)="saveSettings(setting)">
+          SAVE
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</ng-container>

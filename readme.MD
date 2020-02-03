@@ -16,13 +16,13 @@ Install library by running command
 #### Helpers libraries
 
 Library | Description
---- | --- 
+--- | ---
 `<unisys-core-dumperson [object]:{}></unisys-core-dumperson>` | JSON object parsed into list-tree
 
 #### Integration
 * Before installing this Core Module, install Angular project first (command **ng new**)
 * Point to file **app.module.ts** in src/app folder
-* Replace **AppComponent** to **UnisysAngularCoreComponent** in bootstrap
+* Replace **GlobalComponent** to **UnisysAngularCoreComponent** in bootstrap
 * Add **UnisysAngularCoreModule** to imports
 
 Your app.module.ts file should looks like this
@@ -35,14 +35,14 @@ import { NgModule } from '@angular/core';
 // Imported UniSys Core Module and Component
 import { UnisysAngularCoreModule } from '@weareunite/unisys-angular-core';
 import { UnisysAngularCoreComponent } from '@weareunite/unisys-angular-core';
-import { AppComponent } from './app.component';
+import { GlobalComponent } from './app.component';
 
 // Import default environment from app and provided it for root
 import {environment} from '../environments/environment';
 
 @NgModule({
   declarations: [
-    AppComponent
+    GlobalComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +51,7 @@ import {environment} from '../environments/environment';
   providers: [],
   bootstrap: [
     UnisysAngularCoreComponent,
-    AppComponent
+    GlobalComponent
     ]
 })
 export class AppModule { }
@@ -59,7 +59,7 @@ export class AppModule { }
 ```
 
 * **Clean (not delete !)** content of your application **app.component.html** file
-* Rename selector in your app.component.ts from **'app-root'** to **'app-fake-root'**
+* Rename selector in your global.component.ts from **'app-root'** to **'app-fake-root'**
 * Add **<app-fake-root></app-fake-root> into your index.html** file above <app-root></app-root>
 * Then, your **index.html** file should look like this
 
@@ -85,7 +85,7 @@ export class AppModule { }
 
 ```
 
-* If you want to run some code immediately when application is loaded, **implement OnInit into AppComponent** and use function in onInit function in AppComponent
+* If you want to run some code immediately when application is loaded, **implement OnInit into GlobalComponent** and use function in onInit function in GlobalComponent
 * It's necessary to import module **UnisysAngularSharedModule** into your Core or Shared module to make shared components from UniSys Angular Core working
 * Add snippet below as scripts into your **angular.json** file
 
@@ -95,12 +95,12 @@ export class AppModule { }
   "input": "./node_modules/@weareunite/unisys-angular-core/assets",
   "output": "./assets/"
 }
-```              
+```
 
 * In your **enviroment** file, set this variables
 
 Variable | Description
---- | --- 
+--- | ---
 `BASE_API_URL` | URL to base API
 `GRAPHQL_API_URL` | URL to base GraphQL API
 `OAUTH_TOKEN_URL` | URL to obtain auth token

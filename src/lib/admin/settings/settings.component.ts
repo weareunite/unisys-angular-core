@@ -43,6 +43,7 @@ export class SettingsComponent implements OnInit {
   ];
 
   public subMenu: MenuItem[] = [
+    {routerLink: ['/admin', 'settings', 'global'], permission: 'admin.settings', translation: 'GLOBAL_SETTINGS', icon: ''},
     {routerLink: ['/admin', 'settings', 'app'], permission: 'admin.settings', translation: 'APP_SETTINGS', icon: ''},
     {routerLink: ['/admin', 'settings', 'company'], permission: 'admin.settings', translation: 'PROFILE', icon: ''},
   ];

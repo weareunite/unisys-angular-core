@@ -16,6 +16,8 @@ export class SettingsService {
   listChanged = new Subject<any[]>();
   companyChanged = new Subject<any>();
   settingsChanged = new Subject<any>();
+  settingsSaved = new Subject();
+  settingsCreated = new Subject();
   protected item;
   protected itemList;
   public company: Contact;
@@ -47,6 +49,8 @@ export class SettingsService {
     let apolloInstnc = this.apollo.setOperationName('query')
       .setOperationType(operationType)
       .setSelection(this.selectionSettings, 'data')
+      .setPostData()
+      .setParams()
       .setQuery()
       .watchQuery();
 
@@ -56,6 +60,7 @@ export class SettingsService {
     });
 
   }
+
 
   getCompany() {
 
@@ -78,6 +83,39 @@ export class SettingsService {
 
 //CR(U)D
 
+  updateSetting(settings) {
+
+    const data = Object.assign(settings);
+
+    delete data.editing;
+    delete data.__typename;
+
+    let apolloInstnc = this.apollo.setOperationName('mutation')
+      .setOperationType('updateSetting')
+      .setSelection('')
+      .setPostData(data)
+      .setQuery()
+      .mutate();
+
+    let subscription = apolloInstnc.subscribe(result => {
+      this.settingsSaved.next();
+    });
+  }
+
+  createSetting(setting) {
+
+    let apolloInstnc = this.apollo.setOperationName('mutation')
+      .setOperationType('createSetting')
+      .setSelection('key,value')
+      .setPostData(setting)
+      .setQuery()
+      .mutate();
+
+    let subscription = apolloInstnc.subscribe(result => {
+      this.settingsCreated.next();
+    });
+  }
+
   updateCompany(item: Contact) {
 
     let itemToSave = Object.assign({}, item);
@@ -89,8 +127,6 @@ export class SettingsService {
       itemToSave['country_id'] = null;
     }
     delete itemToSave['country'];
-
-    console.log(itemToSave);
 
     let apolloInstnc = this.apollo.setOperationName('mutation')
       .setOperationType('updateCompany')
