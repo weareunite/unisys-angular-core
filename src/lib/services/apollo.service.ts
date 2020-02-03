@@ -47,8 +47,17 @@ export class ApolloService {
     @Inject('env') private environment,
   ) {
 
+
     const link = httpLink.create({
       uri: this.environment.GRAPHQL_API_URL,
+    });
+
+    const openLink = httpLink.create({
+      uri: this.environment.GRAPHQL_OPEN_API_URL
+    });
+
+    const adminLink = httpLink.create({
+      uri: this.environment.ADMIN_GRAPHQL_API_URL
     });
 
     const defaultOptions: DefaultOptions = {
@@ -109,8 +118,26 @@ export class ApolloService {
       link
     ]);
 
+    const adminLinkWithErrors = ApolloLink.from([
+      authMiddleware,
+      errorMiddleware,
+      adminLink
+    ]);
+
     apollo.create({
       link: linkWithErrors,
+      cache: new InMemoryCache(),
+      defaultOptions: defaultOptions
+    });
+
+    apollo.createNamed('open', {
+      link: openLink,
+      cache: new InMemoryCache(),
+      defaultOptions: defaultOptions
+    });
+
+    apollo.createNamed('admin', {
+      link: adminLinkWithErrors,
       cache: new InMemoryCache(),
       defaultOptions: defaultOptions
     });
@@ -424,12 +451,20 @@ export class ApolloService {
     this.lastApolloCalls.push(query);
   }
 
-  watchQuery() {
-    return this.apollo.query({query: this.query});
+  watchQuery(queryName: string = '') {
+    if (queryName === '') {
+      return this.apollo.query({query: this.query});
+    } else {
+      return this.apollo.use(queryName).query({query: this.query});
+    }
   }
 
-  mutate() {
-    return this.apollo.mutate({mutation: this.query});
+  mutate(mutationName: string = '') {
+    if (mutationName === '') {
+      return this.apollo.mutate({mutation: this.query});
+    } else {
+      return this.apollo.use(mutationName).mutate({mutation: this.query});
+    }
   }
 
 }

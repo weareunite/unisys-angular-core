@@ -15,6 +15,7 @@ export abstract class BaseApolloService extends BaseService {
   protected selection: string;
   protected operationType: string;
   protected operationTypePlural: string;
+  protected clientName: string;
   protected properties: any[];
   protected operationName: string;
   protected autoLoadData = true;
@@ -35,6 +36,12 @@ export abstract class BaseApolloService extends BaseService {
 
   createItem(item: any, postData?: any) {
 
+    let queryClientName = this.clientName;
+
+    if (typeof queryClientName === 'undefined') {
+      queryClientName = '';
+    }
+
     item = this.removeIdFromItem(item);
 
     const apolloInstnc = this.apollo.setOperationName('mutation')
@@ -43,7 +50,7 @@ export abstract class BaseApolloService extends BaseService {
       .setSelection(this.selection)
       .clearMetaData()
       .setQuery()
-      .mutate();
+      .mutate(queryClientName);
 
     apolloInstnc.subscribe(result => {
       this.setItem(result.data);
@@ -106,13 +113,19 @@ export abstract class BaseApolloService extends BaseService {
 
     const unvariabledSelection = this.selection.replace('%VARIABLE%', '');
 
+    let queryClientName = this.clientName;
+
+    if (typeof queryClientName === 'undefined') {
+      queryClientName = '';
+    }
+
     const apolloInstnc = this.apollo.setOperationName('mutation')
       .setOperationType(itemAction)
       .setPostData(item)
       .setSelection(unvariabledSelection)
       .clearMetaData()
       .setQuery()
-      .mutate();
+      .mutate(queryClientName);
 
     apolloInstnc.subscribe(result => {
       const newItem = result['data'][itemAction];
@@ -156,6 +169,13 @@ export abstract class BaseApolloService extends BaseService {
   }
 
   getItem(id: number) {
+
+    let queryClientName = this.clientName;
+
+    if (typeof queryClientName === 'undefined') {
+      queryClientName = '';
+    }
+
     const apolloInstnc = this.apollo.setOperationName('query')
       .setOperationType(this.operationType)
       .setParams()
@@ -163,7 +183,7 @@ export abstract class BaseApolloService extends BaseService {
       .setSelection(this.selection)
       .setMetaData([])
       .setQuery()
-      .watchQuery();
+      .watchQuery(queryClientName);
 
     apolloInstnc.subscribe(result => {
       this.setItem(result.data[this.operationType]);
@@ -214,6 +234,12 @@ export abstract class BaseApolloService extends BaseService {
 
   getItemList() {
 
+    let queryClientName = this.clientName;
+
+    if (typeof queryClientName === 'undefined') {
+      queryClientName = '';
+    }
+
     if (!this.autoLoadData) {
       this.setItemList(this.fakeItemList);
       return false;
@@ -226,7 +252,7 @@ export abstract class BaseApolloService extends BaseService {
       .setSelection(this.selectionPlural ? this.selectionPlural : this.selection, 'data')
       .setMetaData()
       .setQuery()
-      .watchQuery();
+      .watchQuery(queryClientName);
 
 
     apolloInstnc.subscribe(result => {
@@ -260,6 +286,12 @@ export abstract class BaseApolloService extends BaseService {
 
   updateItemFromList(item: any, postData?: any, action?: string) {
 
+    let queryClientName = this.clientName;
+
+    if (typeof queryClientName === 'undefined') {
+      queryClientName = '';
+    }
+
     let mutationName = '';
     if (action) {
       mutationName = action + this.firstLetterUp(this.operationType);
@@ -282,7 +314,7 @@ export abstract class BaseApolloService extends BaseService {
       .setPostData(postData)
       .setSelection('')
       .setQuery()
-      .mutate();
+      .mutate(queryClientName);
 
     const thisInstance = Object.assign({}, this);
 
@@ -311,12 +343,19 @@ export abstract class BaseApolloService extends BaseService {
   }
 
   deleteItem(id: number) {
+
+    let queryClientName = this.clientName;
+
+    if (typeof queryClientName === 'undefined') {
+      queryClientName = '';
+    }
+
     let apolloInstnc = this.apollo.setOperationName('mutation')
       .setOperationType('delete' + this.firstLetterUp(this.operationType))
       .setPostData({id: id})
       .setSelection('')
       .setQuery()
-      .mutate();
+      .mutate(queryClientName);
 
     apolloInstnc.subscribe(data => {
 
@@ -324,12 +363,18 @@ export abstract class BaseApolloService extends BaseService {
   }
 
   deleteItemFromList(item: any) {
+
+    let queryClientName = this.clientName;
+
+    if (typeof queryClientName === 'undefined') {
+      queryClientName = '';
+    }
     let apolloInstnc = this.apollo.setOperationName('mutation')
       .setOperationType('delete' + this.firstLetterUp(this.operationType))
       .setPostData({id: item.id})
       .setSelection('')
       .setQuery()
-      .mutate();
+      .mutate(queryClientName);
 
     apolloInstnc.subscribe(data => {
       this.itemList.forEach(function (entry, index, object) {
