@@ -300,9 +300,9 @@ export class ApolloService {
               } else {
 
                 if (Array.isArray(data)) {
-                  conditionItem = {field: subIndex, values: data.map(String)};
+                  conditionItem = {field: subIndex, operator: 'and', values: data.map(String)};
                 } else {
-                  conditionItem = {field: subIndex, values: [String(data)]};
+                  conditionItem = {field: subIndex, operator: 'and', values: [String(data)]};
                 }
               }
               filterParams['conditions'].push(conditionItem);

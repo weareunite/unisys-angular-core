@@ -1,15 +1,16 @@
-import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { ElementRef } from '@angular/core';
+import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {ElementRef, OnInit} from '@angular/core';
 import * as moment_ from 'moment';
 
 const moment = moment_;
 
-export class BaseFilterComponent {
+export class BaseFilterComponent implements OnInit {
   public bsConfig;
   public defaultService;
   public selector;
   public isVisilbe = false;
+  public defaultForm = new FormGroup({});
 
   /**
    * Initial values form
@@ -23,16 +24,16 @@ export class BaseFilterComponent {
     protected formBuilder: FormBuilder,
     protected elem: ElementRef,
   ) {
-    this.selector = elem.nativeElement.tagName.toLowerCase();
+    this.selector = this.elem.nativeElement.tagName.toLowerCase();
     this.bsConfig = {
       containerClass: 'theme-dark-blue',
       rangeInputFormat: 'DD.MM.YYYY',
       placement: 'top',
     };
-
   }
 
-  public defaultForm = new FormGroup({});
+  ngOnInit() {
+  }
 
   protected builForm(initial: boolean = false) {
     let rawData = this.appStateService.getViewState(this.selector);
