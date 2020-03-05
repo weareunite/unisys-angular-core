@@ -25,7 +25,6 @@ export class UserService extends BaseApolloService {
   protected selection = 'id, active,name, surname, username, email, roles {id, name}, frontend_permissions {id, name}';
   protected operationType = 'user';
   protected operationTypePlural = 'users';
-  protected clientName = 'admin';
 
   constructor(
     protected auth: AuthService,
