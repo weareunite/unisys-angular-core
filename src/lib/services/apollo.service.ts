@@ -80,10 +80,20 @@ export class ApolloService {
           let message = graphQLErrors[index]['message'];
           let debugMessage = graphQLErrors[index]['debugMessage'];
 
-          let translatedMessage = this.interceptorService.translateError(message);
-          let translatedDebug = this.interceptorService.translateError(debugMessage);
+          if (message === 'validation') {
+            let validations = graphQLErrors[index]['validation'];
+            Object.keys(validations).forEach(function (i) {
+              const validation = validations[i];
+              const validationMessage = validation[0];
+              toastr.error(validationMessage, 'Validation Error');
+            }, this);
+          } else {
+            let translatedMessage = this.interceptorService.translateError(message);
+            let translatedDebug = this.interceptorService.translateError(debugMessage);
 
-          toastr.error(translatedDebug, translatedMessage);
+            toastr.error(translatedDebug, translatedMessage);
+          }
+
         }, this);
       }
 
