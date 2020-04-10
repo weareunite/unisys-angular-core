@@ -51,8 +51,10 @@ export class CoreService {
   }
 
   setAsideMenuList(itemList: MenuItem[]) {
-    this.itemList = itemList;
-    this.itemListChanged.next(this.itemList);
+    setTimeout(() => {
+      this.itemList = itemList;
+      this.itemListChanged.next(this.itemList);
+    }, 1000);
   }
 
   pushIntoAppItemList(item) {

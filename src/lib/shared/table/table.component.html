@@ -105,7 +105,8 @@
               </span>
               <span *ngIf="column.type == 'link'">
                 <a (click)="service.linkCallback(column.link, column.args, item, column.method)">
-                <i class="fas {{column.icon}}" aria-hidden="true"></i>
+                    <span *ngIf="column.icon && column.icon != ''"><i class="fa {{column.icon}}" aria-hidden="true"></i>&nbsp;</span>
+                    <span *ngIf="column.title && column.title != '' ">{{drillColumnFromItem(item, column.title)}}</span>
                   </a>
               </span>
               <span *ngIf="column.type == 'timestamp'">{{getValue(item, column) | moment : 'X' : 'DD.MM.YYYY HH:mm:ss'}}</span>
@@ -138,7 +139,7 @@
                   <div *ngFor="let option of column.options | filterVisibility: true">
                     <a *ngxPermissionsOnly="option.permission" translate (click)="clickAction(item,option.action)" class="action">{{ option.translation}}</a>
                   </div>
-                  <div appDropdown [autoclose]="true" style="position: relative; display: inline;width: 25px;">
+                  <div appDropdown [autoclose]="true" style="position: relative; display: inline;width: 25px;" *ngIf="column.options.length > 1">
                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true" style="padding: 4px 7px;font-size: 16px;line-height: 1;">
                       <i class="fa fa-angle-down"></i>
                     </a>

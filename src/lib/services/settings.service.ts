@@ -24,7 +24,7 @@ export class SettingsService {
   public settings: any;
 
   // Apollo
-  protected selectionCompany = 'id,name,surname,company,street,zip,city,country{id,name,full_name},reg_no,tax_no,vat_no,web,email,telephone,description,custom_properties';
+  protected selectionCompany = 'id,name,is_active,contact_profile{id,name,surname,company,street,zip,city,country{id,name},reg_no,tax_no,vat_no,web,email,telephone,description}';
   protected selectionSettings = 'key,value';
 
   constructor(
@@ -44,7 +44,7 @@ export class SettingsService {
     //     this.setSettings(dataToSet);
     // });
 
-    const operationType = 'settings';
+    const operationType = 'systemSettings';
 
     let apolloInstnc = this.apollo.setOperationName('query')
       .setOperationType(operationType)
@@ -64,7 +64,7 @@ export class SettingsService {
 
   getCompany() {
 
-    const operationType = 'companyProfile';
+    const operationType = 'company';
 
     let apolloInstnc = this.apollo.setOperationName('query')
       .setOperationType(operationType)
