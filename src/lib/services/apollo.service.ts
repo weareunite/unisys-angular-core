@@ -56,10 +56,6 @@ export class ApolloService {
       uri: this.environment.GRAPHQL_OPEN_API_URL
     });
 
-    const adminLink = httpLink.create({
-      uri: this.environment.ADMIN_GRAPHQL_API_URL
-    });
-
     const defaultOptions: DefaultOptions = {
       watchQuery: {
         fetchPolicy: 'no-cache',
@@ -128,11 +124,6 @@ export class ApolloService {
       link
     ]);
 
-    const adminLinkWithErrors = ApolloLink.from([
-      authMiddleware,
-      errorMiddleware,
-      adminLink
-    ]);
 
     apollo.create({
       link: linkWithErrors,
@@ -142,12 +133,6 @@ export class ApolloService {
 
     apollo.createNamed('open', {
       link: openLink,
-      cache: new InMemoryCache(),
-      defaultOptions: defaultOptions
-    });
-
-    apollo.createNamed('admin', {
-      link: adminLinkWithErrors,
       cache: new InMemoryCache(),
       defaultOptions: defaultOptions
     });
