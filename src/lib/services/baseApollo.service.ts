@@ -244,7 +244,7 @@ export abstract class BaseApolloService extends BaseService {
       this.setItemList(this.fakeItemList);
       return false;
     }
-
+    
     const apolloInstnc = this.apollo.setOperationName('query')
       .setOperationType(this.operationTypePlural)
       .setParams(this.generateGraphQlParams())
