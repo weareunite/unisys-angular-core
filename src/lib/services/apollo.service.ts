@@ -447,11 +447,14 @@ export class ApolloService {
   }
 
   watchQuery(queryName: string = '') {
-    if (queryName === '') {
-      return this.apollo.query({query: this.query});
-    } else {
-      return this.apollo.use(queryName).query({query: this.query});
-    }
+
+    return this.apollo.query({query: this.query});
+
+    // if (queryName === '') {
+    //   return this.apollo.query({query: this.query});
+    // } else {
+    //   return this.apollo.use(queryName).query({query: this.query});
+    // }
   }
 
   mutate(mutationName: string = '') {
