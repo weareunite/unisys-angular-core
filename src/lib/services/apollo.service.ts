@@ -458,11 +458,14 @@ export class ApolloService {
   }
 
   mutate(mutationName: string = '') {
-    if (mutationName === '') {
-      return this.apollo.mutate({mutation: this.query});
-    } else {
-      return this.apollo.use(mutationName).mutate({mutation: this.query});
-    }
+
+    return this.apollo.mutate({mutation: this.query});
+
+    // if (mutationName === '') {
+    //   return this.apollo.mutate({mutation: this.query});
+    // } else {
+    //   return this.apollo.use(mutationName).mutate({mutation: this.query});
+    // }
   }
 
 }
