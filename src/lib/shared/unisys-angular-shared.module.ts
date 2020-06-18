@@ -37,6 +37,7 @@ import {MomentPipe} from '../pipes/moment.pipe';
 import {CharAtPipe} from '../pipes/char-at.pipe';
 import {SubstringPipe} from '../pipes/substring.pipe';
 import {IsNaNPipe} from '../pipes/isNaN.pipe';
+import { SanitizeHtmlPipe } from "../pipes/sanitizeHtml.pipe";
 
 // Local UniSys GIT modules in project (for development purposes only !)
 // import {UnisysAngularFormGroupModule} from '../../../../unisys-angular-form-group/src/lib/unisys-angular-form-group.module';
@@ -91,7 +92,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DumpersonComponent,
     CharAtPipe,
     SubstringPipe,
-    IsNaNPipe
+    IsNaNPipe,
+    SanitizeHtmlPipe,
   ],
   exports: [
     AngularEditorModule,
@@ -122,7 +124,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DumpersonComponent,
     CharAtPipe,
     SubstringPipe,
-    IsNaNPipe
+    IsNaNPipe,
+    SanitizeHtmlPipe,
   ],
   entryComponents: [
     ModalDeleteComponent,
