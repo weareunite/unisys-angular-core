@@ -31,7 +31,10 @@ export class ApolloService {
       'or',
       'between'
     ],
-    custom: {}
+    custom: {
+      currency: ['EUR'],
+      week_day: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'],
+    }
 
   };
 
