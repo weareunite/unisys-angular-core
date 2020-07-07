@@ -19,7 +19,7 @@
           <h4 translate>CHOOSE_A_HELP_TOPIC</h4>
           <p translate>YOU_CAN_FIND_HELP_TOPICS_IN_THE_SIDE_MENU</p>
         </div>
-        <div *ngIf="item" [innerHTML]="item?.body"></div>
+        <div *ngIf="item" [innerHTML]="item?.body | sanitizeHtml"></div>
       </div>
     </div>
   </div>

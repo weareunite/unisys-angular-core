@@ -27,11 +27,15 @@ export class ApolloService {
   protected query;
   public enumOperators = {
     operators: [
-      'and',
-      'or',
-      'between'
+      'and', 'AND',
+      'or', 'OR',
+      'between', 'BETWEEN',
+      'not', 'NOT',
     ],
-    custom: {}
+    custom: {
+      currency: ['EUR'],
+      week_day: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'],
+    }
 
   };
 
@@ -73,19 +77,25 @@ export class ApolloService {
 
         Object.keys(graphQLErrors).forEach(function (index) {
 
-          let message = graphQLErrors[index]['message'];
-          let debugMessage = graphQLErrors[index]['debugMessage'];
+          const message = graphQLErrors[index]['message'];
+          const debugMessage = graphQLErrors[index]['debugMessage'];
+
 
           if (message === 'validation') {
-            let validations = graphQLErrors[index]['validation'];
-            Object.keys(validations).forEach(function (i) {
+            let validations = {};
+            if (graphQLErrors[index]['validation']) {
+              validations =  graphQLErrors[index]['validation'];
+            } else if (graphQLErrors[index]['extensions'] && graphQLErrors[index]['extensions']['validation']) {
+              validations = graphQLErrors[index]['extensions']['validation'];
+            }
+            Object.keys(validations).forEach((i) => {
               const validation = validations[i];
               const validationMessage = validation[0];
               toastr.error(validationMessage, 'Validation Error');
             }, this);
           } else {
-            let translatedMessage = this.interceptorService.translateError(message);
-            let translatedDebug = this.interceptorService.translateError(debugMessage);
+            const translatedMessage = this.interceptorService.translateError(message);
+            const translatedDebug = this.interceptorService.translateError(debugMessage);
 
             toastr.error(translatedDebug, translatedMessage);
           }
@@ -94,10 +104,10 @@ export class ApolloService {
       }
 
       if (networkError) {
-        let message = networkError['error']['message'];
-        let debugMessage = networkError.message;
-        let translatedMessage = this.interceptorService.translateError(message);
-        let translatedDebug = this.interceptorService.translateError(debugMessage);
+        const message = networkError['error']['message'];
+        const debugMessage = networkError.message;
+        const translatedMessage = this.interceptorService.translateError(message);
+        const translatedDebug = this.interceptorService.translateError(debugMessage);
 
         toastr.error(translatedDebug, translatedMessage);
       }
@@ -161,7 +171,7 @@ export class ApolloService {
 
   getMetaData(result) {
 
-    let metaArray = [];
+    const metaArray = [];
     let meta = this.metaData;
 
     if (meta.length === 0) {
@@ -251,9 +261,9 @@ export class ApolloService {
 
     if (this.params && this.operationName.includes('query')) {
 
-      let baseParams = {};
-      let filterParams = {};
-      let paginateParams = {};
+      const baseParams = {};
+      const filterParams = {};
+      const paginateParams = {};
       Object.keys(this.params).forEach(function (index) {
         if (index === 'limit' || index === 'page') {
           paginateParams[index] = this.params[index];
@@ -271,10 +281,10 @@ export class ApolloService {
           Object.keys(this.params[index]).forEach(function (subIndex) {
             let data = [];
             let conditionItem = {};
-            let params = this.params[index][subIndex];
+            const paramsSubindex = this.params[index][subIndex];
 
             if (this.params[index][subIndex].hasOwnProperty('base') && this.params[index][subIndex].hasOwnProperty('base') === true) {
-              baseParams[subIndex] = params['values'];
+              baseParams[subIndex] = paramsSubindex['values'];
             } else {
 
               if (Array.isArray(this.params[index][subIndex]) && !this.params[index][subIndex].values) {
@@ -364,7 +374,7 @@ export class ApolloService {
     }
 
     if (params.charAt(0) === '{') {
-      let paramLength = params.length - 1;
+      const paramLength = params.length - 1;
       params = params.substring(1, paramLength);
     }
 
@@ -419,10 +429,10 @@ export class ApolloService {
 
   fixEnumOperators(string: string) {
 
-    let enumOperators = this.enumOperators;
+    const enumOperators = this.enumOperators;
 
     Object.keys(enumOperators['operators']).forEach(function (index) {
-      let regex = new RegExp('operator:"' + enumOperators['operators'][index] + '"', 'g');
+      const regex = new RegExp('operator:"' + enumOperators['operators'][index] + '"', 'g');
       string = string.replace(regex, 'operator:' + enumOperators['operators'][index]);
     });
 
@@ -430,7 +440,7 @@ export class ApolloService {
 
       Object.keys(enumOperators['custom'][index]).forEach(function (subIndex) {
 
-        let customRegex = new RegExp(index + ':"' + enumOperators['custom'][index][subIndex] + '"', 'g');
+        const customRegex = new RegExp(index + ':"' + enumOperators['custom'][index][subIndex] + '"', 'g');
         string = string.replace(customRegex, index + ':' + enumOperators['custom'][index][subIndex]);
       });
     });
@@ -447,19 +457,25 @@ export class ApolloService {
   }
 
   watchQuery(queryName: string = '') {
-    if (queryName === '') {
-      return this.apollo.query({query: this.query});
-    } else {
-      return this.apollo.use(queryName).query({query: this.query});
-    }
+
+    return this.apollo.query({query: this.query});
+
+    // if (queryName === '') {
+    //   return this.apollo.query({query: this.query});
+    // } else {
+    //   return this.apollo.use(queryName).query({query: this.query});
+    // }
   }
 
   mutate(mutationName: string = '') {
-    if (mutationName === '') {
-      return this.apollo.mutate({mutation: this.query});
-    } else {
-      return this.apollo.use(mutationName).mutate({mutation: this.query});
-    }
+
+    return this.apollo.mutate({mutation: this.query});
+
+    // if (mutationName === '') {
+    //   return this.apollo.mutate({mutation: this.query});
+    // } else {
+    //   return this.apollo.use(mutationName).mutate({mutation: this.query});
+    // }
   }
 
 }

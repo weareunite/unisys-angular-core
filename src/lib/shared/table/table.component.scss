@@ -2,6 +2,10 @@
   cursor: pointer;
 }
 
+.box--custom-padding{
+  padding: 3px 0px !important;
+}
+
 .selected {
   position: relative;
   padding: 5px 20px 5px 5px !important;
@@ -171,8 +175,8 @@ tbody > tr > td {
 
 .table-download-icon {
   i.fa {
-    font-size: 25px;
-    padding: 6px;
+    font-size: 16px;
+    padding: 2px;
     color: #3b8dbc;
   }
 }
