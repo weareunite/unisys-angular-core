@@ -72,8 +72,9 @@
               </ng-template>
             </th>
             <th *ngFor="let item of columns | filterColumns: settings.visibleColumns" translate (click)="setSorting(item)" [ngClass]="setClass(item)" style="min-width: 30px;" class="text-center">
-              <span *ngIf="item.type != 'attachment' ; else paperClip" translate>{{item.translation}}</span>
-              <ng-template #paperClip><i class="fa fa-paperclip"></i></ng-template>
+              <span *ngIf="item.type == 'attachment'"><i class="fa fa-paperclip"></i></span>
+              <span *ngIf="item.type == 'favorite'"><i class="fa fa-star-o"></i></span>
+              <span *ngIf="item.type != 'attachment' ||  item.type != 'favorite'" translate>{{item.translation}}</span>
             </th>
           </tr>
           </thead>
@@ -82,7 +83,7 @@
             <!--<tr *ngFor="let item of data | orderBy : 'id'">-->
             <td style="text-align: center;">
               <input type="checkbox" [checked]="item.selected" (click)="onCheckboxSelect(item)"/></td>
-            <td *ngFor="let column of columns | filterColumns: settings.visibleColumns" (click)="clickEvent(item,column)" (mouseover)="overEvent(item,column)" [ngClass]="{'hand detail': column.click || column.mouseover, 'text-right': column.type == 'number', 'text-center': column.type == 'attachment', 'text' : column.type == 'string' || column.type == 'list_prop'}">
+            <td *ngFor="let column of columns | filterColumns: settings.visibleColumns" (click)="clickEvent(item, column , event)" (mouseover)="overEvent(item, column, event)" (mouseenter)="enterEvent(item, column, event)" (mouseleave)="leaveEvent(item, column, event)" (mouseout)="outEvent(item, column, event)"  [ngClass]="{'hand detail': column.click || column.mouseover || column.mouseenter || column.mouseleave || column.mouseout || column.mouseover, 'text-right': column.type == 'number', 'text-center': column.type == 'attachment', 'text' : column.type == 'string' || column.type == 'list_prop'}">
             <span *ngIf="column.type != 'action'; else actionType">
               <span *ngIf="column.type == 'json'">{{parseJSON(getValue(item, column), column.jsonPointer, column.count)}}</span>
               <span *ngIf="column.type == 'number' || column.type == 'date'">{{ getValue(item, column)}}</span>
@@ -122,7 +123,8 @@
               </span>
               <span *ngIf="column.type == 'tag'">
                 <small *ngFor="let tag of getValue(item,column)" class="label label-default" [ngStyle]="{'background-color': tag.custom_properties ? tag.custom_properties.color : 'gray'}"> {{ tag.name}}
-                  <i class="fa fa-times hand" *ngxPermissionsOnly="settings.permission+'.update'" (click)="onOpenDeleteTagModal(item,tag)"></i></small>
+                  <i class="fa fa-times hand" *ngxPermissionsOnly="settings.permission+'.update'" (click)="onOpenDeleteTagModal(item,tag)"></i>
+                </small>
               </span>
               <span *ngIf="column.type == 'tag_view'">
                 <small *ngFor="let tag of getValue(item,column)" class="label label-default" [ngStyle]="{'background-color': tag.custom_properties ? tag.custom_properties.color : 'gray'}"> {{ tag.name}}</small>
@@ -132,6 +134,12 @@
               </span>
               <span *ngIf="column.type == 'translation'">
                 <span translate *ngIf="getValue(item,column) !== null">{{ getValue(item, column).toUpperCase()}}</span>
+              </span>
+              <span *ngIf="column.type == 'favorite'">
+                <button class="btn btn-xs btn-default hand" (click)="onToggleFavourite(item)">
+                    <i class="fa fa-star hand" *ngIf="getValue(item, column)"></i>
+                    <i class="fa fa-star-o hand" *ngIf="!getValue(item, column)"></i>
+                </button>
               </span>
             </span>
               <ng-template #actionType>
@@ -162,8 +170,8 @@
       <!-- /.box-body -->
       <div class="box-footer clearfix" *ngIf="service.pageList.length">
         <div class="col-sm-5">
-          <div class="dataTables_info" translate [translateParams]="{from: service.meta?.from, to: service.meta?.to, total: service.meta?.total}">
-            SHOWING_FROM_TO_OF
+          <div class="dataTables_info">
+            <span [translate]="'SHOWING:'"></span> {{ service.meta?.from}} - {{ service.meta?.to}} <span [translate]="'FROM'"></span> {{ service.meta?.total}}
           </div>
         </div>
         <div class="col-sm-7">

@@ -144,5 +144,7 @@
   "SAVING": "Pracujem",
   "NO_CHANGES_ENDPOINT_DEFINED_TITLE": "Nebol definovaný endpoint",
   "NO_CHANGES_ENDPOINT_DEFINED": "Endpoint pre aplikovanie zmien nebol v komponente definovaný",
-  "CHARGING_SESSIONS_REPORT": "Report nabíjaní"
+  "CHARGING_SESSIONS_REPORT": "Report nabíjaní",
+  "SHOWING:" : "Zobrazujem:",
+  "FROM" : "z"
 }
