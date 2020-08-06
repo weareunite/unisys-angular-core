@@ -160,6 +160,12 @@ export abstract class BaseService {
     });
   }
 
+  getStreamImage(url) {
+    this.http.streamImage(url).subscribe(data => {
+      return this.http.imageEncode(data['data'])
+    });
+  }
+
 //CR(U)D
 
   updateItem(id: number, item) {

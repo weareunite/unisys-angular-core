@@ -30,7 +30,7 @@ export class HttpService {
 
   streamImage(serviceUrl: string) {
     this.pushIntoLatestCall('GET', serviceUrl, {});
-    return this.http.get(this.url + serviceUrl, {
+    return this.http.get(serviceUrl, {
       headers: new HttpHeaders({
         'responseType': 'ResponseContentType.BLob',
         'Authorization': 'Bearer ' + this.auth.getAccessToken(),
@@ -106,6 +106,15 @@ export class HttpService {
       return p + String.fromCharCode(c);
     }, ''));
     let mimetype = 'image/jpeg';
+    return 'data:' + mimetype + ';base64,' + b64encoded;
+  }
+
+  public pdfEncode(arrayBuffer) {
+    let u8 = new Uint8Array(arrayBuffer);
+    let b64encoded = btoa([].reduce.call(new Uint8Array(arrayBuffer), function (p, c) {
+      return p + String.fromCharCode(c);
+    }, ''));
+    let mimetype = 'application/pdf';
     return 'data:' + mimetype + ';base64,' + b64encoded;
   }
 

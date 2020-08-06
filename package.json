@@ -26,7 +26,7 @@
     "@weareunite/unisys-angular-form-group": "^0.3.4",
     "@weareunite/unisys-angular-input-wrapper": "^0.0.12",
     "@weareunite/unisys-angular-progress-bar": "^0.1.5",
-    "@weareunite/unisys-angular-tab-router": "^0.1.4",
+    "@weareunite/unisys-angular-tab-router": "^0.1.5",
     "@weareunite/unisys-angular-view-button": "^0.2.0",
     "admin-lte": "^2.4.8",
     "apollo-angular": "^1.5.0",

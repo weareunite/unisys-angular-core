@@ -130,6 +130,9 @@ export class TableComponent implements OnInit {
     if (item.sortable) {
       classString = classString + ' hand';
     }
+    if (item.type == 'favorite' || item.type == 'attachment') {
+      classString = classString + ' tight';
+    }
     return classString;
   }
 
@@ -138,16 +141,34 @@ export class TableComponent implements OnInit {
     action.call(this.context, item);
   }
 
-  public clickEvent(item, column) {
+  public clickEvent(item, column, event: Event) {
     this.setClicked(item);
     if (column.click) {
-      column.click.call(this.context, item, column);
+      column.click.call(this.context, item, column, event);
     }
   }
 
-  public overEvent(item, column) {
+  public overEvent(item, column, event: Event) {
     if (column.mouseover) {
-      column.mouseover.call(this.context, item, column);
+      column.mouseover.call(this.context, item, column, event);
+    }
+  }
+
+  public enterEvent(item, column, event:Event){
+    if(column.mouseenter){
+      column.mouseenter.call(this.context, item, column, event);
+    }
+  }
+
+  public outEvent(item, column, event:Event){
+    if(column.mouseout){
+      column.mouseout.call(this.context, item, column, event);
+    }
+  }
+
+  public leaveEvent(item, column, event?:Event){
+    if(column.mouseleave){
+      column.mouseleave.call(this.context, item, column, event);
     }
   }
 
@@ -479,6 +500,12 @@ export class TableComponent implements OnInit {
       tag: tag,
     };
     this.bsModalRef = this.modalService.show(ModalTagDeleteComponent, {initialState, class: 'modal-sm'});
+  }
+
+// FAVOURITES
+
+  onToggleFavourite(item){
+    this.service.toggleFavourite(item)
   }
 
 //EXPORT
