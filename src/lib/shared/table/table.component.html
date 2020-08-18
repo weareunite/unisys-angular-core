@@ -135,6 +135,9 @@
               <span *ngIf="column.type == 'translation'">
                 <span translate *ngIf="getValue(item,column) !== null">{{ getValue(item, column).toUpperCase()}}</span>
               </span>
+              <span *ngIf="column.type == 'object'">
+                <span>{{ getObjectValue(item, column)}}</span>
+              </span>
               <span *ngIf="column.type == 'favorite'">
                 <button class="btn btn-xs btn-default hand" (click)="onToggleFavourite(item)">
                     <i class="fa fa-star hand" *ngIf="getValue(item, column)"></i>
