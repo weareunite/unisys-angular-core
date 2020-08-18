@@ -365,10 +365,16 @@ export class TableComponent implements OnInit {
   }
 
   transformDate(date, format: string) {
-    if (date != '') {
-      // Fix for Safari browser
-      date = moment(date).toISOString();
-      return formatDate(date, format, 'en-US', 'UTC+2');
+    if (date !== '') {
+      let stringToReturn = '';
+      if (date) {
+        // Fix for Safari browser
+        date = moment(date).toISOString();
+        stringToReturn = formatDate(date, format, 'en-US', 'UTC+2');
+      } else {
+        stringToReturn = '---';
+      }
+      return stringToReturn;
     } else {
       return '';
     }
