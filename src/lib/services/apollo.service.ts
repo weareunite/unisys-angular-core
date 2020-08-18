@@ -34,6 +34,11 @@ export class ApolloService {
     ],
     custom: {
       currency: ['EUR'],
+      country: ['SK'],
+      code: ['SK'],
+      language: ['SK', 'EN'],
+      type: ['PRICE', 'PERCENT'],
+      unit: ['MONTHS', 'DAYS', 'WEEKS', 'YEARS'],
       week_day: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'],
     }
 
