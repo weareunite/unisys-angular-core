@@ -105,12 +105,13 @@ export class TableComponent implements OnInit {
     }
 
     public setSorting(column) {
+        const objectKeysArray = column.key.split('+');
         if (column.sortable) {
             let sortBy = '';
-            if (this.settings.sortBy == column.key) {
-                sortBy = '-' + column.key;
+            if (this.settings.sortBy === objectKeysArray[0]) {
+                sortBy = '-' + objectKeysArray[0];
             } else {
-                sortBy = column.key;
+                sortBy = objectKeysArray[0];
             }
             this.settings.sortBy = sortBy;
             this.service.setOrder(this.settings.sortBy).getItemList();
@@ -218,19 +219,36 @@ export class TableComponent implements OnInit {
             if (array[0] === 'properties' && item.properties.length > 0) {
                 valueToReturn = this.getProperty(item.properties, array[1]);
             } else {
-                if (item[array[0]] && array[1] && array[2] && array[3]) {
-                    valueToReturn = item[array[0]][array[1]][array[2]][array[3]];
+                if (item[array[0]] && array[1] && array[2] && array[3] && array[4]) {
+                    try {
+                        valueToReturn = item[array[0]][array[1]][array[2]][array[3]][array[4]];
+                    } catch (e) {
+                        valueToReturn = '-';
+                    }
+                } else if (item[array[0]] && array[1] && array[2] && array[3]) {
+                    try {
+                        valueToReturn = item[array[0]][array[1]][array[2]][array[3]];
+                    } catch (e) {
+                        valueToReturn = '-';
+                    }
                 } else if (item[array[0]] && array[1] && array[2]) {
-                    valueToReturn = item[array[0]][array[1]][array[2]];
+                    try {
+                        valueToReturn = item[array[0]][array[1]][array[2]];
+                    } catch (e) {
+                        valueToReturn = '-';
+                    }
                 } else if (item[array[0]] && array[1]) {
-                    valueToReturn = item[array[0]][array[1]];
+                    try {
+                        valueToReturn = item[array[0]][array[1]];
+                    } catch (e) {
+                        valueToReturn = '-';
+                    }
                 } else {
                     valueToReturn = '';
                 }
             }
         } else {
             valueToReturn = item[key];
-
             if (valueToReturn !== null) {
                 if (valueToReturn.hasOwnProperty('value')) {
                     valueToReturn = valueToReturn.value;
@@ -323,12 +341,9 @@ export class TableComponent implements OnInit {
         return valueToReturn;
     }
 
-    getObjectValue(item, column) { // format : 'objectKey.prop1+glue+prop2'
-        const keyArray = column.key.split('.');
-        const key = keyArray[0];
-        const objectString = keyArray[1].split('+');
-        const object = item[key];
-        return object[objectString[0]] + objectString[1] + object[objectString[2]];
+    getObjectValue(item, column) { // format : 'objectKey1.prop1+glue+objectKey2.prop2'
+        const objectKeysArray = column.key.split('+');
+        return this.drillColumnFromItem(item,  objectKeysArray[0]) + objectKeysArray[1] + this.drillColumnFromItem(item,  objectKeysArray[2]);
     }
 
     public downloadFile(url, type, fileName: string = 'export') {
