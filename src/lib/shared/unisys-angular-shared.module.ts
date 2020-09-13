@@ -16,7 +16,7 @@ import {ModalDeleteComponent} from './table/modal-delete/modal-delete.component'
 import {ModalTagComponent} from './table/modal-tag/modal-tag.component';
 import {ModalTagDeleteComponent} from './table/modal-tag-delete/modal-tag-delete.component';
 import {NgxPermissionsModule} from 'ngx-permissions';
-import {BsDatepickerModule, BsLocaleService, TimepickerModule, TooltipModule} from 'ngx-bootstrap';
+import { BsDatepickerModule, BsLocaleService, enGbLocale, TimepickerModule, TooltipModule } from 'ngx-bootstrap';
 import {TruncateModule} from 'ng2-truncate';
 import {defineLocale} from 'ngx-bootstrap/chronos';
 import {skLocale} from 'ngx-bootstrap/locale';
@@ -151,8 +151,18 @@ export class UnisysAngularSharedModule {
     } else if (userLang) {
       selectedLang = userLang;
     }
-    // this.coreService.setTranslation(selectedLang);
-    defineLocale(selectedLang, skLocale);
+    this.coreService.setTranslation(selectedLang);
+    switch(selectedLang){
+      case 'sk':
+        defineLocale(selectedLang, skLocale);
+        break;
+      case 'en':
+        defineLocale(selectedLang, enGbLocale);
+        break;
+      default:
+        defineLocale(selectedLang, skLocale);
+        break;
+    }
     this.localeService.use(selectedLang);
     this.translate.setDefaultLang(selectedLang);
     this.translate.use(selectedLang);

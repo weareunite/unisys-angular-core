@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
 import { Language, MenuItem } from '../models';
 import {ToastrService} from 'ngx-toastr';
-import { BsLocaleService, defineLocale, skLocale } from 'ngx-bootstrap';
+import { BsLocaleService, defineLocale, enGbLocale, skLocale } from 'ngx-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
 
@@ -79,7 +79,17 @@ export class CoreService {
   }
 
   setTranslation(langCode) {
-      defineLocale(langCode, skLocale);
+      switch (langCode) {
+        case 'sk':
+          defineLocale(langCode, skLocale);
+          break;
+        case 'en':
+          defineLocale(langCode, enGbLocale);
+          break;
+        default:
+          defineLocale(langCode, skLocale);
+          break;
+      }
       this.localeService.use(langCode);
       this.translate.setDefaultLang(langCode);
       this.translate.use(langCode);
