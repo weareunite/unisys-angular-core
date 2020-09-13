@@ -1,7 +1,10 @@
 import {Inject, Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
-import {MenuItem} from '../models';
+import { Language, MenuItem } from '../models';
 import {ToastrService} from 'ngx-toastr';
+import { BsLocaleService, defineLocale, skLocale } from 'ngx-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
+import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,13 +13,19 @@ import {ToastrService} from 'ngx-toastr';
 export class CoreService {
 
   public itemList: MenuItem[] = [];
+  public langList: Language[] = [];
   public appSettingsItemList: MenuItem[] = [];
   public itemListChanged = new Subject();
+  public langListChanged = new Subject();
   public appItemListPushed = new Subject();
   public appTitle: string;
   public appShorttag: string;
 
-  constructor() {
+  constructor(
+      private translate: TranslateService,
+      private localeService: BsLocaleService,
+      private appStateService: UnisysAngularAppStateServiceService
+  ) {
     this.appSettingsItemList = [
       {routerLink: ['admin', 'user'], permission: 'admin.users', translation: 'USERS', icon: 'fa fa-users'},
       {routerLink: ['admin', 'roles'], permission: 'admin.role', translation: 'ROLES', icon: 'fa fa-lock'},
@@ -57,8 +66,23 @@ export class CoreService {
     }, 1000);
   }
 
+  setLangList(langList: Language[]) {
+    setTimeout(() => {
+      this.langList = langList;
+      this.langListChanged.next(this.langList);
+    }, 1000);
+  }
+
   pushIntoAppItemList(item) {
     this.appSettingsItemList.push(item);
     this.appItemListPushed.next(item);
+  }
+
+  setTranslation(langCode) {
+      defineLocale(langCode, skLocale);
+      this.localeService.use(langCode);
+      this.translate.setDefaultLang(langCode);
+      this.translate.use(langCode);
+      this.appStateService.setAppState(langCode,'language');
   }
 }

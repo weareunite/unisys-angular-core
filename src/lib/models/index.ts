@@ -10,6 +10,11 @@ export interface MenuItem {
   divider?: boolean
 }
 
+export interface Language {
+  translation: string,
+  code: string
+}
+
 export interface Contact {
   id: number,
   type: string,

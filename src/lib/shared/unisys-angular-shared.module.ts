@@ -38,6 +38,8 @@ import {SubstringPipe} from '../pipes/substring.pipe';
 import {IsNaNPipe} from '../pipes/isNaN.pipe';
 import { SanitizeHtmlPipe } from '../pipes/sanitizeHtml.pipe';
 import { UnisysAngularFormGroupModule } from '@weareunite/unisys-angular-form-group';
+import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
+import { CoreService } from '../services/core.service';
 
 // Local UniSys GIT modules in project (for development purposes only !)
 // import {UnisysAngularFormGroupModule} from '../../../../unisys-angular-form-group/src/lib/unisys-angular-form-group.module';
@@ -135,13 +137,18 @@ export function HttpLoaderFactory(http: HttpClient) {
 })
 export class UnisysAngularSharedModule {
   constructor(
-    translate: TranslateService,
-    private localeService: BsLocaleService
+    private appStateService: UnisysAngularAppStateServiceService,
+    private coreService: CoreService,
+    private translate: TranslateService,
   ) {
-    defineLocale('sk', skLocale);
-    this.localeService.use('sk');
-// userLang = translate.getBrowserLang(); for future translations
-    translate.setDefaultLang('sk');
-    translate.use('sk');
+    const langCode = this.appStateService.getAppState('language');
+    const userLang = translate.getBrowserLang();
+    let selectedLang = 'sk';
+    if (langCode) {
+      selectedLang = langCode;
+    } else if (userLang) {
+      selectedLang = userLang;
+    }
+    this.coreService.setTranslation(selectedLang);
   }
 }

@@ -98,6 +98,11 @@ textarea.form-control {
   border-bottom: none;
 }
 
+.main-sidebar{
+  height: 100vh;
+  overflow-y: scroll;
+}
+
 body.fullscreen app-header, body.fullscreen .main-sidebar {
   display: none;
 }
@@ -208,3 +213,21 @@ body.fullscreen.skin-purple .wrapper {
   bottom: 0px;
   width: 100%;
 }
+
+@media (max-width: 768px) {
+  .sidebar-mini.sidebar-collapse .main-sidebar {
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+    z-index: 850;
+  }
+  .skin-aqua .main-header .navbar .dropdown-menu li a {
+    color: #404040;
+  }
+}
+
+@media (max-width: 991px) {
+  .main-header .navbar-custom-menu a, .main-header .navbar-right a {
+    color: #404040;
+  }
+}
+

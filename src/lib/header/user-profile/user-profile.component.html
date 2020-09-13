@@ -1,5 +1,10 @@
 <h5>{{ user?.name}} {{ user?.surname}} <small>(<span *ngFor="let role of user?.roles ; let isLast=last">{{ role.name}}{{isLast ? '' : ', '}}</span>)</small></h5>
 <ul>
+    <li *ngFor="let lang of langList">
+        <a (click)="onSetTranslation(lang.code)" [translate]="lang.translation"></a>
+    </li>
+</ul>
+<ul>
   <li>
     <a (click)="onLogOut()">
       <i class="fa fa-lock"></i>
