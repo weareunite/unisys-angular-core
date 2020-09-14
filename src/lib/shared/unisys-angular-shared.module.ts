@@ -16,10 +16,8 @@ import {ModalDeleteComponent} from './table/modal-delete/modal-delete.component'
 import {ModalTagComponent} from './table/modal-tag/modal-tag.component';
 import {ModalTagDeleteComponent} from './table/modal-tag-delete/modal-tag-delete.component';
 import {NgxPermissionsModule} from 'ngx-permissions';
-import { BsDatepickerModule, BsLocaleService, enGbLocale, TimepickerModule, TooltipModule } from 'ngx-bootstrap';
+import { BsDatepickerModule, BsLocaleService, enGbLocale, TimepickerModule, TooltipModule, defineLocale, skLocale } from 'ngx-bootstrap';
 import {TruncateModule} from 'ng2-truncate';
-import {defineLocale} from 'ngx-bootstrap/chronos';
-import {skLocale} from 'ngx-bootstrap/locale';
 import {AngularEditorModule} from '@kolkov/angular-editor';
 
 // UniSys Modules
@@ -37,12 +35,12 @@ import {CharAtPipe} from '../pipes/char-at.pipe';
 import {SubstringPipe} from '../pipes/substring.pipe';
 import {IsNaNPipe} from '../pipes/isNaN.pipe';
 import { SanitizeHtmlPipe } from '../pipes/sanitizeHtml.pipe';
-import { UnisysAngularFormGroupModule } from '@weareunite/unisys-angular-form-group';
+// import { UnisysAngularFormGroupModule } from '@weareunite/unisys-angular-form-group';
 import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
 import { CoreService } from '../services/core.service';
 
 // Local UniSys GIT modules in project (for development purposes only !)
-// import {UnisysAngularFormGroupModule} from '../../../../unisys-angular-form-group/src/lib/unisys-angular-form-group.module';
+import {UnisysAngularFormGroupModule} from '../../../../unisys-angular-form-group/src/lib/unisys-angular-form-group.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -145,27 +143,29 @@ export class UnisysAngularSharedModule {
   ) {
     const langCode = this.appStateService.getAppState('language');
     const userLang = translate.getBrowserLang();
-    let selectedLang = 'sk';
+    let selectedLang = '';
+    let localeString = '';
     if (langCode) {
       selectedLang = langCode;
     } else if (userLang) {
       selectedLang = userLang;
     }
-    this.coreService.setTranslation(selectedLang);
-    switch(selectedLang){
+    switch (selectedLang) {
       case 'sk':
-        defineLocale(selectedLang, skLocale);
+        localeString = 'sk';
+        defineLocale(localeString, skLocale);
         break;
       case 'en':
-        defineLocale(selectedLang, enGbLocale);
+        localeString = 'engb';
+        defineLocale(localeString, enGbLocale);
         break;
       default:
-        defineLocale(selectedLang, skLocale);
+        localeString = 'sk';
+        defineLocale(localeString, skLocale);
         break;
     }
-    this.localeService.use(selectedLang);
-    this.translate.setDefaultLang(selectedLang);
-    this.translate.use(selectedLang);
-
+    this.localeService.use(localeString);
+    this.translate.setDefaultLang(localeString);
+    this.translate.use(localeString);
   }
 }

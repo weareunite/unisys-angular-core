@@ -79,20 +79,7 @@ export class CoreService {
   }
 
   setTranslation(langCode) {
-      switch (langCode) {
-        case 'sk':
-          defineLocale(langCode, skLocale);
-          break;
-        case 'en':
-          defineLocale(langCode, enGbLocale);
-          break;
-        default:
-          defineLocale(langCode, skLocale);
-          break;
-      }
-      this.localeService.use(langCode);
-      this.translate.setDefaultLang(langCode);
-      this.translate.use(langCode);
       this.appStateService.setAppState(langCode,'language');
+      location.reload();
   }
 }
