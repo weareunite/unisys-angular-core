@@ -33,7 +33,7 @@ app-user-profile{
     .navbar-nav > .user-menu > .dropdown-menu {
         width: 100%;
         padding-left: 15px;
-        overflow-y: scroll;
+        overflow-y: auto;
         height: 300px;
         right: 0%;
     }

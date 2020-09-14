@@ -100,7 +100,7 @@ textarea.form-control {
 
 .main-sidebar{
   height: 100vh;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 body.fullscreen app-header, body.fullscreen .main-sidebar {
