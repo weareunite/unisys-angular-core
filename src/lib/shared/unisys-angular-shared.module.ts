@@ -35,12 +35,12 @@ import {CharAtPipe} from '../pipes/char-at.pipe';
 import {SubstringPipe} from '../pipes/substring.pipe';
 import {IsNaNPipe} from '../pipes/isNaN.pipe';
 import { SanitizeHtmlPipe } from '../pipes/sanitizeHtml.pipe';
-// import { UnisysAngularFormGroupModule } from '@weareunite/unisys-angular-form-group';
+import { UnisysAngularFormGroupModule } from '@weareunite/unisys-angular-form-group';
 import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
 import { CoreService } from '../services/core.service';
 
 // Local UniSys GIT modules in project (for development purposes only !)
-import {UnisysAngularFormGroupModule} from '../../../../unisys-angular-form-group/src/lib/unisys-angular-form-group.module';
+// import {UnisysAngularFormGroupModule} from '../../../../unisys-angular-form-group/src/lib/unisys-angular-form-group.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
