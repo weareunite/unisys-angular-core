@@ -4,7 +4,7 @@
         <!--<b>Version</b> {{ deployInfo.GIT_COMMIT }} @ {{ deployInfo.GIT_BRANCH }},-->
         <!--<b>Timestamp</b> {{ deployInfo.TIMESTAMP }}-->
     </div>
-    <strong>Copyright © 2018 - {{footerYears}}<a href="http://unite.sk" target="_blank"> Unite s.r.o</a></strong>
+    <strong>Copyright © {{ coreService.appYearsRange}} <a [href]="coreService.appProducerUrl" target="_blank"><span [innerHTML]="coreService.appProducer"></span></a></strong>
     <small class="version" *ngIf="versionCheckService.getLocalVersion()">
         v.{{versionCheckService.getLocalVersion()}}</small>
 </footer>

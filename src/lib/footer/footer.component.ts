@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { VersionCheckService } from '../services/version-check.service';
+import { CoreService } from '../services/core.service';
 
 @Component({
     selector: 'app-footer',
@@ -11,6 +12,7 @@ export class FooterComponent implements OnInit {
 
     constructor(
         public versionCheckService: VersionCheckService,
+        public coreService: CoreService,
     ) {
     }
 

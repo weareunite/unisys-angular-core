@@ -19,6 +19,9 @@ export class CoreService {
   public langListChanged = new Subject();
   public appItemListPushed = new Subject();
   public appTitle: string;
+  public appProducer: string;
+  public appProducerUrl: string;
+  public appYearsRange: string;
   public appShorttag: string;
 
   constructor(
@@ -81,5 +84,23 @@ export class CoreService {
   setTranslation(langCode) {
       this.appStateService.setAppState(langCode,'language');
       location.reload();
+  }
+
+  setAppProducer(title: string) {
+    setTimeout(() => {
+      this.appProducer = title;
+    }, 1000);
+  }
+
+  setAppProducerUrl(title: string) {
+    setTimeout(() => {
+      this.appProducerUrl = title;
+    }, 1000);
+  }
+
+  setAppYearsRange(range: string) {
+    setTimeout(() => {
+      this.appYearsRange = range;
+    }, 1000);
   }
 }
