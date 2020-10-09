@@ -104,10 +104,11 @@
                   <span translate>DETAIL</span>
                 </a>
               </span>
-              <span *ngIf="column.type == 'link'">
+              <span *ngIf="column.type == 'link' || column.type == 'objectlink'">
                 <a (click)="service.linkCallback(column.link, column.args, item, column.method)">
                     <span *ngIf="column.icon && column.icon != ''"><i class="fa {{column.icon}}" aria-hidden="true"></i>&nbsp;</span>
                     <span *ngIf="column.title && column.title != '' ">{{drillColumnFromItem(item, column.title)}}</span>
+                    <span *ngIf="column.type == 'objectlink'">{{ getObjectValue(item, column)}}</span>
                   </a>
               </span>
               <span *ngIf="column.type == 'timestamp'">{{getValue(item, column) | moment : 'X' : 'DD.MM.YYYY HH:mm:ss'}}</span>
