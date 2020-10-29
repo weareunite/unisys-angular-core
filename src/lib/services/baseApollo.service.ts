@@ -191,12 +191,20 @@ export abstract class BaseApolloService extends BaseService {
   }
 
   getItemFromServerToList(item: any) {
+    let queryClientName = this.clientName;
+
+    if (typeof queryClientName === 'undefined') {
+      queryClientName = '';
+    }
+
     const apolloInstnc = this.apollo.setOperationName('query')
       .setOperationType(this.operationType)
-      .setParams({id: item.id})
+      .setParams()
+      .setPostData({id: item.id})
       .setSelection(this.selection)
+      .setMetaData([])
       .setQuery()
-      .watchQuery();
+      .watchQuery(queryClientName);
 
     apolloInstnc.subscribe(result => {
       const updatedItem = result.data[this.operationType];
