@@ -3,7 +3,7 @@
     <ul class="sidebar-menu" *ngIf="haveItems">
       <li *ngFor="let mainMenu of itemList" class="menu-open" routerLinkActive="active">
         <ng-container *ngIf="mainMenu.type === 'divider'">
-          <a class="menu-divider header" translate>{{ mainMenu.translation}}</a>
+          <a class="menu-divider header" translate *ngxPermissionsOnly="mainMenu.permission">{{ mainMenu.translation}}</a>
         </ng-container>
         <ng-container *ngIf="mainMenu.type !== 'divider'">
           <a [routerLink]="mainMenu.routerLink" *ngxPermissionsOnly="mainMenu.permission"><i [ngClass]="mainMenu.icon">

@@ -512,6 +512,15 @@ export class TableComponent implements OnInit {
         this.bsModalRef = this.modalService.show(ModalDeleteComponent, {initialState, class: 'modal-sm'});
     }
 
+// USER RIGHTS
+    public processPermission(permission = null) {
+        if (permission) {
+            return permission;
+        }
+        return 'default';
+    }
+
+
 //TAGS
 
     onOpenTagModal() {
