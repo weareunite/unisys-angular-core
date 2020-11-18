@@ -33,13 +33,13 @@ export class ApolloService {
       'not', 'NOT',
     ],
     custom: {
-      currency: ['EUR'],
-      country: ['SK'],
-      code: ['SK'],
-      language: ['SK', 'EN'],
-      type: ['PRICE', 'PERCENT'],
-      unit: ['MONTHS', 'DAYS', 'WEEKS', 'YEARS'],
-      week_day: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'],
+      currency: ['EUR', 'eur'],
+      country: ['SK', 'sk'],
+      code: ['SK', 'sk'],
+      language: ['SK', 'EN', 'sk', 'en'],
+      type: ['PRICE', 'PERCENT', 'price', 'percent'],
+      unit: ['MONTHS', 'DAYS', 'WEEKS', 'YEARS', 'months', 'days', 'weeks', 'years'],
+      week_day: ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
     }
 
   };
