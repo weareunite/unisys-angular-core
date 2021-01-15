@@ -117,7 +117,7 @@ export class ApolloService {
         toastr.error(translatedDebug, translatedMessage);
       }
 
-      return Observable.of();
+      //return Observable.of(); // TODO ANALYZE IF IT'S OK
     });
 
     const authMiddleware = new ApolloLink((operation, forward) => {
