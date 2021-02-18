@@ -38,6 +38,7 @@ import { SanitizeHtmlPipe } from '../pipes/sanitizeHtml.pipe';
 import { UnisysAngularFormGroupModule } from '@weareunite/unisys-angular-form-group';
 import { UnisysAngularAppStateServiceService } from '@weareunite/unisys-angular-app-state-service';
 import { CoreService } from '../services/core.service';
+import { MinuteSecondsPipe } from "../pipes/duration.pipe";
 
 // Local UniSys GIT modules in project (for development purposes only !)
 // import {UnisysAngularFormGroupModule} from '../../../../unisys-angular-form-group/src/lib/unisys-angular-form-group.module';
@@ -94,6 +95,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SubstringPipe,
     IsNaNPipe,
     SanitizeHtmlPipe,
+    MinuteSecondsPipe,
   ],
   exports: [
     AngularEditorModule,
@@ -126,6 +128,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SubstringPipe,
     IsNaNPipe,
     SanitizeHtmlPipe,
+    MinuteSecondsPipe,
   ],
   entryComponents: [
     ModalDeleteComponent,
