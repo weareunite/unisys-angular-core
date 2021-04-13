@@ -83,7 +83,7 @@
             <!--<tr *ngFor="let item of data | orderBy : 'id'">-->
             <td style="text-align: center;">
               <input type="checkbox" [checked]="item.selected" (click)="onCheckboxSelect(item)"/></td>
-            <td *ngFor="let column of columns | filterColumns: settings.visibleColumns" (click)="clickEvent(item, column , event)" (mouseover)="overEvent(item, column, event)" (mouseenter)="enterEvent(item, column, event)" (mouseleave)="leaveEvent(item, column, event)" (mouseout)="outEvent(item, column, event)"  [ngClass]="{'hand detail': column.click || column.mouseover || column.mouseenter || column.mouseleave || column.mouseout || column.mouseover, 'text-right': column.type == 'number', 'text-center': column.type == 'attachment', 'text' : column.type == 'string' || column.type == 'list_prop'}">
+            <td *ngFor="let column of columns | filterColumns: settings.visibleColumns" (click)="clickEvent(item, column , $event)" (mouseover)="overEvent(item, column, $event)" (mouseenter)="enterEvent(item, column, $event)" (mouseleave)="leaveEvent(item, column, $event)" (mouseout)="outEvent(item, column, $event)"  [ngClass]="{'hand detail': column.click || column.mouseover || column.mouseenter || column.mouseleave || column.mouseout || column.mouseover, 'text-right': column.type == 'number', 'text-center': column.type == 'attachment', 'text' : column.type == 'string' || column.type == 'list_prop'}">
             <span *ngIf="column.type != 'action'; else actionType">
               <span *ngIf="column.type == 'json'">{{parseJSON(getValue(item, column), column.jsonPointer, column.count)}}</span>
               <span *ngIf="column.type == 'number' || column.type == 'date'">{{ getValue(item, column)}}</span>

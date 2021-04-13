@@ -131,7 +131,7 @@ export class TableComponent implements OnInit {
         if (item.sortable) {
             classString = classString + ' hand';
         }
-        if (item.type == 'favorite' || item.type == 'attachment') {
+        if (item.type === 'favorite' || item.type === 'attachment') {
             classString = classString + ' tight';
         }
         return classString;
