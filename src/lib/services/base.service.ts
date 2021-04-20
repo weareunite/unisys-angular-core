@@ -614,9 +614,9 @@ export abstract class BaseService {
   public fixDateTimes(item, list: any[]) {
     list.forEach(function (value) {
       if (typeof item[value] === 'object' && item[value] != null) {
-        item[value] = item[value].toJSON().slice(0, 19).replace('T', ' ');
+        item[value] = formatDate(item[value], 'yyyy-MM-dd HH:mm', 'en-US', 'UTC+1');
       } else if (typeof item[value] === 'string' && item[value] !== '') {
-        item[value] = new Date(item[value]).toJSON().slice(0, 19).replace('T', ' ');
+        item[value] = formatDate(new Date(item[value]), 'yyyy-MM-dd HH:mm', 'en-US', 'UTC+1');
       } else {
         item[value] = '';
       }
