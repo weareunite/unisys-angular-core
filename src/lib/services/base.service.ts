@@ -370,7 +370,7 @@ export abstract class BaseService {
 
   getExport(columns: { header: string, key: string }[]) {
     const requestUlr = this.url + '/export' + this.generateUrlQuery() + '&columns=' + encodeURIComponent(JSON.stringify(columns));
-    let dateString = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    const dateString = new Date().toISOString().slice(0, 19).replace('T', ' ');
     this.http.download(requestUlr, 'application/vnd.ms-excel', 'export-' + dateString + '.xls');
   }
 
@@ -577,13 +577,13 @@ export abstract class BaseService {
   public returnDatestringArray(list: Date[]) {
     const arrayToReturn = [];
     list.forEach(function (value) {
-      arrayToReturn.push(formatDate(value, 'yyyy-MM-dd', 'en-US', 'UTC+1'));
+      arrayToReturn.push(this.returnDatestring(value));
     });
     return arrayToReturn;
   }
 
   public returnDatestring(value: Date) {
-    return formatDate(value, 'yyyy-MM-dd', 'en-US', 'UTC+1');
+    return moment(value).format( 'yyyy-MM-dd');
   }
 
   public formatMomentDate(date, format) {
@@ -593,9 +593,9 @@ export abstract class BaseService {
   public fixDates(item, list: any[]) {
     list.forEach(function (value) {
       if (typeof item[value] === 'object' && item[value] != null) {
-        item[value] = formatDate(item[value], 'yyyy-MM-dd', 'en-US', 'UTC+1');
+        item[value] = moment(item[value]).format('yyyy-MM-dd');
       } else if (typeof item[value] === 'string' && item[value] !== '') {
-        item[value] = formatDate(new Date(item[value]), 'yyyy-MM-dd', 'en-US', 'UTC+1');
+        item[value] = moment(item[value]).format('yyyy-MM-dd');
       } else {
         item[value] = '';
       }
@@ -606,7 +606,7 @@ export abstract class BaseService {
 
   public fixTimes(item, list: any[]) {
     list.forEach(function (value) {
-      item[value] = moment(new Date(item[value])).format('HH:mm');
+      item[value] = moment(item[value]).format('HH:mm');
     });
     return item;
   }
@@ -614,13 +614,12 @@ export abstract class BaseService {
   public fixDateTimes(item, list: any[]) {
     list.forEach(function (value) {
       if (typeof item[value] === 'object' && item[value] != null) {
-        item[value] = formatDate(item[value], 'yyyy-MM-dd HH:mm', 'en-US', 'UTC+1');
+        item[value] = moment(item[value]).format('yyyy-MM-dd HH:mm:ss');
       } else if (typeof item[value] === 'string' && item[value] !== '') {
-        item[value] = formatDate(new Date(item[value]), 'yyyy-MM-dd HH:mm', 'en-US', 'UTC+1');
+        item[value] = moment(item[value]).format('yyyy-MM-dd HH:mm:ss');
       } else {
         item[value] = '';
       }
-      ;
     });
     return item;
   }
