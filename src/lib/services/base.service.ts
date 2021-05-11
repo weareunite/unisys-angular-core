@@ -583,7 +583,7 @@ export abstract class BaseService {
   }
 
   public returnDatestring(value: Date) {
-    return moment(value).format( 'yyyy-MM-dd');
+    return moment(value).format( 'YYYY-MM-DD');
   }
 
   public formatMomentDate(date, format) {
@@ -593,9 +593,9 @@ export abstract class BaseService {
   public fixDates(item, list: any[]) {
     list.forEach(function (value) {
       if (typeof item[value] === 'object' && item[value] != null) {
-        item[value] = moment(item[value]).format('yyyy-MM-dd');
+        item[value] = moment(item[value]).format('YYYY-MM-DD');
       } else if (typeof item[value] === 'string' && item[value] !== '') {
-        item[value] = moment(item[value]).format('yyyy-MM-dd');
+        item[value] = moment(item[value]).format('YYYY-MM-DD');
       } else {
         item[value] = '';
       }
@@ -614,9 +614,9 @@ export abstract class BaseService {
   public fixDateTimes(item, list: any[]) {
     list.forEach(function (value) {
       if (typeof item[value] === 'object' && item[value] != null) {
-        item[value] = moment(item[value]).format('yyyy-MM-dd HH:mm:ss');
+        item[value] = moment(item[value]).format('YYYY-MM-DD HH:mm:ss');
       } else if (typeof item[value] === 'string' && item[value] !== '') {
-        item[value] = moment(item[value]).format('yyyy-MM-dd HH:mm:ss');
+        item[value] = moment(item[value]).format('YYYY-MM-DD HH:mm:ss');
       } else {
         item[value] = '';
       }
