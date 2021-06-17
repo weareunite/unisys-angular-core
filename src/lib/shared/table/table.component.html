@@ -186,7 +186,10 @@
             <span [translate]="'SHOWING:'"></span> {{ service.meta?.from}} - {{ service.meta?.to}} <span [translate]="'FROM'"></span> {{ service.meta?.total}}
           </div>
         </div>
-        <div class="col-sm-7">
+        <div class="col-sm-2">
+          <button *ngIf="service.pageList.length > 1" class="btn btn-default btn-sm" (click)="loadMore(settings.rowsOnPage)" translate>LOAD_MORE</button>
+        </div>
+        <div class="col-sm-5">
           <ul class="pagination pagination-sm no-margin pull-right" *ngIf="service.pageList.length > 1">
             <li><a (click)="setPrevPage()">«</a></li>
             <li *ngIf="showDotsAtBegin()"><a (click)="setPage(1)">1</a></li>

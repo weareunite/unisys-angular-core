@@ -316,34 +316,39 @@ export class TableComponent implements OnInit {
     public getValue(item, column) {
         let valueToReturn: any = '';
 
-        switch(column.type){
-            case 'date':{
+        switch(column.type) {
+            case 'date': {
                 valueToReturn = this.transformDate(this.drillColumnFromItem(item, column.key), 'dd.MM.yyyy');
                 break;
             }
-            case 'progress':{
+            case 'progress': {
                 valueToReturn = this.returnRatio(item, column.key);
                 break;
             }
-            case 'list_prop':{
-                let splitedPath = column.key.split('/');
-                let valueList = [];
+            case 'list_prop': {
+                const splitedPath = column.key.split('/');
+                const valueList = [];
                 this.drillColumnFromItem(item, splitedPath[0]).forEach(function(entry, index) {
                     valueList.push(this.drillColumnFromItem(entry, splitedPath[1]));
                 }.bind(this));
                 valueToReturn = valueList.join(',');
                 break;
             }
-            default:{
+            default: {
                 valueToReturn = this.drillColumnFromItem(item, column.key);
             }
         }
         return valueToReturn;
     }
 
-    getObjectValue(item, column) { // format : 'objectKey1.prop1+glue+objectKey2.prop2'
+    getObjectValue(item, column) { // format : 'objectKey1.prop1+glue+objectKey2.prop2+glue+objectKey3.prop3'
         const objectKeysArray = column.key.split('+');
-        return this.drillColumnFromItem(item,  objectKeysArray[0]) + objectKeysArray[1] + this.drillColumnFromItem(item,  objectKeysArray[2]);
+        if(objectKeysArray.length === 3) {
+            return this.drillColumnFromItem(item,  objectKeysArray[0]) + objectKeysArray[1] + this.drillColumnFromItem(item,  objectKeysArray[2]);
+        } else if (objectKeysArray.length === 5) {
+            return this.drillColumnFromItem(item,  objectKeysArray[0]) + objectKeysArray[1] + this.drillColumnFromItem(item,  objectKeysArray[2]) + objectKeysArray[3] + this.drillColumnFromItem(item,  objectKeysArray[4]);
+        }
+        return '';
     }
 
     public downloadFile(url, type, fileName: string = 'export') {
@@ -564,6 +569,12 @@ export class TableComponent implements OnInit {
 
 
 //PAGINATION
+
+    loadMore(incrementBy: number): void {
+        this.service.setPage(this.service.page);
+        this.setPageSize(this.service.limit + incrementBy);
+        this.service.getItemList();
+    }
 
     setFirstPage() {
         this.service.setPage(1);
