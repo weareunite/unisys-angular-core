@@ -33,9 +33,10 @@ export class ApolloService {
       'not', 'NOT',
     ],
     custom: {
-      currency: ['EUR', 'eur'],
-      country: ['SK', 'sk'],
       code: ['SK', 'sk'],
+      country: ['SK', 'sk'],
+      currency: ['EUR', 'eur'],
+      current_unit: ['kWh', 'Wh'],
       language: ['SK', 'EN', 'sk', 'en'],
       type: ['PRICE', 'PERCENT', 'price', 'percent'],
       unit: ['MONTHS', 'DAYS', 'WEEKS', 'YEARS', 'months', 'days', 'weeks', 'years'],
