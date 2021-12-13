@@ -374,10 +374,16 @@ export abstract class BaseService {
 
 // EXPORT
 
-  getExport(columns: { header: string, key: string }[]) {
+  getExport(columns: { header: string, key: string }[], type: string = 'xls') {
     const requestUlr = this.url + '/export' + this.generateUrlQuery() + '&columns=' + encodeURIComponent(JSON.stringify(columns));
-    let dateString = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    this.http.download(requestUlr, 'application/vnd.ms-excel', 'export-' + dateString + '.xls');
+    const dateString = new Date().toISOString().slice(0, 19).replace('T', ' ');
+    if (type === 'csv') {
+      this.http.download(requestUlr, 'text/csv', 'export-' + dateString + '.csv');
+    } else if (type === 'xls') {
+      this.http.download(requestUlr, 'application/vnd.ms-excel', 'export-' + dateString + '.xls');
+    } else {
+      this.http.download(requestUlr, 'application/vnd.ms-excel', 'export-' + dateString + '.xls');
+    }
   }
 
 
