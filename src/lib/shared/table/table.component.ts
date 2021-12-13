@@ -495,7 +495,7 @@ export class TableComponent implements OnInit {
         });
       }
     }, this);
-    this.service.getExport(columnList);
+    this.service.getExport(columnList, this.settings.exportType ? this.settings.exportType : null);
   }
 
 
