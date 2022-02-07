@@ -583,7 +583,7 @@ export abstract class BaseService {
   public returnDatestringArray(list: Date[]) {
     const arrayToReturn = [];
     list.forEach(function (value) {
-      arrayToReturn.push(this.returnDatestring(value));
+      arrayToReturn.push(formatDate(value, 'yyyy-MM-dd', 'en-US', 'UTC+1'));
     });
     return arrayToReturn;
   }
