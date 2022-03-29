@@ -51,16 +51,14 @@ export class BaseFilterComponent {
           recoveredFormValues[key] = new FormGroup(subForm);
         } else if (rawData[key] !== null && (rawData[key].hasOwnProperty('values') && rawData[key].hasOwnProperty('operator'))) {
           const subForm = {};
-          if (rawData[key].values !== null) {
-            if (moment(rawData[key].values[0], moment.ISO_8601, true).isValid()) {
-              const datesToReturn = [];
-              rawData[key].values.forEach(function (value) {
-                datesToReturn.push(new Date(value));
-              });
-              subForm['values'] = this.formBuilder.control(datesToReturn);
-            } else {
-              subForm['values'] = this.formBuilder.control(rawData[key].values ? rawData[key].values : '');
-            }
+          if (rawData[key].values !== null && moment(rawData[key].values[0], moment.ISO_8601, true).isValid()) {
+            const datesToReturn = [];
+            rawData[key].values.forEach(function (value) {
+              datesToReturn.push(new Date(value));
+            });
+            subForm['values'] = this.formBuilder.control(datesToReturn);
+          } else {
+            subForm['values'] = this.formBuilder.control(rawData[key].values !== null && rawData[key].values ? rawData[key].values : '');
           }
           subForm['operator'] = this.formBuilder.control(rawData[key].operator ? rawData[key].operator : '');
           recoveredFormValues[key] = new FormGroup(subForm);
