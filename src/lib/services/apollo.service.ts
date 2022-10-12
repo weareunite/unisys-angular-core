@@ -275,6 +275,8 @@ export class ApolloService {
           paginateParams[index] = this.params[index];
         } else if (index === 'order') {
           filterParams[index] = this.params[index];
+        } else if (index === 'search') {
+          filterParams[index] = this.params[index];
         } else if (index === 'distinct') {
           filterParams[index] = this.params[index];
         } else {

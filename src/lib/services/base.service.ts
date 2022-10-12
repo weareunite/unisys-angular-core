@@ -298,7 +298,7 @@ export abstract class BaseService {
 
       if (value && key.indexOf('fulltext') > -1) {
         const array = key.split('/');
-        this.setSearch('%' + value, array[1]);
+        this.setSearch(value, array[1]);
       } else if (value) {
         if (typeof value === 'string' || typeof value === 'number') {
           this.setFilter(key, value);
