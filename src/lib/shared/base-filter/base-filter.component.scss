@@ -43,7 +43,7 @@ form.row {
   }
 }
 
-:host /deep/ .form-group {
+:host ::ng-deep .form-group {
   padding-left: 3px !important;
   padding-right: 3px !important;
 }
