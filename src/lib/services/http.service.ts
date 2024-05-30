@@ -39,19 +39,30 @@ export class HttpService {
     });
   }
 
-  get(serviceUrl: string, useBase: boolean = true) {
+  get(
+    serviceUrl: string,
+    useBase: boolean = true,
+    params: {} = {}
+  ) {
     let url = this.url + serviceUrl;
     if (!useBase) {
       url = serviceUrl;
     }
-    this.pushIntoLatestCall('GET', serviceUrl, {});
-    return this.http.get(url, {
+
+    let options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ' + this.auth.getAccessToken(),
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + this.auth.getAccessToken()
       })
-    });
+    };
+
+    if (Object.keys(params).length > 0) {
+      options['params'] = new HttpParams({fromObject: params});
+    }
+
+    this.pushIntoLatestCall('GET', url, {});
+    return this.http.get(url, options);
   }
 
   post(serviceUrl: string, data) {
