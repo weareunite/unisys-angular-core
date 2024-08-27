@@ -315,7 +315,7 @@ export abstract class BaseService {
           });
         } else if (value.values && value.values.length > 0) {
           const objectAsValue = {
-            values: value.values[0] instanceof Date || new Date(value.values[0]) instanceof Date ? this.returnDatestringArray(value.values) : value.values,
+            values: [moment(value.values[0]).startOf('day').format('YYYY-MM-DD HH:mm:ss'), moment(value.values[1]).endOf('day').format('YYYY-MM-DD HH:mm:ss')],
             operator: value.operator ? value.operator : 'or'
           };
           this.setFilter(key, objectAsValue);
