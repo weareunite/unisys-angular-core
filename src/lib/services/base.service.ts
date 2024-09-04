@@ -91,7 +91,7 @@ export abstract class BaseService {
     } else {
       this.search = {
         query: query,
-        fields: fields.split(',')
+        fields: fields ? fields.split(',') : []
       };
     }
     return this;

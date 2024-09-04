@@ -277,6 +277,8 @@ export class ApolloService {
           filterParams[index] = this.params[index];
         } else if (index === 'distinct') {
           filterParams[index] = this.params[index];
+        } else if (index === 'search') {
+          filterParams[index] = this.params[index];
         } else {
           if (!filterParams['conditions']) {
             filterParams['conditions'] = [];
@@ -288,14 +290,12 @@ export class ApolloService {
             let data = [];
             let conditionItem = {};
             const paramsSubindex = this.params[index][subIndex];
-
             if (this.params[index][subIndex].hasOwnProperty('base') && this.params[index][subIndex].hasOwnProperty('base') === true) {
               baseParams[subIndex] = paramsSubindex['values'];
             } else {
-
-              if (Array.isArray(this.params[index][subIndex]) && !this.params[index][subIndex].values) {
+              if (Array.isArray(this.params[index][subIndex])) {
                 data = this.params[index][subIndex];
-              } else if (this.params[index][subIndex].values) {
+              } else if (typeof this.params[index][subIndex] === 'object' && this.params[index][subIndex] !== null && 'values' in this.params[index][subIndex]) {
                 data = this.params[index][subIndex].values;
               } else {
                 data.push(this.params[index][subIndex]);
