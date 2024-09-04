@@ -86,7 +86,7 @@ export abstract class BaseService {
   }
 
   setSearch(query?: string, fields?: string) {
-    if (!query && !fields) {
+    if (!query || !fields) {
       this.search = {};
     } else {
       this.search = {
