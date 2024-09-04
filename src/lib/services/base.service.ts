@@ -90,7 +90,7 @@ export abstract class BaseService {
       this.search = {};
     } else {
       this.search = {
-        query: query,
+        query: query ? query : '',
         fields: fields ? fields.split(',') : []
       };
     }
