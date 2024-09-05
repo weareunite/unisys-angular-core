@@ -90,7 +90,7 @@ export abstract class BaseService {
       this.search = {};
     } else {
       this.search = {
-        query: query ? query : '',
+        query: query ? this.normalizeText(query) : '',
         fields: fields ? fields.split(',') : []
       };
     }
@@ -693,4 +693,7 @@ export abstract class BaseService {
 
   }
 
+  public normalizeText(text: string): string {
+    return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLowerCase();
+  }
 }

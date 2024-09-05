@@ -279,8 +279,6 @@ export class ApolloService {
           filterParams[index] = this.params[index];
         } else if (index === 'distinct') {
           filterParams[index] = this.params[index];
-        } else if (index === 'search') {
-          filterParams[index] = this.params[index];
         } else {
           if (!filterParams['conditions']) {
             filterParams['conditions'] = [];
