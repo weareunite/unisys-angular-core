@@ -50,6 +50,11 @@ export class BaseFilterComponent implements OnInit {
           subForm['data'] = this.formBuilder.control(rawData[key].data ? rawData[key].data : '');
           subForm['operator'] = this.formBuilder.control(rawData[key].operator ? rawData[key].operator : '');
           recoveredFormValues[key] = new FormGroup(subForm);
+        } else if (rawData[key] !== null && (rawData[key].hasOwnProperty('fields') && rawData[key].hasOwnProperty('query'))) {
+          const subForm = {};
+          subForm['fields'] = this.formBuilder.control(rawData[key].fields ? rawData[key].fields : '');
+          subForm['query'] = this.formBuilder.control(rawData[key].query ? rawData[key].query : '');
+          recoveredFormValues[key] = new FormGroup(subForm);
         } else if (rawData[key] !== null && (rawData[key].hasOwnProperty('values') && rawData[key].hasOwnProperty('operator'))) {
           const subForm = {};
           if (rawData[key].values !== null && moment(rawData[key].values[0], moment.ISO_8601, true).isValid()) {

@@ -128,12 +128,12 @@
                 <lib-unisys-angular-progress-bar [percentage]="getValue(item,column)*100"></lib-unisys-angular-progress-bar>
               </span>
               <span *ngIf="column.type == 'tag'">
-                <small *ngFor="let tag of getValue(item,column)" class="label label-default" [ngStyle]="{'background-color': tag.custom_properties ? tag.custom_properties.color : 'gray'}"> {{ tag.name}}
+                <small *ngFor="let tag of getValue(item,column)" class="label label-default" [ngStyle]="{'background-color': tag.custom_properties ? tag.custom_properties.color : 'gray'}"> {{ tag.title}}
                   <i class="fa fa-times hand" *ngxPermissionsOnly="settings.permission+'.update'" (click)="onOpenDeleteTagModal(item,tag)"></i>
                 </small>
               </span>
               <span *ngIf="column.type == 'tag_view'">
-                <small *ngFor="let tag of getValue(item,column)" class="label label-default" [ngStyle]="{'background-color': tag.custom_properties ? tag.custom_properties.color : 'gray'}"> {{ tag.name}}</small>
+                <small *ngFor="let tag of getValue(item,column)" class="label label-default" [ngStyle]="{'background-color': tag.custom_properties ? tag.custom_properties.color : 'gray'}"> {{ tag.title}}</small>
               </span>
               <span *ngIf="column.type == 'color'">
                 <small class="label label-default" [ngStyle]="{'background-color': getValue(item,column)}"> {{ getValue(item, column)}}</small>

@@ -298,7 +298,7 @@ export abstract class BaseService {
 
       if (value && key.indexOf('fulltext') > -1) {
         const array = key.split('/');
-        this.setSearch('%' + value, array[1]);
+        this.setSearch(value, array[1]);
       } else if (value) {
         if (typeof value === 'string' || typeof value === 'number') {
           this.setFilter(key, value);
@@ -315,7 +315,7 @@ export abstract class BaseService {
           });
         } else if (value.values && value.values.length > 0) {
           const objectAsValue = {
-            values: value.values[0] instanceof Date || new Date(value.values[0]) instanceof Date ? this.returnDatestringArray(value.values) : value.values,
+            values: [moment(value.values[0]).startOf('day').format('YYYY-MM-DD HH:mm:ss'), moment(value.values[1]).endOf('day').format('YYYY-MM-DD HH:mm:ss')],
             operator: value.operator ? value.operator : 'or'
           };
           this.setFilter(key, objectAsValue);
