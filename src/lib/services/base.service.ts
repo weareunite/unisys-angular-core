@@ -86,12 +86,12 @@ export abstract class BaseService {
   }
 
   setSearch(query?: string, fields?: string) {
-    if (!query && !fields) {
+    if (!query || !fields) {
       this.search = {};
     } else {
       this.search = {
-        query: query,
-        fields: fields.split(',')
+        query: query ? this.normalizeText(query) : '',
+        fields: fields ? fields.split(',') : []
       };
     }
     return this;
@@ -693,4 +693,7 @@ export abstract class BaseService {
 
   }
 
+  public normalizeText(text: string): string {
+    return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim().toLowerCase();
+  }
 }
