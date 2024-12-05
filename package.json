@@ -16,7 +16,7 @@
     "javascript"
   ],
   "dependencies": {
-    "@angular/core": "^7.2.0",
+    "@angular/core": "^11.0.5",
     "@angular/forms": "^7.2.2",
     "@angular/router": "~7.2.0",
     "@kolkov/angular-editor": "^0.13.1",
@@ -58,6 +58,6 @@
   },
   "peerDependencies": {
     "@angular/common": "^7.2.0",
-    "@angular/core": "^7.2.0"
+    "@angular/core": "^11.0.5"
   }
 }
