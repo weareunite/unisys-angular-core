@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import {Inject, Injectable, forwardRef} from '@angular/core';
 import {HttpService} from './http.service';
 import {NgxPermissionsService} from 'ngx-permissions';
 import {AuthService} from './auth.service';
@@ -30,12 +30,12 @@ export class UserService extends BaseApolloService {
   constructor(
     protected auth: AuthService,
     protected http: HttpService,
-    protected apollo: ApolloService,
+    @Inject(forwardRef(() => ApolloService)) protected apollo: ApolloService,
     protected httpAngular: HttpClient,
     protected router: Router,
     protected toastrService: ToastrService,
     protected appStateService: UnisysAngularAppStateServiceService,
-    private interceptorService: InterceptorService,
+    @Inject(forwardRef(() => InterceptorService)) private interceptorService: InterceptorService,
     private   permissionsService: NgxPermissionsService,
     public translate: TranslateService,
     @Inject('env') private environment,

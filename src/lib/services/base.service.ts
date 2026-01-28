@@ -4,7 +4,6 @@ import {Subject} from 'rxjs';
 import {HttpService} from './http.service';
 import {Tag} from '../models';
 import {UnisysAngularAppStateServiceService} from '@weareunite/unisys-angular-app-state-service';
-import {ApolloService} from './apollo.service';
 import * as moment_ from 'moment';
 import {formatDate} from '@angular/common';
 
@@ -38,7 +37,6 @@ export abstract class BaseService {
   constructor(
     protected http: HttpService,
     protected appStateService: UnisysAngularAppStateServiceService,
-    protected apollo: ApolloService,
   ) {
 
   }

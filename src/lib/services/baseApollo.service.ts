@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable, forwardRef} from '@angular/core';
 
 import {BaseService} from './base.service';
 import {HttpService} from './http.service';
@@ -27,9 +27,9 @@ export abstract class BaseApolloService extends BaseService {
   constructor(
     protected http: HttpService,
     protected appStateService: UnisysAngularAppStateServiceService,
-    protected apollo: ApolloService
+    @Inject(forwardRef(() => ApolloService)) protected apollo: ApolloService
   ) {
-    super(http, appStateService, apollo);
+    super(http, appStateService);
   }
 
 // (C)RUD

@@ -47,7 +47,7 @@ export class ErrorReportService extends BaseService {
     private apolloService: ApolloService,
     private httpService: HttpService
   ) {
-    super(http, appStateService, apollo);
+    super(http, appStateService);
     this.context = this;
     this.url = 'errorReports';
   }
